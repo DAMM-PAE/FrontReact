@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "./pantallaInicial.css";
 import logo from "./dammlogo.jpg";
 
@@ -7,6 +9,8 @@ function PantallaInicial() {
   const [showFilters, setShowFilters] = useState(false);
   const [provincia, setProvincia] = useState("");
   const [ciutat, setCiutat] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const handleShowFilters = () => {
     setShowFilters(!showFilters);
@@ -70,6 +74,17 @@ function PantallaInicial() {
     setProvincia(selectedProvincia);
     setCiutat("");
   }
+
+  const handleDataChange = (e) => {
+    const selectedData = e.target.value;
+    setSelectedDate(null);
+    if (selectedData === "Escull data") {
+      setShowCalendar(true);
+    } else {
+      setShowCalendar(false);
+    }
+  }
+
 
   return (
     <div>
@@ -171,14 +186,22 @@ function PantallaInicial() {
                 <option value="75-100">75-100</option>
               </select>
 
-            <label htmlFor="data">Data pròxima entrega</label>
-              <select name="data" id="data">
-                <option value=""></option>
-                <option value="Avui">Avui</option>
-                <option value="Demà">Demà</option>
-                <option value="Aquesta setmana">Aquesta setmana</option>
-                <option value="Aquest mes">Aquest mes</option>
-              </select>
+              <label htmlFor="data">Data pròxima entrega</label>
+            <select name="data" id="data" value={selectedDate ? "Escull data" : ""} onChange={handleDataChange}>
+              <option value=""></option>
+              <option value="Avui">Avui</option>
+              <option value="Demà">Demà</option>
+              <option value="Aquesta setmana">Aquesta setmana</option>
+              <option value="Aquest mes">Aquest mes</option>
+              <option value="Escull data">Escull data</option>
+            </select>
+
+            {showCalendar && (
+              <div>
+                <label htmlFor="calendari">Calendari</label>
+                <DatePicker selected={selectedDate} onChange={(date) => setSelectedDate(date)} />
+              </div>
+            )}
             </form>
           </div>
         )}
