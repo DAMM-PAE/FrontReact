@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main style file
 import "./pantallaInicial.css";
 import logo from "./dammlogo.jpg";
 
@@ -10,6 +10,8 @@ function PantallaInicial() {
   const [provincia, setProvincia] = useState("");
   const [ciutat, setCiutat] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
 
   const handleShowFilters = () => {
@@ -76,9 +78,22 @@ function PantallaInicial() {
   }
 
   const handleDataChange = (e) => {
-    const selectedData = e.target.value;
+    const selectedDate = e.target.value;
     setSelectedDate(null);
-    if (selectedData === "Escull data") {
+    const today = new Date();
+    if (selectedDate === "Avui") {
+      setSelectedDate("Avui");
+      setStartDate(today);
+      setEndDate(today);
+      console.log("Avui");
+    }
+    else if (selectedDate === "Demà") {
+      setSelectedDate("Demà");
+      setStartDate(today.getDate() + 1);
+      setEndDate(today.getDate() + 1);
+      console.log("Demà");
+    }
+    if (selectedDate === "Escull data") {
       setShowCalendar(true);
     } else {
       setShowCalendar(false);
@@ -187,7 +202,7 @@ function PantallaInicial() {
               </select>
 
               <label htmlFor="data">Data pròxima entrega</label>
-            <select name="data" id="data" value={selectedDate ? "Escull data" : ""} onChange={handleDataChange}>
+            <select name="data" id="data" value = {selectedDate} onChange={handleDataChange}>
               <option value=""></option>
               <option value="Avui">Avui</option>
               <option value="Demà">Demà</option>
@@ -199,7 +214,26 @@ function PantallaInicial() {
             {showCalendar && (
               <div>
                 <label htmlFor="calendari">Calendari</label>
-                <DatePicker selected={selectedDate} onChange={(date) => setSelectedDate(date)} />
+                {/* Utiliza el componente DateRange para seleccionar un rango de fechas */}
+                <DateRange
+                  onChange={(ranges) => {
+                    // El objeto 'ranges' contiene el rango de fechas seleccionado
+                    const { selection } = ranges;
+                    // Actualiza 'startDate' y 'endDate' con el rango seleccionado
+                    setStartDate(selection.startDate);
+                    setEndDate(selection.endDate);
+                    // Puedes utilizar startDate y endDate como necesites
+                    console.log("Fecha de inicio:", selection.startDate);
+                    console.log("Fecha de fin:", selection.endDate);
+                  }}
+                  ranges={[
+                    {
+                      startDate: startDate,
+                      endDate: endDate,
+                      key: "selection",
+                    },
+                  ]}
+                />
               </div>
             )}
             </form>
