@@ -1,0 +1,68 @@
+.calendari {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px; /* Ancho máximo del calendario */
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .calendari label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .close_NI {
+    background-color: #fff;
+    margin: 2.5rem;
+    border: 0;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 2rem;
+    padding: 12px 24px;
+}
+
+.boto_close {
+    display: flex;
+    justify-content: flex-end;
+    margin-left:60rem;
+}
+
+.creu {
+    color: red
+}
+
+.calendari-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Espacio entre los elementos */
+  }
+  
+  .boto-container {
+    text-align: center; 
+    margin-top: 24rem;
+  }
+
+  .boto {
+    background-color: rgb(61, 145, 255);
+    border-radius: 2rem;
+    border-color: #ccc;
+    height: 2rem;
+    width: 10rem;
+  }
+
+  .text {
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  

@@ -1,11 +1,19 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+
 import PantallaInicial from './components/pantallaInicial/pantallaInicial';
+import Calendari from './components/calendari/calendari';
+
 
 function App() {
   return (
-    <div className="App">
-      <PantallaInicial />
-    </div>
+    <Router>
+      <Routes>
+      <Route path="/" element={<PantallaInicial />} exact></Route>
+        <Route path="/calendari" element={<Calendari />} exact></Route>
+      </Routes>
+    </Router>
   );
 }
 

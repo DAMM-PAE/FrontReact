@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "./pantallaInicial.css";
 import logo from "./dammlogo.jpg";
+import { useNavigate } from 'react-router-dom';
+
 
 function PantallaInicial() {
 
@@ -13,12 +14,10 @@ function PantallaInicial() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [showCalendar, setShowCalendar] = useState(false);
   const [tipus, setTipus] = useState("");
   const [percentatge, setPercentatge] = useState("");
 
-  const maxDate = new Date();
-  maxDate.setFullYear(maxDate.getFullYear() + 2);
+  const navigate = useNavigate();
 
   const handleShowFilters = () => {
     setShowFilters(!showFilters);
@@ -97,6 +96,7 @@ function PantallaInicial() {
 
   }
 
+
   const handleDataChange = (e) => {
     const selectedDate = e.target.value;
     const today = new Date();
@@ -119,20 +119,19 @@ function PantallaInicial() {
       setSelectedDate("Aquest mes");
       setStartDate(today);
       setEndDate(new Date(today.getFullYear(), today.getMonth() + 1, 0));
-    } else {
+    } else if (selectedDate === "Aquest any") {
       //no date selected
       setSelectedDate("");
       setStartDate(today);
       //end date is set to 1 year from now
       setEndDate(new Date(today.getFullYear() + 1, today.getMonth(), today.getDate()));
-    }
-    
-    if (selectedDate !== "Escull data") {
-      setShowCalendar(false);
-    }
-    else {
-      setSelectedDate("Escull data");
-      setShowCalendar(true);
+    } else if (selectedDate === "") {
+      setSelectedDate("");
+      //fecha de fin es de aqui 2 años
+      setStartDate(today);
+      setEndDate(new Date(today.getFullYear() + 2, today.getMonth(), today.getDate()));
+    } else {
+      navigate('/calendari');
     }
 
     console.log("Fecha de inicio:", startDate);
@@ -265,42 +264,10 @@ function PantallaInicial() {
               <option value="Escull data">Escull data</option>
             </select>
             </div>
-          
-            {showCalendar && (
-            <div className="calendari">
-              <label htmlFor="calendari">Calendari</label>
-              {/* Utiliza el componente DateRange para seleccionar un rango de fechas */}
-              <DateRange
-                onChange={(ranges) => {
-                  // El objeto 'ranges' contiene el rango de fechas seleccionado
-                  const { selection } = ranges;
-                  // Actualiza 'startDate' y 'endDate' con el rango seleccionado
-                  setStartDate(selection.startDate);
-                  setEndDate(selection.endDate);
-                  // Puedes utilizar startDate y endDate como necesites
-                  console.log("Fecha de inicio:", selection.startDate);
-                  console.log("Fecha de fin:", selection.endDate);
-                }}
-                ranges={[
-                  {
-                    startDate: startDate,
-                    endDate: endDate,
-                    key: "selection",
-                  },
-                ]}
-                
-                minDate={new Date()} // Fecha mínima es la fecha actual
-                maxDate={maxDate}
-              />
-            </div>
-          )}
           </div>
             </form>
-            <button className="btn btn-primary">Cerca</button>
+            <button className="btn btn-primary">Filtra</button>
           </div>
-
-        
-
         )} 
 
      <div className="menu-llista">LLISTA</div>
