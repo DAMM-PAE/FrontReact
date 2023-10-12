@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import "./pantallaInicial.css";
 import logo from "./dammlogo.jpg";
 
@@ -13,6 +14,11 @@ function PantallaInicial() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
+  const [tipus, setTipus] = useState("");
+  const [percentatge, setPercentatge] = useState("");
+
+  const maxDate = new Date();
+  maxDate.setFullYear(maxDate.getFullYear() + 2);
 
   const handleShowFilters = () => {
     setShowFilters(!showFilters);
@@ -77,29 +83,61 @@ function PantallaInicial() {
     setCiutat("");
   }
 
+  const handleTipusChange = (e) => {
+    const selectedTipus = e.target.value;
+    setTipus(selectedTipus);
+
+    if (selectedTipus === "IoT") {
+      setPercentatge("");
+      document.getElementById("percentatge_restant").disabled = false;
+    } else {
+      setPercentatge("");
+      document.getElementById("percentatge_restant").disabled = true;
+    }
+
+  }
+
   const handleDataChange = (e) => {
     const selectedDate = e.target.value;
-    setSelectedDate(null);
     const today = new Date();
+  
     if (selectedDate === "Avui") {
       setSelectedDate("Avui");
       setStartDate(today);
       setEndDate(today);
-      console.log("Avui");
-    }
-    else if (selectedDate === "Demà") {
+    } else if (selectedDate === "Demà") {
       setSelectedDate("Demà");
-      setStartDate(today.getDate() + 1);
-      setEndDate(today.getDate() + 1);
-      console.log("Demà");
-    }
-    if (selectedDate === "Escull data") {
-      setShowCalendar(true);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(today.getDate() + 1);
+      setStartDate(tomorrow);
+      setEndDate(tomorrow);
+    } else if (selectedDate === "Aquesta setmana") {
+      setSelectedDate("Aquesta setmana");
+      setStartDate(today);
+      setEndDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay())));
+    } else if (selectedDate === "Aquest mes") {
+      setSelectedDate("Aquest mes");
+      setStartDate(today);
+      setEndDate(new Date(today.getFullYear(), today.getMonth() + 1, 0));
     } else {
+      //no date selected
+      setSelectedDate("");
+      setStartDate(today);
+      //end date is set to 1 year from now
+      setEndDate(new Date(today.getFullYear() + 1, today.getMonth(), today.getDate()));
+    }
+    
+    if (selectedDate !== "Escull data") {
       setShowCalendar(false);
     }
-  }
+    else {
+      setSelectedDate("Escull data");
+      setShowCalendar(true);
+    }
 
+    console.log("Fecha de inicio:", startDate);
+    console.log("Fecha de fin:", endDate);
+  };  
 
   return (
     <div>
@@ -112,7 +150,8 @@ function PantallaInicial() {
         <input type="text" className="cercador" placeholder="Cerca!"></input>
       </div>
 
-      
+      <div className="menu-total">
+       <div className="filtres-llista"> 
       <div class="first-row">
           <label htmlFor="show-form-toggle" class="btn btn-primary" onClick={handleShowFilters}> 
             Filtres
@@ -121,8 +160,10 @@ function PantallaInicial() {
         {showFilters && (
           <div class="form-group">
             <form class="form-inline" >
+              <div class="provincia-ciutat">
+                <div className="provincia">
             <label htmlFor="provincia">Província</label>
-              <select name="provincia" id="provincia" value={provincia} onChange={handleProvinciaChange}>
+              <select className="provincia-select" name="provincia" id="provincia" value={provincia} onChange={handleProvinciaChange}>
                 <option value=""></option>
                 <option value="A Coruña">A Coruña</option>
                 <option value="Álava">Álava</option>
@@ -175,34 +216,47 @@ function PantallaInicial() {
                 <option value="Zamora">Zamora</option>
                 <option value="Zaragoza">Zaragoza</option>
               </select>
+              </div>
 
+              <div className="ciutat">
             <label htmlFor="ciutat">Ciutat</label>
-              <select name="ciutat" id="ciutat" value={ciutat} onChange={(e) => setCiutat(e.target.value)}>
+              <select className="ciutat-select" name="ciutat" id="ciutat" value={ciutat} onChange={(e) => setCiutat(e.target.value)}>
                 <option value=""></option>
                 {ciutatsPerProvincia[provincia]?.map((ciutat) => (
                   <option key={ciutat} value={ciutat}>{ciutat}</option>
                 ))}
                 <option value="Altres">Altres</option>
               </select>
+              </div>
+              </div>
 
+            <div className="tipus-percentatge">
+              <div className="tipus">
             <label htmlFor="tipus">Tipus</label>
-              <select name="tipus" id="tipus">
+              <select className="tipus-select" name="tipus" id="tipus" value={tipus} onChange={handleTipusChange}>
                 <option value=""></option>
                 <option value="IoT">IoT</option>
                 <option value="no_IoT">No IoT</option> 
               </select>
-
-            <label htmlFor="percentatge_restant">Percentatge restant(només per IoT)</label>
-              <select name="percentatge_restant" id="percentatge_restant">
+              </div>
+            
+              <div className="percentatge">
+            <label htmlFor="percentatge_restant">Percentatge restant</label>
+              <select className="percentatge-select" name="percentatge_restant" id="percentatge_restant"
+                      value={percentatge} disabled={tipus !== "IoT"} onChange={(e) => setPercentatge(e.target.value)}>
                 <option value=""></option>
                 <option value="0-25">0-25</option>
                 <option value="25-50">25-50</option>
                 <option value="50-75">50-75</option>
                 <option value="75-100">75-100</option>
               </select>
-
-              <label htmlFor="data">Data pròxima entrega</label>
-            <select name="data" id="data" value = {selectedDate} onChange={handleDataChange}>
+            </div>
+            </div>
+                
+            <div className="data-calendari">
+              <div className="data">
+              <label htmlFor="data">Data entrega</label>
+            <select className="data-select" name="data" id="data" value = {selectedDate} onChange={handleDataChange}>
               <option value=""></option>
               <option value="Avui">Avui</option>
               <option value="Demà">Demà</option>
@@ -210,35 +264,52 @@ function PantallaInicial() {
               <option value="Aquest mes">Aquest mes</option>
               <option value="Escull data">Escull data</option>
             </select>
-
+            </div>
+          
             {showCalendar && (
-              <div>
-                <label htmlFor="calendari">Calendari</label>
-                {/* Utiliza el componente DateRange para seleccionar un rango de fechas */}
-                <DateRange
-                  onChange={(ranges) => {
-                    // El objeto 'ranges' contiene el rango de fechas seleccionado
-                    const { selection } = ranges;
-                    // Actualiza 'startDate' y 'endDate' con el rango seleccionado
-                    setStartDate(selection.startDate);
-                    setEndDate(selection.endDate);
-                    // Puedes utilizar startDate y endDate como necesites
-                    console.log("Fecha de inicio:", selection.startDate);
-                    console.log("Fecha de fin:", selection.endDate);
-                  }}
-                  ranges={[
-                    {
-                      startDate: startDate,
-                      endDate: endDate,
-                      key: "selection",
-                    },
-                  ]}
-                />
-              </div>
-            )}
-            </form>
+            <div className="calendari">
+              <label htmlFor="calendari">Calendari</label>
+              {/* Utiliza el componente DateRange para seleccionar un rango de fechas */}
+              <DateRange
+                onChange={(ranges) => {
+                  // El objeto 'ranges' contiene el rango de fechas seleccionado
+                  const { selection } = ranges;
+                  // Actualiza 'startDate' y 'endDate' con el rango seleccionado
+                  setStartDate(selection.startDate);
+                  setEndDate(selection.endDate);
+                  // Puedes utilizar startDate y endDate como necesites
+                  console.log("Fecha de inicio:", selection.startDate);
+                  console.log("Fecha de fin:", selection.endDate);
+                }}
+                ranges={[
+                  {
+                    startDate: startDate,
+                    endDate: endDate,
+                    key: "selection",
+                  },
+                ]}
+                
+                minDate={new Date()} // Fecha mínima es la fecha actual
+                maxDate={maxDate}
+              />
+            </div>
+          )}
           </div>
-        )}
+            </form>
+            <button className="btn btn-primary">Cerca</button>
+          </div>
+
+        
+
+        )} 
+
+     <div className="menu-llista">LLISTA</div>
+      </div>
+     <div className="menu-right">
+      <label>RECORDATORIS I GRÀFICS</label>
+      </div>
+
+     </div>
     </div>
   );
 }

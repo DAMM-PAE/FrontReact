@@ -1,12 +1,12 @@
 .menu-left {
   width: 12.5rem; /* Ancho del menú izquierdo */
   height: 100vh; /* Altura completa de la ventana */
-  float: left; /* Posición a la izquierda */
+  float: left;
 }
 
 /* Estilos para el menú en la parte superior */
 .menu-top { /* Color rojo muy claro */
-  height: 6.9rem; /* Altura de la barra de menú superior */
+  height: 6.9rem; 
   /* Otros estilos para la barra de menú superior */
 }
 
@@ -20,8 +20,8 @@
   float: right;
   margin-top: 3rem;
   margin-right: 10rem;
-  width: 10rem;
-  height: 1.5rem;
+  width: 12rem;
+  height: 2rem;
 }
 
 .first-row {
@@ -29,7 +29,74 @@
   align-items:center;
 }
 
+.provincia-ciutat {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
 
+.provincia {
+  margin-right: 1rem;
+}
+
+.provincia-select {
+  margin-left: 2.3rem;
+}
+
+.ciutat {
+  margin-left: 1rem;
+}
+
+.ciutat-select {
+  margin-left: 6.5rem;
+}
+
+.tipus-percentatge {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.tipus {
+  margin-right: 8.1rem;
+}
+
+.tipus-select {
+  margin-left: 3.9rem;
+}
+
+.percentatge-select {
+  margin-left: 0.5rem;
+}
+
+.data-calendari {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.data-select {
+  margin-left: 0.5rem;
+}
+
+.menu-total {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.filtres-llista {
+  flex: 0 0 65%; /* El elemento ocupa el 75% del ancho disponible */
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 1rem;
+}
+
+.menu-llista {
+  margin-top: 5rem;
+}
+
+.menu-right {
+  flex: 1;
+  box-sizing: border-box; 
+  margin: 1rem;
+}
 
 
 
