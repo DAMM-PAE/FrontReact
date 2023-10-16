@@ -1,0 +1,146 @@
+.menu-left {
+  width: 12.5rem; /* Ancho del menú izquierdo */
+  height: 100vh; /* Altura completa de la ventana */
+  float: left;
+}
+
+/* Estilos para el menú en la parte superior */
+.menu-top { /* Color rojo muy claro */
+  height: 6.9rem; 
+  /* Otros estilos para la barra de menú superior */
+}
+
+.logodamm {
+  width: 12.5rem;
+  height: 7rem;
+  margin-bottom: 20px;
+}
+
+.cercador {
+  float: right;
+  margin-top: 3rem;
+  margin-right: 8.3rem;
+  width: 12rem;
+  height: 2rem;
+}
+
+.first-row {
+  display: flex;
+  align-items:center;
+}
+
+.provincia-ciutat {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.provincia {
+  margin-right: 1rem;
+}
+
+.provincia-select {
+  margin-left: 2.3rem;
+}
+
+.ciutat {
+  margin-left: 1rem;
+}
+
+.ciutat-select {
+  margin-left: 6.5rem;
+}
+
+.tipus-percentatge {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.tipus {
+  margin-right: 8.1rem;
+}
+
+.tipus-select {
+  margin-left: 3.9rem;
+}
+
+.percentatge-select {
+  margin-left: 0.5rem;
+}
+
+.data-calendari {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.data-select {
+  margin-left: 0.5rem;
+}
+
+.menu-total {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.filtres-llista {
+  flex: 0 0 65%; /* El elemento ocupa el 75% del ancho disponible */
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 1rem;
+}
+
+.menu-top-llista {
+  margin-top: 5rem;
+}
+
+.menu-right {
+  flex: 1;
+  box-sizing: border-box; 
+  margin: 1rem;
+}
+
+.menu-top-llista {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-bottom: 0.75rem;
+  align-items: center;
+  border-bottom: 3px solid #d94100;
+  padding: .3rem 0;
+  text-align: left;
+}
+
+.col-llista1 {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-basis: 6rem;
+  margin-right: 6.8rem;
+}
+
+.col-llista2 {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-basis: 6rem;
+  margin-right: 2.5rem;
+}
+
+.col-llista3 {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-basis: 6rem;
+  margin-right: 2.2rem;
+}
+
+.button_order {
+  text-decoration: none;
+  color: #d94100;
+  background: none;
+  margin: 0;
+  border: none;
+  padding: 1px 3px;
+}
+
+
+
