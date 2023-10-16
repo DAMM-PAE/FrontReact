@@ -19,7 +19,7 @@
 .cercador {
   float: right;
   margin-top: 3rem;
-  margin-right: 10rem;
+  margin-right: 8.3rem;
   width: 12rem;
   height: 2rem;
 }
@@ -88,7 +88,7 @@
   margin: 1rem;
 }
 
-.menu-llista {
+.menu-top-llista {
   margin-top: 5rem;
 }
 
@@ -98,7 +98,49 @@
   margin: 1rem;
 }
 
+.menu-top-llista {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-bottom: 0.75rem;
+  align-items: center;
+  border-bottom: 3px solid #d94100;
+  padding: .3rem 0;
+  text-align: left;
+}
 
+.col-llista1 {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-basis: 6rem;
+  margin-right: 6.8rem;
+}
+
+.col-llista2 {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-basis: 6rem;
+  margin-right: 2.5rem;
+}
+
+.col-llista3 {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-basis: 6rem;
+  margin-right: 2.2rem;
+}
+
+.button_order {
+  text-decoration: none;
+  color: #d94100;
+  background: none;
+  margin: 0;
+  border: none;
+  padding: 1px 3px;
+}
 
 
 

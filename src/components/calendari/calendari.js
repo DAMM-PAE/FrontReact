@@ -15,7 +15,7 @@ function Calendari() {
     maxDate.setFullYear(maxDate.getFullYear() + 2);
 
     const handleNavigate = () => {
-        window.location.href = "/";
+        
     }
 
   return (

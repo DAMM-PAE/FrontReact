@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "./pantallaInicial.css";
 import logo from "./dammlogo.jpg";
 import { useNavigate } from 'react-router-dom';
+import ListBars from '../listBars/ListBars';
+import { set } from "date-fns";
 
 
 function PantallaInicial() {
@@ -16,11 +18,65 @@ function PantallaInicial() {
   const [endDate, setEndDate] = useState(new Date());
   const [tipus, setTipus] = useState("");
   const [percentatge, setPercentatge] = useState("");
+  const [filteredBars, setFilteredBars] = useState([]);
+
+  
 
   const navigate = useNavigate();
 
   const handleShowFilters = () => {
     setShowFilters(!showFilters);
+  }
+
+  useEffect(() => {
+    fetchBars();
+  }, []);
+
+  const fetchBars = async () => {
+    //crear 4 bares de ejemplo
+    const bar1 = { 
+      id: 1,
+      nom: "Bar 1",
+      provincia: "Barcelona",
+      ciutat: "Barcelona",
+      iot: true,
+      percentatge: "25",
+      data: new Date(2023, 11, 17)
+    }
+
+    const bar2 = {
+      id: 2,
+      nom: "Bar 2",
+      provincia: "Madrid",
+      ciutat: "Madrid",
+      iot: false,
+      percentatge: "-",
+      data: new Date(2023, 9, 17)
+    }
+
+    const bar3 = {
+      id: 3,
+      nom: "Bar 3",
+      provincia: "Barcelona",
+      ciutat:"Badalona",
+      iot: true,
+      percentatge: "50",
+      data: new Date(2023, 10, 23)
+    }
+
+    const bar4 = {
+      id: 4,
+      nom: "MARIA ISABEL GARCIA FERNANDEZve-d.kjcxnvhj,mfseavhjenmb",
+      provincia: "Cuenca",
+      ciutat: "Cuenca",
+      iot: false,
+      percentatge: "-",
+      data: new Date(2023, 11, 9)
+    }
+
+    const bars = [bar1, bar2, bar3, bar4];
+    setFilteredBars(bars);
+    console.log(filteredBars);
   }
 
   const ciutatsPerProvincia = {
@@ -33,7 +89,7 @@ function PantallaInicial() {
     "Ávila": ["Ávila"],
     "Badajoz": ["Badajoz", "Mérida"],
     "Baleares": ["Ibiza", "Palma de Mallorca"],
-    "Barcelona": ["Badalona", "Barcelona", "Hospitalet de Llobregat, "],
+    "Barcelona": ["Badalona", "Barcelona", "Hospitalet de Llobregat"],
     "Burgos": ["Burgos", "Miranda de Ebro"],
     "Cáceres": ["Cáceres"],
     "Cádiz": ["Cádiz", "Jerez de la Frontera"],
@@ -263,14 +319,39 @@ function PantallaInicial() {
               <option value="Aquest mes">Aquest mes</option>
               <option value="Escull data">Escull data</option>
             </select>
+
             </div>
           </div>
             </form>
-            <button className="btn btn-primary">Filtra</button>
+            <button type="submit" className="btn btn-primary">Filtra</button>
           </div>
         )} 
 
-     <div className="menu-llista">LLISTA</div>
+     <div className="menu-top-llista">
+        <div class="col-llista1">
+          Nom 
+          <button className="button_order">&#9650;</button>
+          <button className="button_order">&#9660;</button>
+        </div>
+        <div class="col-llista2">
+          Província/Ciutat
+          <button className="button_order">&#9650;</button>
+          <button className="button_order">&#9660;</button>
+        </div>
+        <div class="col-llista3">
+          %IoT restant
+          <button className="button_order">&#9650;</button>
+          <button className="button_order">&#9660;</button>
+       </div> 
+        <div class="col-llista4">
+            Data entrega
+            <button className="button_order">&#9650;</button>
+            <button className="button_order">&#9660;</button>
+        </div>
+     </div>
+
+    <ListBars filteredBars={filteredBars} />
+
       </div>
      <div className="menu-right">
       <label>RECORDATORIS I GRÀFICS</label>
