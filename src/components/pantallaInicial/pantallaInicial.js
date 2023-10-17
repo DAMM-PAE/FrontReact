@@ -19,6 +19,7 @@ function PantallaInicial() {
   const [tipus, setTipus] = useState("");
   const [percentatge, setPercentatge] = useState("");
   const [filteredBars, setFilteredBars] = useState([]);
+  const [sortDirection, setSortDirection] = useState({});
 
   
 
@@ -40,7 +41,7 @@ function PantallaInicial() {
       provincia: "Barcelona",
       ciutat: "Barcelona",
       iot: true,
-      percentatge: "25",
+      percentatge: "75",
       data: new Date(2023, 11, 17)
     }
 
@@ -49,8 +50,8 @@ function PantallaInicial() {
       nom: "Bar 2",
       provincia: "Madrid",
       ciutat: "Madrid",
-      iot: false,
-      percentatge: "-",
+      iot: true,
+      percentatge: "100",
       data: new Date(2023, 9, 17)
     }
 
@@ -60,7 +61,7 @@ function PantallaInicial() {
       provincia: "Barcelona",
       ciutat:"Badalona",
       iot: true,
-      percentatge: "50",
+      percentatge: "10",
       data: new Date(2023, 10, 23)
     }
 
@@ -193,6 +194,66 @@ function PantallaInicial() {
     console.log("Fecha de inicio:", startDate);
     console.log("Fecha de fin:", endDate);
   };  
+
+  const handleSortNom = (attribute, sortdir) => {
+    const newData = [...filteredBars];
+    newData.sort((a, b) => {
+      if (sortdir === 'asc') {
+        return a[attribute].localeCompare(b[attribute]);
+      } else if (sortdir === 'desc') {
+        return b[attribute].localeCompare(a[attribute]);
+      } else {
+        return 0;
+      }
+    });
+    setFilteredBars(newData);
+  }
+
+  const handleSortProvinciaCiutat = (attprovincia, attciutat, sortdir) => {
+    const newData = [...filteredBars];
+    newData.sort((a, b) => {
+      const provinciaComparison = a[attprovincia].localeCompare(b[attprovincia]);
+      if (provinciaComparison === 0) {
+        // Las provincias son iguales, comparar las ciudades
+        return sortdir === 'asc' ? a[attciutat].localeCompare(b[attciutat]) : b[attciutat].localeCompare(a[attciutat]);
+      }
+      return sortdir === 'asc' ? provinciaComparison : -provinciaComparison;
+    });
+    setFilteredBars(newData);
+  }
+
+  const handleSortPercentatge = (attribute, sortdir) => {
+    const newData = [...filteredBars];
+    newData.sort((a, b) => {
+      const auxA = a[attribute] === "-" ? 0 : parseInt(a[attribute]);
+      const auxB = b[attribute] === "-" ? 0 : parseInt(b[attribute]);
+      if (sortdir === 'asc') {
+        return auxA - auxB;
+      } else if (sortdir === 'desc') {
+        return auxB - auxA;
+      } else {
+        return 0;
+      }
+    });
+    setFilteredBars(newData);
+  }
+
+  const handleSortData = (attribute, sortdir) => {
+    const newData = [...filteredBars];
+    newData.sort((a, b) => {
+      //pasar strings a date
+      const auxA = new Date(a[attribute]);
+      const auxB = new Date(b[attribute]);
+      if (sortdir === 'asc') {
+        return auxA - auxB;
+      } else if (sortdir === 'desc') {
+        return auxB - auxA;
+      } else {
+        return 0;
+      }
+    });
+    setFilteredBars(newData);
+  }
 
   return (
     <div>
@@ -330,23 +391,23 @@ function PantallaInicial() {
      <div className="menu-top-llista">
         <div class="col-llista1">
           Nom 
-          <button className="button_order">&#9650;</button>
-          <button className="button_order">&#9660;</button>
+          <button className="button_order" onClick={() => handleSortNom('nom', 'asc')}>&#9650;</button>
+          <button className="button_order" onClick={() => handleSortNom('nom', 'desc')}>&#9660;</button>
         </div>
         <div class="col-llista2">
           Província/Ciutat
-          <button className="button_order">&#9650;</button>
-          <button className="button_order">&#9660;</button>
+          <button className="button_order" onClick={() => handleSortProvinciaCiutat('provincia', 'ciutat', 'asc')}>&#9650;</button>
+          <button className="button_order" onClick={() => handleSortProvinciaCiutat('provincia', 'ciutat', 'desc')}>&#9660;</button>
         </div>
         <div class="col-llista3">
           %IoT restant
-          <button className="button_order">&#9650;</button>
-          <button className="button_order">&#9660;</button>
+          <button className="button_order" onClick={() => handleSortPercentatge('percentatge', 'desc')}>&#9650;</button>
+          <button className="button_order" onClick={() => handleSortPercentatge('percentatge', 'asc')}>&#9660;</button>
        </div> 
         <div class="col-llista4">
             Data entrega
-            <button className="button_order">&#9650;</button>
-            <button className="button_order">&#9660;</button>
+            <button className="button_order" onClick={() => handleSortData('data', 'asc')}>&#9650;</button>
+            <button className="button_order" onClick={() => handleSortData('data', 'desc')}>&#9660;</button>
         </div>
      </div>
 
