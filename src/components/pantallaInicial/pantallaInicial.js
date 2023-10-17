@@ -35,7 +35,7 @@ function PantallaInicial() {
 
   const fetchBars = async () => {
     //crear 4 bares de ejemplo
-    const bar1 = { 
+    const bar1 = {
       id: 1,
       nom: "Bar 1",
       provincia: "Barcelona",
@@ -43,8 +43,8 @@ function PantallaInicial() {
       iot: true,
       percentatge: "75",
       data: new Date(2023, 11, 17)
-    }
-
+    };
+    
     const bar2 = {
       id: 2,
       nom: "Bar 2",
@@ -53,29 +53,88 @@ function PantallaInicial() {
       iot: true,
       percentatge: "100",
       data: new Date(2023, 9, 17)
-    }
-
+    };
+    
     const bar3 = {
       id: 3,
       nom: "Bar 3",
       provincia: "Barcelona",
-      ciutat:"Badalona",
+      ciutat: "Badalona",
       iot: true,
       percentatge: "10",
       data: new Date(2023, 10, 23)
-    }
-
+    };
+    
     const bar4 = {
       id: 4,
-      nom: "MARIA ISABEL GARCIA FERNANDEZve-d.kjcxnvhj,mfseavhjenmb",
+      nom: "MARIA ISABEL GARCIA FERNANDEZ",
       provincia: "Cuenca",
       ciutat: "Cuenca",
       iot: false,
       percentatge: "-",
       data: new Date(2023, 11, 9)
-    }
-
-    const bars = [bar1, bar2, bar3, bar4];
+    };
+    
+    const bar5 = {
+      id: 5,
+      nom: "Bar 5",
+      provincia: "Valencia",
+      ciutat: "Valencia",
+      iot: true,
+      percentatge: "45",
+      data: new Date(2023, 8, 15)
+    };
+    
+    const bar6 = {
+      id: 6,
+      nom: "Bar 6",
+      provincia: "Barcelona",
+      ciutat: "Barcelona",
+      iot: false,
+      percentatge: "-",
+      data: new Date(2023, 7, 2)
+    };
+    
+    const bar7 = {
+      id: 7,
+      nom: "Bar 7",
+      provincia: "Madrid",
+      ciutat: "Madrid",
+      iot: true,
+      percentatge: "85",
+      data: new Date(2023, 6, 21)
+    };
+    
+    const bar8 = {
+      id: 8,
+      nom: "Bar 8",
+      provincia: "Valencia",
+      ciutat: "Valencia",
+      iot: true,
+      percentatge: "30",
+      data: new Date(2023, 5, 12)
+    };
+    
+    const bar9 = {
+      id: 9,
+      nom: "Bar 9",
+      provincia: "Cuenca",
+      ciutat: "Cuenca",
+      iot: false,
+      percentatge: "-",
+      data: new Date(2023, 4, 28)
+    };
+    
+    const bar10 = {
+      id: 10,
+      nom: "Bar 10",
+      provincia: "Barcelona",
+      ciutat: "Badalona",
+      iot: true,
+      percentatge: "70",
+      data: new Date(2023, 3, 11)
+    };
+    const bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10];
     setFilteredBars(bars);
     console.log(filteredBars);
   }
