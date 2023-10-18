@@ -135,6 +135,7 @@ function PantallaInicial() {
       data: new Date(2023, 3, 11)
     };
     const bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10];
+    bars.sort((a, b) => new Date(a.data) - new Date(b.data));
     setFilteredBars(bars);
     console.log(filteredBars);
   }
