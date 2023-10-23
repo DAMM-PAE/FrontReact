@@ -13,7 +13,7 @@ function PantallaInicial() {
   const [showFilters, setShowFilters] = useState(false);
   const [provincia, setProvincia] = useState("");
   const [ciutat, setCiutat] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [tipus, setTipus] = useState("");
@@ -220,34 +220,37 @@ function PantallaInicial() {
 
     const selectedDate = e.target.value;
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     setSelectedDate("");
     setStartDate(today);
     setEndDate(new Date(today.getFullYear() + 2, today.getMonth(), today.getDate()));  
 
     if (selectedDate === "Avui") {
       setSelectedDate("Avui");
+      const endDateToday = new Date();
+      endDateToday.setHours(23, 59, 59, 999);
       setStartDate(today);
-      setEndDate(today);
+      setEndDate(endDateToday)
     } else if (selectedDate === "Demà") {
       setSelectedDate("Demà");
       const tomorrow = new Date(today);
       tomorrow.setDate(today.getDate() + 1);
+      const endDateTomorrow = new Date(tomorrow);
+      endDateTomorrow.setHours(23, 59, 59, 999);
       setStartDate(tomorrow);
-      setEndDate(tomorrow);
+      setEndDate(endDateTomorrow);
     } else if (selectedDate === "Aquesta setmana") {
       setSelectedDate("Aquesta setmana");
       setStartDate(today);
-      setEndDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay())));
+      const endDateWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay()));
+      endDateWeek.setHours(23, 59, 59, 999);
+      setEndDate(endDateWeek);
     } else if (selectedDate === "Aquest mes") {
       setSelectedDate("Aquest mes");
       setStartDate(today);
-      setEndDate(new Date(today.getFullYear(), today.getMonth() + 1, 0));
-    } else if (selectedDate === "Aquest any") {
-      //no date selected
-      setSelectedDate("");
-      setStartDate(today);
-      //end date is set to 1 year from now
-      setEndDate(new Date(today.getFullYear() + 1, today.getMonth(), today.getDate()));
+      const endDateMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      endDateMonth.setHours(23, 59, 59, 999);
+      setEndDate(endDateMonth);
     } else if (selectedDate === "Escull data"){
       navigate('/calendari');
     }
@@ -366,7 +369,7 @@ function PantallaInicial() {
     }
 
     //filtra por fecha, si la data esta entre la fecha de inicio y la fecha de fin, añadelo al array
-    if (dataFilter !== "") {
+   if (dataFilter !== "") {
       filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => {
         const data = new Date(bar.data);
         return data >= dataFilterStart && data <= dataFilterEnd;
