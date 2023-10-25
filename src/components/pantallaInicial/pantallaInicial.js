@@ -13,13 +13,14 @@ function PantallaInicial() {
   const [showFilters, setShowFilters] = useState(false);
   const [provincia, setProvincia] = useState("");
   const [ciutat, setCiutat] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [tipus, setTipus] = useState("");
   const [percentatge, setPercentatge] = useState("");
   const [filteredBars, setFilteredBars] = useState([]);
   const [sortDirection, setSortDirection] = useState({});
+  const [allBars, setAllBars] = useState([]);
 
   
 
@@ -42,7 +43,7 @@ function PantallaInicial() {
       ciutat: "Barcelona",
       iot: true,
       percentatge: "75",
-      data: new Date(2023, 11, 17)
+      data: new Date(2023, 10, 17)
     };
     
     const bar2 = {
@@ -52,7 +53,7 @@ function PantallaInicial() {
       ciutat: "Madrid",
       iot: true,
       percentatge: "100",
-      data: new Date(2023, 9, 17)
+      data: new Date(2023, 11, 17)
     };
     
     const bar3 = {
@@ -62,7 +63,7 @@ function PantallaInicial() {
       ciutat: "Badalona",
       iot: true,
       percentatge: "10",
-      data: new Date(2023, 10, 23)
+      data: new Date(2023, 9, 23)
     };
     
     const bar4 = {
@@ -72,7 +73,7 @@ function PantallaInicial() {
       ciutat: "Cuenca",
       iot: false,
       percentatge: "-",
-      data: new Date(2023, 11, 9)
+      data: new Date(2023, 10, 9)
     };
     
     const bar5 = {
@@ -82,7 +83,7 @@ function PantallaInicial() {
       ciutat: "Valencia",
       iot: true,
       percentatge: "45",
-      data: new Date(2023, 8, 15)
+      data: new Date(2024, 8, 15)
     };
     
     const bar6 = {
@@ -92,7 +93,7 @@ function PantallaInicial() {
       ciutat: "Barcelona",
       iot: false,
       percentatge: "-",
-      data: new Date(2023, 7, 2)
+      data: new Date(2023, 10, 2)
     };
     
     const bar7 = {
@@ -102,7 +103,7 @@ function PantallaInicial() {
       ciutat: "Madrid",
       iot: true,
       percentatge: "85",
-      data: new Date(2023, 6, 21)
+      data: new Date(2023, 11, 21)
     };
     
     const bar8 = {
@@ -112,7 +113,7 @@ function PantallaInicial() {
       ciutat: "Valencia",
       iot: true,
       percentatge: "30",
-      data: new Date(2023, 5, 12)
+      data: new Date(2023, 9, 31)
     };
     
     const bar9 = {
@@ -122,7 +123,7 @@ function PantallaInicial() {
       ciutat: "Cuenca",
       iot: false,
       percentatge: "-",
-      data: new Date(2023, 4, 28)
+      data: new Date(2023, 9, 19)
     };
     
     const bar10 = {
@@ -132,11 +133,12 @@ function PantallaInicial() {
       ciutat: "Badalona",
       iot: true,
       percentatge: "70",
-      data: new Date(2023, 3, 11)
+      data: new Date(2023, 9, 18)
     };
-    const bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10];
+    let bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10];
     bars.sort((a, b) => new Date(a.data) - new Date(b.data));
     setFilteredBars(bars);
+    setAllBars(bars);
     console.log(filteredBars);
   }
 
@@ -215,39 +217,41 @@ function PantallaInicial() {
 
 
   const handleDataChange = (e) => {
+
     const selectedDate = e.target.value;
     const today = new Date();
-  
+    today.setHours(0, 0, 0, 0);
+    setSelectedDate("");
+    setStartDate(today);
+    setEndDate(new Date(today.getFullYear() + 2, today.getMonth(), today.getDate()));  
+
     if (selectedDate === "Avui") {
       setSelectedDate("Avui");
+      const endDateToday = new Date();
+      endDateToday.setHours(23, 59, 59, 999);
       setStartDate(today);
-      setEndDate(today);
+      setEndDate(endDateToday)
     } else if (selectedDate === "Demà") {
       setSelectedDate("Demà");
       const tomorrow = new Date(today);
       tomorrow.setDate(today.getDate() + 1);
+      const endDateTomorrow = new Date(tomorrow);
+      endDateTomorrow.setHours(23, 59, 59, 999);
       setStartDate(tomorrow);
-      setEndDate(tomorrow);
+      setEndDate(endDateTomorrow);
     } else if (selectedDate === "Aquesta setmana") {
       setSelectedDate("Aquesta setmana");
       setStartDate(today);
-      setEndDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay())));
+      const endDateWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay()));
+      endDateWeek.setHours(23, 59, 59, 999);
+      setEndDate(endDateWeek);
     } else if (selectedDate === "Aquest mes") {
       setSelectedDate("Aquest mes");
       setStartDate(today);
-      setEndDate(new Date(today.getFullYear(), today.getMonth() + 1, 0));
-    } else if (selectedDate === "Aquest any") {
-      //no date selected
-      setSelectedDate("");
-      setStartDate(today);
-      //end date is set to 1 year from now
-      setEndDate(new Date(today.getFullYear() + 1, today.getMonth(), today.getDate()));
-    } else if (selectedDate === "") {
-      setSelectedDate("");
-      //fecha de fin es de aqui 2 años
-      setStartDate(today);
-      setEndDate(new Date(today.getFullYear() + 2, today.getMonth(), today.getDate()));
-    } else {
+      const endDateMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      endDateMonth.setHours(23, 59, 59, 999);
+      setEndDate(endDateMonth);
+    } else if (selectedDate === "Escull data"){
       navigate('/calendari');
     }
 
@@ -315,6 +319,70 @@ function PantallaInicial() {
     setFilteredBars(newData);
   }
 
+  const filterBars = (e) => {
+    //obtener valores de los filtros
+    const provinciaFilter = provincia;
+    const ciutatFilter = ciutat;
+    const tipusFilter = tipus;
+    const percentatgeFilter = percentatge;
+    const dataFilter = selectedDate;
+    const dataFilterStart = startDate;
+    const dataFilterEnd = endDate;
+    console.log("Provincia: ", provinciaFilter);
+    console.log("Ciutat: ", ciutatFilter);
+    console.log("Tipus: ", tipusFilter);
+    console.log("Percentatge: ", percentatgeFilter);
+    console.log("Data inici: ", dataFilterStart);
+    console.log("Data fi: ", dataFilterEnd);
+
+    //filtrar por provincia
+    let filteredBarsByProvincia = allBars;
+    console.log(allBars)
+    if (provinciaFilter !== "") {
+      filteredBarsByProvincia = allBars.filter((bar) => bar.provincia === provinciaFilter);
+    }
+
+    if (ciutatFilter !== "") {
+      filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => bar.ciutat === ciutatFilter);
+    }
+
+    if (tipusFilter !== "") {
+      filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => bar.iot === (tipusFilter === "IoT"));
+    }
+
+    if (percentatgeFilter !== "") {
+      filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => {
+        //pasar el percentatge a int
+        const percentatge = parseInt(bar.percentatge);
+        if (percentatgeFilter === "0-25") {
+          return percentatge >= 0 && percentatge <= 25;
+        } else if (percentatgeFilter === "25-50") {   
+          return percentatge >= 25 && percentatge <= 50;
+        } else if (percentatgeFilter === "50-75") {
+          return percentatge >= 50 && percentatge <= 75;
+        } else if (percentatgeFilter === "75-100") {
+          return percentatge >= 75 && percentatge <= 100;
+        } else {
+          return false;
+        }
+      });
+    }
+
+    //filtra por fecha, si la data esta entre la fecha de inicio y la fecha de fin, añadelo al array
+   if (dataFilter !== "") {
+      filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => {
+        const data = new Date(bar.data);
+        return data >= dataFilterStart && data <= dataFilterEnd;
+      });
+    }
+
+
+    console.log("data inici: ", dataFilterStart);
+    console.log("data fi: ", dataFilterEnd);
+    console.log(filteredBarsByProvincia);
+    setFilteredBars(filteredBarsByProvincia);
+}
+
   return (
     <div>
       <div className="menu-left">
@@ -335,7 +403,7 @@ function PantallaInicial() {
         </div>
         {showFilters && (
           <div class="form-group">
-            <form class="form-inline" >
+            <form class="form-inline">
               <div class="provincia-ciutat">
                 <div className="provincia">
             <label htmlFor="provincia">Província</label>
@@ -444,7 +512,7 @@ function PantallaInicial() {
             </div>
           </div>
             </form>
-            <button type="submit" className="btn btn-primary">Filtra</button>
+            <button type="submit" className="btn btn-primary" onClick={filterBars}>Filtra</button>
           </div>
         )} 
 
