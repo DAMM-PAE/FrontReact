@@ -3,6 +3,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "./pantallaInicial.css";
 import logo from "./dammlogo.jpg";
+import reset from "./reset.png";
 import { useNavigate } from 'react-router-dom';
 import ListBars from '../listBars/ListBars';
 import { set } from "date-fns";
@@ -24,8 +25,7 @@ function PantallaInicial() {
   const [filteredBars, setFilteredBars] = useState([]);
   const [sortDirection, setSortDirection] = useState({});
   const [allBars, setAllBars] = useState([]);
-
-  
+  const [searchText, setSearchText] = useState("");
 
   const navigate = useNavigate();
 
@@ -384,7 +384,30 @@ function PantallaInicial() {
     console.log("data fi: ", dataFilterEnd);
     console.log(filteredBarsByProvincia);
     setFilteredBars(filteredBarsByProvincia);
-}
+  }
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === "Enter") {
+      const filteredBars = allBars.filter((bar) =>
+        bar.nom.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setFilteredBars(filteredBars);
+    }
+  };
+
+  const handleReset = () => {
+    setProvincia("");
+    setCiutat("");
+    setTipus("");
+    setPercentatge("");
+    setSelectedDate("");
+    setStartDate(new Date());
+    setEndDate(new Date());
+    setSearchText("");
+    setFilteredBars(allBars);
+    
+
+  }
 
   return (
     <div>
@@ -394,7 +417,14 @@ function PantallaInicial() {
         </div>
       </div>
       <div className="menu-top">
-        <input type="text" className="cercador" placeholder="Cerca!"></input>
+        <input
+          type="text"
+          className="cercador"
+          placeholder="Cerca!"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          onKeyPress={handleSearchKeyPress}
+        />
       </div>
 
       <div className="menu-total">
@@ -403,6 +433,9 @@ function PantallaInicial() {
           <label htmlFor="show-form-toggle" class="btn btn-primary" onClick={handleShowFilters}> 
             Filtres
           </label>
+          <div className="reset">
+          <img src={reset} className="reset" alt="reset" onClick={handleReset} />
+          </div>
         </div>
         {showFilters && (
           <div class="form-group">
