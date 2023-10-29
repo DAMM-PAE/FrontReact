@@ -19,7 +19,7 @@
 .cercador {
   float: right;
   margin-top: 3rem;
-  margin-right: 8.3rem;
+  margin-right: 7.8rem;
   width: 12rem;
   height: 2rem;
 }
@@ -148,4 +148,14 @@
   margin-left: 1rem;
 }
 
+.titol-entregues {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #d94100;
+}
 
+.titol-avui {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #d94100;
+}

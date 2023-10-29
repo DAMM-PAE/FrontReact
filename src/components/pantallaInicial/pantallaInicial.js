@@ -4,10 +4,10 @@ import "react-date-range/dist/theme/default.css";
 import "./pantallaInicial.css";
 import logo from "./dammlogo.jpg";
 import reset from "./reset.png";
+import tick from "./tick.png";
 import { useNavigate } from 'react-router-dom';
 import ListBars from '../listBars/ListBars';
 import { set } from "date-fns";
-import { useHistory } from "react-router-dom";
 
 
 
@@ -66,7 +66,7 @@ function PantallaInicial() {
       ciutat: "Badalona",
       iot: true,
       percentatge: "10",
-      data: new Date(2023, 9, 23)
+      data: new Date(2023, 9, 29)
     };
     
     const bar4 = {
@@ -76,7 +76,7 @@ function PantallaInicial() {
       ciutat: "Cuenca",
       iot: false,
       percentatge: "-",
-      data: new Date(2023, 10, 9)
+      data: new Date(2023, 9, 29)
     };
     
     const bar5 = {
@@ -106,7 +106,7 @@ function PantallaInicial() {
       ciutat: "Madrid",
       iot: true,
       percentatge: "85",
-      data: new Date(2023, 11, 21)
+      data: new Date(2023, 9, 30)
     };
     
     const bar8 = {
@@ -405,8 +405,29 @@ function PantallaInicial() {
     setEndDate(new Date());
     setSearchText("");
     setFilteredBars(allBars);
-    
+  }
 
+  const handleTickClick = (barId) => {
+    // Encuentra el índice del bar basado en el ID proporcionado
+    // Cambiar el color de fondo a verde
+    const tickElement = document.getElementById(`tick-${barId}`);
+    if (tickElement) {
+      tickElement.parentElement.style.backgroundColor = 'rgba(0, 255, 0, 0.45)';
+    }
+    // Esperar 1 segundo antes de ejecutar la actualización de la fecha
+    setTimeout(() => {
+      updateDate(barId);
+    }, 1000);
+  }
+
+  const updateDate = (barId) => {
+    //poner al bar la fecha de hoy
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const newData = [...allBars];
+    const index = newData.findIndex((bar) => bar.id === barId);
+    newData[index].data = today;
+    setAllBars(newData);
   }
 
   return (
@@ -576,12 +597,68 @@ function PantallaInicial() {
      </div>
 
     <ListBars filteredBars={filteredBars} />
+    </div>
 
-      </div>
-     <div className="menu-right">
-      <label>RECORDATORIS I GRÀFICS</label>
-      </div>
 
+    <div className="menu-right">
+  <h1 className="titol-entregues">PRÒXIMES ENTREGUES</h1>
+
+  <h2 className="titol-avui">Avui</h2>
+  <ul>
+    {allBars
+      .filter((bar) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const data = new Date(bar.data);
+        return data >= today && data <= today;
+      })
+      .map((bar, index) => (
+        <li key={bar.id} style={{ display: "flex", alignItems: "center", backgroundColor: 'rgba(255, 255, 153, 0.45)', marginBottom: '8px', padding: '5px', borderRadius: '5px' }}>
+          <span style={{ flex: "1" }}>{bar.nom}</span>
+          <img id={`tick-${bar.id}`} src={tick} alt="Tick" style={{ width: "13px", height: "13px" }} onClick={() => handleTickClick(bar.id)} />
+        </li>
+      ))}
+  </ul>
+
+  <h2 className="titol-avui">Demà</h2>
+  <ul>
+    {allBars
+      .filter((bar) => {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
+        const data = new Date(bar.data);
+        return data >= tomorrow && data <= tomorrow;
+      })
+      .map((bar, index) => (
+        <li key={bar.id} style={{ display: "flex", alignItems: "center", backgroundColor: 'rgba(255, 255, 153, 0.45)', marginBottom: '8px', padding: '5px', borderRadius: '5px' }}>
+          <span style={{ flex: "1" }}>{bar.nom}</span>
+          <img id={`tick-${bar.id}`} src={tick} alt="Tick" style={{ width: "13px", height: "13px" }} onClick={() => handleTickClick(bar.id)} />
+        </li>
+      ))}
+  </ul>
+
+  <h2 className="titol-avui">Aquesta setmana</h2>
+  <ul>
+    {allBars
+      .filter((bar) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+        const endDateWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay()));
+        endDateWeek.setHours(0, 0, 0, 0);
+        const data = new Date(bar.data);
+        return data > tomorrow && data <= endDateWeek;
+      })
+      .map((bar, index) => (
+        <li key={bar.id} style={{ display: "flex", alignItems: "center", backgroundColor: 'rgba(255, 255, 153, 0.45)', marginBottom: '8px', padding: '5px', borderRadius: '5px' }}>
+          <span style={{ flex: "1" }}>{bar.nom}</span>
+          <img id={`tick-${bar.id}`} src={tick} alt="Tick" style={{ width: "13px", height: "13px" }} onClick={() => handleTickClick(bar.id)} />
+        </li>
+      ))}
+  </ul>
+</div>
      </div>
     </div>
   );
