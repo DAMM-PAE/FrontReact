@@ -430,11 +430,19 @@ function PantallaInicial() {
     setAllBars(newData);
   }
 
+  const handleVistaCalendari = () => {
+    navigate('/vistaCalendari', {state: { bars: allBars }});
+  }
+
   return (
     <div>
       <div className="menu-left">
         <div className="logo">
           <img src={logo} className="logodamm" alt="logo" />
+        </div>
+        <div className="menu-options">
+          <button className="menu-options-llista">Vista Llista</button>
+          <button className="menu-options-calendari" onClick={handleVistaCalendari}>Vista Calendari</button>
         </div>
       </div>
       <div className="menu-top">
