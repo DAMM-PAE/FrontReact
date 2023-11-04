@@ -46,7 +46,12 @@ function PantallaInicial() {
       ciutat: "Barcelona",
       iot: true,
       percentatge: "75",
-      data: new Date(2023, 10, 17)
+      data: new Date(2023, 10, 17),
+      codiPostal: "08001",
+      direccio: "Carrer de la Cera",
+      numCarrer: "12",
+      latitud: 41.379128,
+      longitud:  2.166431
     };
     
     const bar2 = {
@@ -56,7 +61,12 @@ function PantallaInicial() {
       ciutat: "Madrid",
       iot: true,
       percentatge: "100",
-      data: new Date(2023, 11, 17)
+      data: new Date(2023, 11, 17),
+      codiPostal: "28001",
+      direccio: "Calle de Felipe IV",
+      numCarrer: "1",
+      latitud:  40.4167,
+      longitud: -3.70325
     };
     
     const bar3 = {
@@ -66,7 +76,12 @@ function PantallaInicial() {
       ciutat: "Badalona",
       iot: true,
       percentatge: "10",
-      data: new Date(2023, 9, 29)
+      data: new Date(2023, 9, 29),
+      codiPostal: "08911",
+      direccio: "Carrer de l'Autonomia",
+      numCarrer: "12",
+      latitud: 41.4500,
+      longitud: 2.2500
     };
     
     const bar4 = {
@@ -76,7 +91,12 @@ function PantallaInicial() {
       ciutat: "Cuenca",
       iot: false,
       percentatge: "-",
-      data: new Date(2023, 9, 29)
+      data: new Date(2023, 9, 29),
+      codiPostal: "16001",
+      direccio: "Paseo de San Antonio",
+      numCarrer: "20",
+      latitud: 40.0704,
+      longitud: -2.1374
     };
     
     const bar5 = {
@@ -86,7 +106,12 @@ function PantallaInicial() {
       ciutat: "Valencia",
       iot: true,
       percentatge: "45",
-      data: new Date(2024, 8, 15)
+      data: new Date(2024, 8, 15),
+      codiPostal: "46001",
+      direccio: "Calle de Marvá",
+      numCarrer: "33",
+      latitud: 39.4667,
+      longitud: -0.3750
     };
     
     const bar6 = {
@@ -96,7 +121,12 @@ function PantallaInicial() {
       ciutat: "Barcelona",
       iot: false,
       percentatge: "-",
-      data: new Date(2023, 10, 2)
+      data: new Date(2023, 10, 2),
+      codiPostal: "08001",
+      direccio: "Passatge de la Pau",
+      numCarrer: "12",
+      latitud: 41.3809,
+      longitud: 2.1685
     };
     
     const bar7 = {
@@ -106,7 +136,12 @@ function PantallaInicial() {
       ciutat: "Madrid",
       iot: true,
       percentatge: "85",
-      data: new Date(2023, 9, 30)
+      data: new Date(2023, 9, 30),
+      codiPostal: "28001",
+      direccio: "Calle de Elfo",
+      numCarrer: "15",
+      latitud: 40.4167,
+      longitud: -3.70325
     };
     
     const bar8 = {
@@ -116,7 +151,12 @@ function PantallaInicial() {
       ciutat: "Valencia",
       iot: true,
       percentatge: "30",
-      data: new Date(2023, 9, 31)
+      data: new Date(2023, 9, 31),
+      codiPostal: "46001",
+      direccio: "Calle Serpis",
+      numCarrer: "40",
+      latitud: 39.4667,
+      longitud: -0.3750
     };
     
     const bar9 = {
@@ -126,7 +166,12 @@ function PantallaInicial() {
       ciutat: "Cuenca",
       iot: false,
       percentatge: "-",
-      data: new Date(2023, 9, 19)
+      data: new Date(2023, 9, 19),
+      codiPostal: "16001",
+      direccio: "Calle Elena Lumbreras",
+      numCarrer: "2",
+      latitud: 40.0704,
+      longitud: -2.1374
     };
     
     const bar10 = {
@@ -136,7 +181,12 @@ function PantallaInicial() {
       ciutat: "Badalona",
       iot: true,
       percentatge: "70",
-      data: new Date(2023, 9, 18)
+      data: new Date(2023, 9, 18),
+      codiPostal: "08911",
+      direccio: "Calle del Mar",
+      numCarrer: "13",
+      latitud: 41.4500,
+      longitud: 2.2500
     };
     let bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10];
     bars.sort((a, b) => new Date(a.data) - new Date(b.data));
