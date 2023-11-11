@@ -1,0 +1,47 @@
+.calendar-container {
+    height: 300px; /* Ajusta la altura según sea necesario */
+    width: 60%; /* Ajusta el ancho según sea necesario */
+    margin: auto; /* Centra el calendario en el contenedor */
+    margin-top: 100px;
+  }
+
+  .menu-left {
+    width: 12.5rem; /* Ancho del menú izquierdo */
+    height: 100vh; /* Altura completa de la ventana */
+    float: left;
+    border: thin solid #d94100;
+  }
+
+  .logodamm {
+    width: 12.44rem;
+    height: 6.87rem;
+    border: thin solid #d94100;
+  }
+
+  .menu-options {
+    margin-top: 0rem;
+  }
+  .menu-options button {
+    display: block; /* o flex */
+    border: none;
+    background-color: white;
+    color: #d94100;
+    font-weight: bold;
+    width: 200px; /* Ancho del botón */
+    height: 60px; /* Alto del botón */
+  }
+
+  .menu-options-llista {
+    font-size: 1rem;
+  }
+  
+  .menu-options-calendari {
+    font-size: 1.35rem;
+  }
+
+  /* Estilos para el menú en la parte superior */
+.menu-top { /* Color rojo muy claro */
+    height: 6.9rem; 
+    border: thin solid #d94100;
+    /* Otros estilos para la barra de menú superior */
+  }

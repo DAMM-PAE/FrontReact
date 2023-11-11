@@ -7,7 +7,6 @@ import reset from "./reset.png";
 import tick from "./tick.png";
 import { useNavigate } from 'react-router-dom';
 import ListBars from '../listBars/ListBars';
-import { set } from "date-fns";
 
 
 
@@ -23,7 +22,6 @@ function PantallaInicial() {
   const [tipus, setTipus] = useState("");
   const [percentatge, setPercentatge] = useState("");
   const [filteredBars, setFilteredBars] = useState([]);
-  const [sortDirection, setSortDirection] = useState({});
   const [allBars, setAllBars] = useState([]);
   const [searchText, setSearchText] = useState("");
 
@@ -46,7 +44,7 @@ function PantallaInicial() {
       ciutat: "Barcelona",
       iot: true,
       percentatge: "75",
-      data: new Date(2023, 10, 17),
+      data: new Date(2023, 10, 9),
       codiPostal: "08001",
       direccio: "Carrer de la Cera",
       numCarrer: "12",
@@ -61,7 +59,7 @@ function PantallaInicial() {
       ciutat: "Madrid",
       iot: true,
       percentatge: "100",
-      data: new Date(2023, 11, 17),
+      data: new Date(2023, 10, 10),
       codiPostal: "28001",
       direccio: "Calle de Felipe IV",
       numCarrer: "1",
