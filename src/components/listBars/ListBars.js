@@ -1,26 +1,35 @@
 import React from "react";
 import "./ListBars.css";
 import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import Pagination from "./Pagination";
 
 function ListBars({ filteredBars }) {
 
   const navigate = useNavigate();
+  const barsPerPage = 15;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastBar = currentPage * barsPerPage;
+  const indexOfFirstBar = indexOfLastBar - barsPerPage;
+  const currentBars = filteredBars.slice(indexOfFirstBar, indexOfLastBar);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleClick = (bar) => {
+    console.log(bar);
+    navigate(`/bar/${bar.id}`, { state: { bar } });
+  }
 
   return (
     <div>
       <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: '14px' }}>
         <tbody>
-          {filteredBars.map((bar) => {
-
+          {currentBars.map((bar) => {
             const rowStyle = bar.iot ? { background: 'rgba(255, 255, 153, 0.45)' } : {};
 
-            const handleClick = () => {
-              console.log(bar)
-              navigate(`/bar/${bar.id}`, { state: { bar } });
-            }
-
             return (
-              <tr key={bar.id} style={rowStyle} onClick={handleClick}>
+              <tr key={bar.id} style={rowStyle} onClick={() => handleClick(bar)}>
                 <td style={{
                   padding: '8px',
                   maxWidth: '60px',
@@ -49,6 +58,12 @@ function ListBars({ filteredBars }) {
           })}
         </tbody>
       </table>
+      <Pagination
+        barsPerPage={barsPerPage}
+        totalBars={filteredBars.length}
+        currentPage={currentPage}
+        paginate={paginate}
+      />
     </div>
   );
 }
