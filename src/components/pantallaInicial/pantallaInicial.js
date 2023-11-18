@@ -3,10 +3,12 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "./pantallaInicial.css";
 import logo from "./dammlogo.jpg";
+import reset from "./reset.png";
+import tick from "./tick.png";
 import { useNavigate } from 'react-router-dom';
 import ListBars from '../listBars/ListBars';
-import { set } from "date-fns";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function PantallaInicial() {
 
@@ -19,10 +21,9 @@ function PantallaInicial() {
   const [tipus, setTipus] = useState("");
   const [percentatge, setPercentatge] = useState("");
   const [filteredBars, setFilteredBars] = useState([]);
-  const [sortDirection, setSortDirection] = useState({});
   const [allBars, setAllBars] = useState([]);
-
-  
+  const [searchText, setSearchText] = useState("");
+  const [showDatePicker, setDatePicker] = useState(false);
 
   const navigate = useNavigate();
 
@@ -35,111 +36,36 @@ function PantallaInicial() {
   }, []);
 
   const fetchBars = async () => {
-    //crear 4 bares de ejemplo
-    const bar1 = {
-      id: 1,
-      nom: "Bar 1",
-      provincia: "Barcelona",
-      ciutat: "Barcelona",
-      iot: true,
-      percentatge: "75",
-      data: new Date(2023, 10, 17)
-    };
-    
-    const bar2 = {
-      id: 2,
-      nom: "Bar 2",
-      provincia: "Madrid",
-      ciutat: "Madrid",
-      iot: true,
-      percentatge: "100",
-      data: new Date(2023, 11, 17)
-    };
-    
-    const bar3 = {
-      id: 3,
-      nom: "Bar 3",
-      provincia: "Barcelona",
-      ciutat: "Badalona",
-      iot: true,
-      percentatge: "10",
-      data: new Date(2023, 9, 23)
-    };
-    
-    const bar4 = {
-      id: 4,
-      nom: "MARIA ISABEL GARCIA FERNANDEZ",
-      provincia: "Cuenca",
-      ciutat: "Cuenca",
-      iot: false,
-      percentatge: "-",
-      data: new Date(2023, 10, 9)
-    };
-    
-    const bar5 = {
-      id: 5,
-      nom: "Bar 5",
-      provincia: "Valencia",
-      ciutat: "Valencia",
-      iot: true,
-      percentatge: "45",
-      data: new Date(2024, 8, 15)
-    };
-    
-    const bar6 = {
-      id: 6,
-      nom: "Bar 6",
-      provincia: "Barcelona",
-      ciutat: "Barcelona",
-      iot: false,
-      percentatge: "-",
-      data: new Date(2023, 10, 2)
-    };
-    
-    const bar7 = {
-      id: 7,
-      nom: "Bar 7",
-      provincia: "Madrid",
-      ciutat: "Madrid",
-      iot: true,
-      percentatge: "85",
-      data: new Date(2023, 11, 21)
-    };
-    
-    const bar8 = {
-      id: 8,
-      nom: "Bar 8",
-      provincia: "Valencia",
-      ciutat: "Valencia",
-      iot: true,
-      percentatge: "30",
-      data: new Date(2023, 9, 31)
-    };
-    
-    const bar9 = {
-      id: 9,
-      nom: "Bar 9",
-      provincia: "Cuenca",
-      ciutat: "Cuenca",
-      iot: false,
-      percentatge: "-",
-      data: new Date(2023, 9, 19)
-    };
-    
-    const bar10 = {
-      id: 10,
-      nom: "Bar 10",
-      provincia: "Barcelona",
-      ciutat: "Badalona",
-      iot: true,
-      percentatge: "70",
-      data: new Date(2023, 9, 18)
-    };
-    let bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10];
-    bars.sort((a, b) => new Date(a.data) - new Date(b.data));
-    setFilteredBars(bars);
-    setAllBars(bars);
-    console.log(filteredBars);
+ 
+    const url = 'http://nattech.fib.upc.edu:40540/api/bars';
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      //a cada bar le añadimos un atributo data que es la fecha de entrega
+      //asignamos una fecha aleatoria entre hoy y dentro de 6 meses
+      data.forEach((bar) => {
+        const today = new Date();
+        const randomDate = new Date(today.getTime() + Math.random() * 15552000000);
+        bar.data = randomDate;
+      });
+      //ordenamos los bares por fecha de entrega
+      data.sort((a, b) => new Date(a.data) - new Date(b.data));
+      //a cada bar le añadimos un atributo iot que es un booleano y a alguno le ponemos true de forma aleatoria,
+      //y si es true le ponemos un atributo percentatge que es un numero aleatorio entre 0 y 100
+      data.forEach((bar) => {
+        bar.iot = Math.random() < 0.5;
+        if (bar.iot) {
+          bar.percentatge = Math.floor(Math.random() * 101);
+        } else {
+          bar.percentatge = "-"
+        }
+      });
+      setFilteredBars(data);
+      setAllBars(data);
+    } catch (error) {
+      console.error('Error fetching bars data:', error);
+    }
+
   }
 
   const ciutatsPerProvincia = {
@@ -251,12 +177,12 @@ function PantallaInicial() {
       const endDateMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
       endDateMonth.setHours(23, 59, 59, 999);
       setEndDate(endDateMonth);
-    } else if (selectedDate === "Escull data"){
-      navigate('/calendari');
+    } else if (selectedDate === "Escull data") {
+      setSelectedDate("Escull data");
+      setDatePicker(true);
     }
-
-    console.log("Fecha de inicio:", startDate);
-    console.log("Fecha de fin:", endDate);
+    console.log("Fecha de inicio en pantalla inicial:", startDate);
+    console.log("Fecha de fin en pantalla inicial:", endDate);
   };  
 
   const handleSortNom = (attribute, sortdir) => {
@@ -275,16 +201,39 @@ function PantallaInicial() {
 
   const handleSortProvinciaCiutat = (attprovincia, attciutat, sortdir) => {
     const newData = [...filteredBars];
+  
     newData.sort((a, b) => {
-      const provinciaComparison = a[attprovincia].localeCompare(b[attprovincia]);
+      const provinciaA = a[attprovincia];
+      const provinciaB = b[attprovincia];
+  
+      const ciutatA = a[attciutat];
+      const ciutatB = b[attciutat];
+  
+      // Función para manejar la comparación y manejo de valores nulos/vacíos
+      const compare = (valueA, valueB) => {
+        if (valueA == null || valueA === "" || valueA === '0') return 1;
+        if (valueB == null || valueB === "" || valueB === '0') return -1;
+        return sortdir === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      };
+  
+      // Comparación de provincias
+      const provinciaComparison = compare(provinciaA, provinciaB);
       if (provinciaComparison === 0) {
-        // Las provincias son iguales, comparar las ciudades
-        return sortdir === 'asc' ? a[attciutat].localeCompare(b[attciutat]) : b[attciutat].localeCompare(a[attciutat]);
+        // Las provincias son iguales, comparar las ciudades si tienen provincia
+        if (provinciaA != null && provinciaA !== "") {
+          return compare(ciutatA, ciutatB);
+        }
       }
-      return sortdir === 'asc' ? provinciaComparison : -provinciaComparison;
+  
+      return provinciaComparison;
     });
+  
     setFilteredBars(newData);
-  }
+  };
+  
+  
+  
+  
 
   const handleSortPercentatge = (attribute, sortdir) => {
     const newData = [...filteredBars];
@@ -338,12 +287,52 @@ function PantallaInicial() {
     //filtrar por provincia
     let filteredBarsByProvincia = allBars;
     console.log(allBars)
+
     if (provinciaFilter !== "") {
-      filteredBarsByProvincia = allBars.filter((bar) => bar.provincia === provinciaFilter);
+      const lowerCaseProvinciaFilter = provinciaFilter.toLowerCase();
+
+      filteredBarsByProvincia = allBars.filter((bar) => {
+        // Verificar si bar.provincia es nulo o indefinido
+        const lowerCaseBarProvincia = (bar.provincia || '').toLowerCase();
+
+        // Realizar la comparación
+        return lowerCaseBarProvincia === lowerCaseProvinciaFilter;
+      });
     }
 
     if (ciutatFilter !== "") {
-      filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => bar.ciutat === ciutatFilter);
+
+      if (ciutatFilter === "Altres") {
+
+        //mirar las ciudades que hay en la provincia seleccionada
+        console.log(ciutatFilter);
+        const ciutatsProvincia = ciutatsPerProvincia[provinciaFilter];
+        console.log(ciutatsProvincia);
+
+        //pasar las ciudades a minusculas
+        ciutatsProvincia.forEach((ciutat, index) => {
+          ciutatsProvincia[index] = ciutat.toLowerCase();
+        });
+        
+        //mirar para cada bar en filteredBarsByProvincia si su ciudad está en ciutatsProvincia
+        //si está, eliminarlo de filteredBarsByProvincia
+        filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => {
+          const lowerCaseBarCiutat = (bar.ciutat || '').toLowerCase();
+          return !ciutatsProvincia.includes(lowerCaseBarCiutat);
+        }
+        );
+
+      } else {
+      const lowerCaseCiutatFilter = ciutatFilter.toLowerCase();
+
+      filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => {
+        // Verificar si bar.ciutat es nulo o indefinido
+        const lowerCaseBarCiutat = (bar.ciutat || '').toLowerCase();
+
+        // Realizar la comparación
+        return lowerCaseBarCiutat === lowerCaseCiutatFilter;
+      });
+    }
     }
 
     if (tipusFilter !== "") {
@@ -374,14 +363,67 @@ function PantallaInicial() {
         const data = new Date(bar.data);
         return data >= dataFilterStart && data <= dataFilterEnd;
       });
-    }
-
-
+  }
     console.log("data inici: ", dataFilterStart);
     console.log("data fi: ", dataFilterEnd);
     console.log(filteredBarsByProvincia);
     setFilteredBars(filteredBarsByProvincia);
-}
+  }
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === "Enter") {
+      const filteredBars = allBars.filter((bar) =>
+        bar.nom.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setFilteredBars(filteredBars);
+    }
+  };
+
+  const confirmarSeleccion = () => {
+    console.log('Fecha de inicio:', startDate);
+    console.log('Fecha de fin:', endDate);
+    endDate.setHours(23, 59, 59, 999);
+    setDatePicker(false); // O cualquier acción adicional
+  };
+
+  const handleReset = () => {
+    setProvincia("");
+    setCiutat("");
+    setTipus("");
+    setPercentatge("");
+    setSelectedDate("");
+    setStartDate(new Date());
+    setEndDate(new Date());
+    setSearchText("");
+    setFilteredBars(allBars);
+  }
+
+  const handleTickClick = (barId) => {
+    // Encuentra el índice del bar basado en el ID proporcionado
+    // Cambiar el color de fondo a verde
+    const tickElement = document.getElementById(`tick-${barId}`);
+    if (tickElement) {
+      tickElement.parentElement.style.backgroundColor = 'rgba(0, 255, 0, 0.45)';
+    }
+    // Esperar 1 segundo antes de ejecutar la actualización de la fecha
+    setTimeout(() => {
+      updateDate(barId);
+    }, 1000);
+  }
+
+  const updateDate = (barId) => {
+    //poner al bar la fecha de hoy
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const newData = [...allBars];
+    const index = newData.findIndex((bar) => bar.id === barId);
+    newData[index].data = today;
+    setAllBars(newData);
+  }
+
+  const handleVistaCalendari = () => {
+    navigate('/vistaCalendari', {state: { bars: allBars }});
+  }
 
   return (
     <div>
@@ -389,9 +431,20 @@ function PantallaInicial() {
         <div className="logo">
           <img src={logo} className="logodamm" alt="logo" />
         </div>
+        <div className="menu-options">
+          <button className="menu-options-llista">Vista Llista</button>
+          <button className="menu-options-calendari" onClick={handleVistaCalendari}>Vista Calendari</button>
+        </div>
       </div>
       <div className="menu-top">
-        <input type="text" className="cercador" placeholder="Cerca!"></input>
+        <input
+          type="text"
+          className="cercador"
+          placeholder="Cerca!"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          onKeyPress={handleSearchKeyPress}
+        />
       </div>
 
       <div className="menu-total">
@@ -400,6 +453,9 @@ function PantallaInicial() {
           <label htmlFor="show-form-toggle" class="btn btn-primary" onClick={handleShowFilters}> 
             Filtres
           </label>
+          <div className="reset">
+          <img src={reset} className="reset" alt="reset" onClick={handleReset} />
+          </div>
         </div>
         {showFilters && (
           <div class="form-group">
@@ -509,6 +565,36 @@ function PantallaInicial() {
               <option value="Escull data">Escull data</option>
             </select>
 
+            {showDatePicker && (
+              <div className="calendari">
+                <label htmlFor="calendari">Escull un rang de dates</label>
+
+                {/* Selector de Rango de Fechas */}
+                <DatePicker
+                  selected={startDate}
+                  startDate={startDate}
+                  endDate={endDate}
+                  selectsRange
+                  inline
+                  onChange={(newDates) => {
+                    setStartDate(newDates[0]);
+                    setEndDate(newDates[1]);
+                  }}
+                />
+
+                {/* Botón de Confirmar */}
+                <button onClick={confirmarSeleccion}>Confirmar</button>
+
+                {/* Muestra el rango de fechas seleccionado */}
+                {startDate && endDate && (
+                  <div>
+                    <p>Data inici: {startDate.toLocaleDateString()}</p>
+                    <p>Data fi: {endDate.toLocaleDateString()}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
             </div>
           </div>
             </form>
@@ -540,12 +626,68 @@ function PantallaInicial() {
      </div>
 
     <ListBars filteredBars={filteredBars} />
+    </div>
 
-      </div>
-     <div className="menu-right">
-      <label>RECORDATORIS I GRÀFICS</label>
-      </div>
 
+    <div className="menu-right">
+  <h1 className="titol-entregues">PRÒXIMES ENTREGUES</h1>
+
+  <h2 className="titol-avui">Avui</h2>
+  <ul>
+    {allBars
+      .filter((bar) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const data = new Date(bar.data);
+        return data >= today && data <= today;
+      })
+      .map((bar, index) => (
+        <li key={bar.id} style={{ display: "flex", alignItems: "center", backgroundColor: 'rgba(255, 255, 153, 0.45)', marginBottom: '8px', padding: '5px', borderRadius: '5px' }}>
+          <span style={{ flex: "1" }}>{bar.nom}</span>
+          <img id={`tick-${bar.id}`} src={tick} alt="Tick" style={{ width: "13px", height: "13px" }} onClick={() => handleTickClick(bar.id)} />
+        </li>
+      ))}
+  </ul>
+
+  <h2 className="titol-avui">Demà</h2>
+  <ul>
+    {allBars
+      .filter((bar) => {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
+        const data = new Date(bar.data);
+        return data >= tomorrow && data <= tomorrow;
+      })
+      .map((bar, index) => (
+        <li key={bar.id} style={{ display: "flex", alignItems: "center", backgroundColor: 'rgba(255, 255, 153, 0.45)', marginBottom: '8px', padding: '5px', borderRadius: '5px' }}>
+          <span style={{ flex: "1" }}>{bar.nom}</span>
+          <img id={`tick-${bar.id}`} src={tick} alt="Tick" style={{ width: "13px", height: "13px" }} onClick={() => handleTickClick(bar.id)} />
+        </li>
+      ))}
+  </ul>
+
+  <h2 className="titol-avui">Aquesta setmana</h2>
+  <ul>
+    {allBars
+      .filter((bar) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+        const endDateWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay()));
+        endDateWeek.setHours(0, 0, 0, 0);
+        const data = new Date(bar.data);
+        return data > tomorrow && data <= endDateWeek;
+      })
+      .map((bar, index) => (
+        <li key={bar.id} style={{ display: "flex", alignItems: "center", backgroundColor: 'rgba(255, 255, 153, 0.45)', marginBottom: '8px', padding: '5px', borderRadius: '5px' }}>
+          <span style={{ flex: "1" }}>{bar.nom}</span>
+          <img id={`tick-${bar.id}`} src={tick} alt="Tick" style={{ width: "13px", height: "13px" }} onClick={() => handleTickClick(bar.id)} />
+        </li>
+      ))}
+  </ul>
+</div>
      </div>
     </div>
   );
