@@ -45,3 +45,14 @@
     border: thin solid #d94100;
     /* Otros estilos para la barra de menú superior */
   }
+
+  .calendar-container {
+    height: 300px;
+    width: 60%;
+    margin: auto;
+    margin-top: 100px;
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+

@@ -1,17 +1,18 @@
 //const API_URL = process.env.REACT_APP_API_URL;
-const API_URL = "https://manually-pretty-barnacle.ngrok-free.app/api"
+const API_URL = "http://nattech.fib.upc.edu:40540/api"
 ;
 
 
-async function apiGet(url){
+export async function apiGet(url){
     let response;
-    const apiURL = `${API_URL}/${url}`;
+    const apiURL = `${API_URL}${url}`;
     console.log(apiURL);
     try {
         const res = await fetch(apiURL, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Allow-Control-Allow-Origin': '*'
             }
         });
         response = await res.json();
@@ -20,6 +21,3 @@ async function apiGet(url){
     }
     return console.log('Success:', response);
 }
-
-const bars = apiGet('bars');
-console.log(bars);

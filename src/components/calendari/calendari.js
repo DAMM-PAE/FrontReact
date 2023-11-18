@@ -4,6 +4,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "./calendari.css";
 import { ca } from "date-fns/locale";
+import { useNavigate } from "react-router-dom";
 
 function Calendari() {
 
@@ -14,14 +15,22 @@ function Calendari() {
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() + 2);
 
+    const navigate = useNavigate();
+
     const handleNavigate = () => {
-        
+      console.log("Fecha de inicio:", startDate);
+      console.log("Fecha de fin:", endDate);
+      navigate('/', {state: { startDate: startDate, endDate: endDate  }})
+    }
+
+    const handleNavigateOut = () => {
+      navigate('/');
     }
 
   return (
     <div className="calendari-container">
   <div className="boto_close">
-    <button className="close_NI" onClick={handleNavigate} type="button">
+    <button className="close_NI" onClick={handleNavigateOut} type="button">
       <span className='creu'>X</span>
     </button>
   </div>
