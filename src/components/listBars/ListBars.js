@@ -22,7 +22,7 @@ function ListBars({ filteredBars }) {
   }
 
   return (
-    <div>
+    <div style={{ margin: '0 auto', maxWidth: '70rem' }}>
       <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: '14px' }}>
         <tbody>
           {currentBars.map((bar) => {
@@ -59,12 +59,14 @@ function ListBars({ filteredBars }) {
         </tbody>
       </table>
       <Pagination
-        barsPerPage={barsPerPage}
-        totalBars={filteredBars.length}
-        currentPage={currentPage}
-        paginate={paginate}
-      />
+            barsPerPage={barsPerPage}
+            totalBars={filteredBars.length}
+            currentPage={currentPage}
+            paginate={paginate}
+          />
     </div>
+
+      
   );
 }
 

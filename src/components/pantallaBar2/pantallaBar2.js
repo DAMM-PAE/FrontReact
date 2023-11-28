@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import "./pantallaInicial.css";
-import logo from "./dammlogo.jpg";
+import "./pantallaBar2.css";
+import logo from "./logo3.png";
 import reset from "./reset.png";
-import tick from "./tick.png";
 import { useNavigate } from 'react-router-dom';
 import ListBars from '../listBars/ListBars';
 import DatePicker from "react-datepicker";
@@ -450,44 +449,51 @@ function PantallaInicial() {
 
   return (
     <div>
-      <div className="menu-left">
+      <header>
+        <div className= "header-div">
         <div className="logo">
           <img src={logo} className="logodamm" alt="logo" />
         </div>
-        <div className="menu-options">
-          <button className="menu-options-llista">Vista Llista</button>
-          <button className="menu-options-calendari" onClick={handleVistaCalendari}>Vista Calendari</button>
-        </div>
-      </div>
-      <div className="menu-top">
-        <input
-          type="text"
-          className="cercador"
-          placeholder="Cerca!"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          onKeyPress={handleSearchKeyPress}
-        />
-      </div>
+        <div class="beerdrive-title">
+          <span class="beerdrive-span">BEERDRIVE</span>
+        </div></div>
+      </header>
 
-      <div className="menu-total">
-       <div className="filtres-llista"> 
-      <div class="first-row">
+      <section className="section-top">
+        <div class="bars-top">
+          <h1 class="llista-titol">
+            <span>LLISTA DE BARS</span>
+          </h1>
+        </div>
+
+        <div class="first-row">
           <label htmlFor="show-form-toggle" class="btn btn-primary" onClick={handleShowFilters}> 
-            Filtres
+              Filtres
           </label>
-          <div className="reset">
-          <img src={reset} className="reset" alt="reset" onClick={handleReset} />
+          <div class="form-group2">
+            <form class="search-form">
+            <input
+              type="text"
+              placeholder="Cerca!"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyPress={handleSearchKeyPress}
+            />
+            <button type="submit" className="btn btn-primary2" onClick={filterBars}>Cerca</button>
+            <div>
+              <img src={reset} className="reset" alt="reset" onClick={handleReset} />
+            </div>
+            </form>
+            
           </div>
         </div>
+
         {showFilters && (
           <div class="form-group">
             <form class="form-inline">
-              <div class="provincia-ciutat">
-                <div className="provincia">
             <label htmlFor="provincia">Província</label>
-              <select className="provincia-select" name="provincia" id="provincia" value={provincia} onChange={handleProvinciaChange}>
-                <option value=""></option>
+              <select className="filtres-select" name="provincia" id="provincia" value={provincia} onChange={handleProvinciaChange}>
+              <option value=""></option>
                 <option value="A Coruña">A Coruña</option>
                 <option value="Álava">Álava</option>
                 <option value="Albacete">Albacete</option>
@@ -538,57 +544,43 @@ function PantallaInicial() {
                 <option value="Vizcaya">Vizcaya</option>
                 <option value="Zamora">Zamora</option>
                 <option value="Zaragoza">Zaragoza</option>
-              </select>
-              </div>
-
-              <div className="ciutat">
-            <label htmlFor="ciutat">Ciutat</label>
-              <select className="ciutat-select" name="ciutat" id="ciutat" value={ciutat} onChange={(e) => setCiutat(e.target.value)}>
-                <option value=""></option>
+              </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <label htmlFor="ciutat">Ciutat</label>
+              <select className="filtres-select" name="ciutat" id="ciutat" value={ciutat} onChange={(e) => setCiutat(e.target.value)}>
+              <option value=""></option>
                 {ciutatsPerProvincia[provincia]?.map((ciutat) => (
                   <option key={ciutat} value={ciutat}>{ciutat}</option>
                 ))}
                 <option value="Altres">Altres</option>
-              </select>
-              </div>
-              </div>
-
-            <div className="tipus-percentatge">
-              <div className="tipus">
-            <label htmlFor="tipus">Tipus</label>
-              <select className="tipus-select" name="tipus" id="tipus" value={tipus} onChange={handleTipusChange}>
+              </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <label htmlFor="tipus">Tipus</label>
+              <select className="filtres-select" name="tipus" id="tipus" value={tipus} onChange={handleTipusChange}>
                 <option value=""></option>
                 <option value="IoT">IoT</option>
-                <option value="no_IoT">No IoT</option> 
-              </select>
-              </div>
-            
-              <div className="percentatge">
-            <label htmlFor="percentatge_restant">Percentatge restant</label>
-              <select className="percentatge-select" name="percentatge_restant" id="percentatge_restant"
+                <option value="no_IoT">No IoT</option>
+              </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              
+              <label htmlFor="percentatge_restant">Percentatge</label>
+              <select className="filtres-select" name="percentatge_restant" id="percentatge_restant"
                       value={percentatge} disabled={tipus !== "IoT"} onChange={(e) => setPercentatge(e.target.value)}>
                 <option value=""></option>
                 <option value="0-25">0-25</option>
                 <option value="25-50">25-50</option>
                 <option value="50-75">50-75</option>
                 <option value="75-100">75-100</option>
-              </select>
-            </div>
-            </div>
-                
-            <div className="data-calendari">
-              <div className="data">
-              <label htmlFor="data">Data entrega</label>
-            <select className="data-select" name="data" id="data" value = {selectedDate} onChange={handleDataChange}>
-              <option value=""></option>
-              <option value="Avui">Avui</option>
-              <option value="Demà">Demà</option>
-              <option value="Aquesta setmana">Aquesta setmana</option>
-              <option value="Aquest mes">Aquest mes</option>
-              <option value="Escull data">Escull data</option>
-            </select>
+              </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              
+              <label htmlFor="data">Data Entrega</label>
+              <select className="filtres-select" name="data" id="data" value = {selectedDate} onChange={handleDataChange}>
+                <option value=""></option>
+                <option value="Avui">Avui</option>
+                <option value="Demà">Demà</option>
+                <option value="Aquesta setmana">Aquesta setmana</option>
+                <option value="Aquest mes">Aquest mes</option>
+                <option value="Escull data">Escull data</option>
+              </select>  
 
-            {showDatePicker && (
+              {showDatePicker && (
               <div className="calendari">
                 <label htmlFor="calendari">Escull un rang de dates</label>
 
@@ -616,16 +608,14 @@ function PantallaInicial() {
                   </div>
                 )}
               </div>
-            )}
+            )} 
 
-            </div>
-          </div>
+              <button type="submit" className="btn btn-primary2" >Filtra</button>
             </form>
-            <button type="submit" className="btn btn-primary" onClick={filterBars}>Filtra</button>
           </div>
-        )} 
-
-     <div className="menu-top-llista">
+        )}
+  
+      <div className="menu-top-llista">
         <div class="col-llista1">
           Nom 
           <button className="button_order" onClick={() => handleSortNom('nom', 'asc')}>&#9650;</button>
@@ -649,72 +639,10 @@ function PantallaInicial() {
      </div>
 
     <ListBars filteredBars={filteredBars} />
-    </div>
+
+      </section>
 
 
-    <div className="menu-right">
-  <h1 className="titol-entregues">PRÒXIMES ENTREGUES</h1>
-
-  <h2 className="titol-avui">Avui</h2>
-  <ul>
-    {allBars
-      .filter((bar) => {
-        //obten los bares que tienen fecha de entrega hoy
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const endDateToday = new Date();
-        endDateToday.setHours(23, 59, 59, 999);
-        const data = new Date(bar.data);
-        return data >= today && data <= endDateToday;
-      })
-      .map((bar, index) => (
-        <li key={bar.id} style={{ display: "flex", alignItems: "center", backgroundColor: 'rgba(255, 255, 153, 0.45)', marginBottom: '8px', padding: '5px', borderRadius: '5px' }}>
-          <span style={{ flex: "1" }} onClick={() => handleNavigateBar(bar)}>{bar.nom}</span>
-          <img id={`tick-${bar.id}`} src={tick} alt="Tick" style={{ width: "13px", height: "13px" }} onClick={() => handleTickClick(bar.id)} />
-        </li>
-      ))}
-  </ul>
-
-  <h2 className="titol-avui">Demà</h2>
-  <ul>
-    {allBars
-      .filter((bar) => {
-        //obten los bares que tienen fecha de entrega mañana
-        const today = new Date();
-        const tomorrow = new Date();
-        tomorrow.setDate(today.getDate() + 1);
-        tomorrow.setHours(0, 0, 0, 0);
-        const endDateTomorrow = new Date(tomorrow);
-        endDateTomorrow.setHours(23, 59, 59, 999);
-        const data = new Date(bar.data);
-        return data > today && data <= endDateTomorrow;
-      })
-      .map((bar, index) => (
-        <li key={bar.id} style={{ display: "flex", alignItems: "center", backgroundColor: 'rgba(255, 255, 153, 0.45)', marginBottom: '8px', padding: '5px', borderRadius: '5px' }}>
-          <span style={{ flex: "1" }} onClick={() => handleNavigateBar(bar)}>{bar.nom}</span>
-          <img id={`tick-${bar.id}`} src={tick} alt="Tick" style={{ width: "13px", height: "13px" }} onClick={() => handleTickClick(bar.id)} />
-        </li>
-      ))}
-  </ul>
-
-  
-
-  <h2 className="titol-avui">Aquesta setmana</h2>
-    <ul>
-      {barsToShow.map((bar, index) => (
-        <li key={bar.id} style={{ display: "flex", alignItems: "center", backgroundColor: 'rgba(255, 255, 153, 0.45)', marginBottom: '8px', padding: '5px', borderRadius: '5px' }}>
-          <span style={{ flex: "1" }} onClick={() => handleNavigateBar(bar)}>{bar.nom}</span>
-          <img id={`tick-${bar.id}`} src={tick} alt="Tick" style={{ width: "13px", height: "13px" }} onClick={() => handleTickClick(bar.id)} />
-        </li>
-      ))}
-      {remainingBarsCount > 0 && (
-        <li>
-          i {remainingBarsCount} més
-        </li>
-      )}
-    </ul>
-</div>
-     </div>
     </div>
   );
 }

@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Pagination({ barsPerPage, totalBars, currentPage, paginate }) {
   const totalPages = Math.ceil(totalBars / barsPerPage);
   const [inputPage, setInputPage] = useState(currentPage);
+
+  // Este efecto se ejecutará cuando `currentPage` cambie desde fuera
+  useEffect(() => {
+    setInputPage(currentPage);
+  }, [currentPage]);
 
   const handleInputChange = (e) => {
     setInputPage(e.target.value);
@@ -18,33 +23,21 @@ function Pagination({ barsPerPage, totalBars, currentPage, paginate }) {
   };
 
   return (
-    <nav>
-      <ul className="pagination">
+    <nav style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <ul className="pagination" style={{ listStyle: 'none', display: 'flex', alignItems: 'center', padding: 0 }}>
         {currentPage !== 1 && (
           <li className="page-item">
-            <a
+            <span
               onClick={() => paginate(currentPage - 1)}
-              href="#"
               className="page-link"
+              style={{ marginRight: '10px', cursor: 'pointer', color: '#d94100' }}
             >
               Anterior
-            </a>
+            </span>
           </li>
         )}
-
-        {currentPage !== totalPages && (
-          <li className="page-item">
-            <a
-              onClick={() => paginate(currentPage + 1)}
-              href="#"
-              className="page-link"
-            >
-              Següent
-            </a>
-          </li>
-        )}
-
-        <li className="page-item">
+  
+        <li className="page-item" style={{ margin: '0 10px' }}>
           <span className="page-link">
             Pàgina{" "}
             <input
@@ -59,6 +52,18 @@ function Pagination({ barsPerPage, totalBars, currentPage, paginate }) {
             de {totalPages}
           </span>
         </li>
+  
+        {currentPage !== totalPages && (
+          <li className="page-item">
+            <span
+              onClick={() => paginate(currentPage + 1)}
+              className="page-link"
+              style={{ marginLeft: '10px', cursor: 'pointer', color: '#d94100' }}
+            >
+              Següent
+            </span>
+          </li>
+        )}
       </ul>
     </nav>
   );
