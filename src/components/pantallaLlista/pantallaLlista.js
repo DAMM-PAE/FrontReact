@@ -4,6 +4,7 @@ import "react-date-range/dist/theme/default.css";
 import "./pantallaLlista.css";
 import logo from "./logo3.png";
 import reset from "./reset.png";
+import logoreg from "./registrar.png"
 import { useNavigate } from 'react-router-dom';
 import ListBars from '../listBars/ListBars';
 import DatePicker from "react-datepicker";
@@ -454,16 +455,26 @@ function PantallaInicial() {
     navigate(`/bar/${bar.id}`, { state: { bar } });
   }
 
+  const handleNavigateRegister = () => {
+    console.log("allBars: ", allBars)
+    navigate('/delivery', {state: { bars: allBars }});
+  }
+
   return (
     <div>
       <header>
-        <div className= "header-div">
-        <div className="logo">
-          <img src={logo} className="logodamm" alt="logo" />
+        <div className="header-div">
+          <div className="logo">
+            <img src={logo} className="logodamm" alt="logo" />
+          </div>
+          <div class="beerdrive-title">
+            <span class="beerdrive-span">BEERDRIVE</span>
+          </div><div class="registration-container" onClick={() => handleNavigateRegister()} >
+          
+            <img src={logoreg} className="logoreg" alt="logo" />
+            <label className="registrar" >Registrar entrega</label>
+          </div>
         </div>
-        <div class="beerdrive-title">
-          <span class="beerdrive-span">BEERDRIVE</span>
-        </div></div>
       </header>
 
       <section className="section-top">

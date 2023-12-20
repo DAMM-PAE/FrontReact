@@ -218,3 +218,25 @@ header {
   height: 4rem;
   margin-right: 5rem;
 }
+
+.registration-container {
+  display: flex;
+  flex-direction: column; /* Alinea los elementos en una columna */
+  align-items: center; /* Alinea los elementos verticalmente en el contenedor secundario */
+  margin-left: auto; /* Mueve el contenedor a la derecha */
+  margin-right: 10rem;
+}
+
+.logoreg {
+  width: 3rem;
+  height: 2.5rem;
+}
+
+.registrar {
+  margin-top: 0.25rem; /* Espaciado superior para separar del logo */
+  cursor: pointer;
+  color: #ffffff;
+  font: bold;
+  font-size: 0.85rem;
+}
+

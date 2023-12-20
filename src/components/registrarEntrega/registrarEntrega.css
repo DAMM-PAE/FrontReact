@@ -1,0 +1,146 @@
+header {
+    background-color: #dd0501;
+    padding: 1.5rem;
+  }
+  
+  .header-div {
+    display: flex;
+  }
+  
+  .logodamm {
+    width: 8rem;
+    height: 4rem;
+    margin-right: 5rem;
+  }
+  
+  .beerdrive-title {
+    margin-top: 1rem;
+  }
+  
+  .beerdrive-span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-left: auto;
+  }
+  
+  .bars-top {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+  }
+  
+  .llista-titol {
+    font: bold;
+    font-size: 200%;
+    margin: 0;
+  }
+
+/* Reset de márgenes y padding para el cuerpo del documento */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilos para el contenedor principal del formulario */
+.form-container {
+  max-width: 600px; /* Ajusta según tus necesidades */
+  margin: 0 auto; /* Centra el formulario en el medio de la pantalla */
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+/* Estilos para el grupo de etiquetas y campos de entrada */
+.form-group1 {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos para el contenedor de cada etiqueta y campo de entrada */
+.input-container {
+  margin-bottom: 15px;
+}
+
+/* Estilos generales para etiquetas */
+.filtres-select1 {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+/* Estilos generales para campos de entrada */
+.input-field1 {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10rem;
+}
+
+.input-field2 {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 1.8rem;
+}
+
+.input-field3 {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 8.7rem;
+}
+
+.button-env {
+  background-color: #d94100;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer; /* Cambia a inline-block */
+  width: 8rem; /* O ajusta el ancho según tus necesidades */
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.button-env:hover {
+  background-color: #d94160;
+}
+
+.button-env:focus {
+  outline: none;
+  box-shadow: 0 0 5px #d94100;
+}
+
+.input-container {
+  position: relative;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 40%;
+  max-height: 150px; /* Altura máxima de la lista de sugerencias */
+  overflow-y: auto; /* Añade una barra de desplazamiento si hay muchas sugerencias */
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 1;
+  margin-left: 16.5rem;
+}
+
+.suggestions-list li {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}

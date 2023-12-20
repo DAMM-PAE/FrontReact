@@ -9,6 +9,7 @@ import VistaCalendari from './components/vistaCalendari/vistaCalendari';
 import JsonProva from './components/jsonProva/jsonProva';
 import PantallaLlista from './components/pantallaLlista/pantallaLlista';
 import IniciPrograma from './components/IniciPrograma/iniciPrograma';
+import RegistrarEntrega from './components/registrarEntrega/registrarEntrega';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/vistaCalendari/" element={<VistaCalendari />} exact></Route>
         <Route path="/json" element={<JsonProva />} exact></Route>
         <Route path="/pantallaBar2" element={<PantallaInicial />} exact></Route>
+        <Route path="/delivery" element={<RegistrarEntrega />} exact></Route>
       </Routes>
     </Router>
   );
