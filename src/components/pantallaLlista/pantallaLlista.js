@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import "./pantallaBar2.css";
+import "./pantallaLlista.css";
 import logo from "./logo3.png";
 import reset from "./reset.png";
 import { useNavigate } from 'react-router-dom';
@@ -42,25 +42,34 @@ function PantallaInicial() {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      //a cada bar le añadimos un atributo data que es la fecha de entrega
-      //asignamos una fecha aleatoria entre hoy y dentro de 6 meses
-      data.forEach((bar) => {
-        const today = new Date();
-        const randomDate = new Date(today.getTime() + Math.random() * 15552000000);
-        bar.data = randomDate;
-      });
       //ordenamos los bares por fecha de entrega
       data.sort((a, b) => new Date(a.data) - new Date(b.data));
-      //a cada bar le añadimos un atributo iot que es un booleano y a alguno le ponemos true de forma aleatoria,
-      //y si es true le ponemos un atributo percentatge que es un numero aleatorio entre 0 y 100
-      data.forEach((bar) => {
-        bar.iot = Math.random() < 0.5;
-        if (bar.iot) {
-          bar.percentatge = Math.floor(Math.random() * 101);
+
+      //transform percentage to int and if iot is false, set percentage to "-"
+      data.forEach((bar, index) => {
+        if (bar.iot === false) {
+          data[index].percentatge = "-";
         } else {
-          bar.percentatge = "-"
+          data[index].percentatge = parseInt(bar.percentatge);
         }
       });
+
+      //transform date to dd-mm-yyyy
+      data.forEach((bar, index) => {
+        const date = new Date(bar.data);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        if (day < 10) data[index].data = `0${day}-${month}-${year}`;
+        else data[index].data = `${day}-${month}-${year}`;
+      });
+
+      //transform provincia and ciutat --> if is 0, set to ""
+      data.forEach((bar, index) => {
+        if (bar.provincia === "0") data[index].provincia = "";
+        if (bar.ciutat === "0") data[index].ciutat = "";
+      });
+
       setFilteredBars(data);
       setAllBars(data);
     } catch (error) {
@@ -371,13 +380,11 @@ function PantallaInicial() {
     setFilteredBars(filteredBarsByProvincia);
   }
 
-  const handleSearchKeyPress = (e) => {
-    if (e.key === "Enter") {
+  const cercaBars = () => {
       const filteredBars = allBars.filter((bar) =>
         bar.nom.toLowerCase().includes(searchText.toLowerCase())
       );
       setFilteredBars(filteredBars);
-    }
   };
 
   const confirmarSeleccion = () => {
@@ -471,15 +478,14 @@ function PantallaInicial() {
               Filtres
           </label>
           <div class="form-group2">
-            <form class="search-form">
+            <form class="search-form" onSubmit={(e) => e.preventDefault()}>
             <input
               type="text"
               placeholder="Cerca!"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              onKeyPress={handleSearchKeyPress}
             />
-            <button type="submit" className="btn btn-primary2" onClick={filterBars}>Cerca</button>
+            <button type="button" className="btn btn-primary2" onClick={cercaBars}>Cerca</button>
             <div>
               <img src={reset} className="reset" alt="reset" onClick={handleReset} />
             </div>
@@ -610,8 +616,9 @@ function PantallaInicial() {
               </div>
             )} 
 
-              <button type="submit" className="btn btn-primary2" >Filtra</button>
+              
             </form>
+            <button type="submit" className="btn btn-primary2" onClick={filterBars}>Filtra</button>
           </div>
         )}
   

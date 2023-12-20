@@ -52,7 +52,7 @@ function ListBars({ filteredBars }) {
                   padding: '8px',
                   textAlign: 'center',
                   borderRadius: '0 5px 5px 0'
-                }}>{bar.data?.toLocaleDateString() ?? ' '}</td>
+                }}>{bar.data}</td>
               </tr>
             );
           })}

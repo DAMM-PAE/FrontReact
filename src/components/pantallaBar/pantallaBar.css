@@ -1,31 +1,52 @@
-.menu-left {
-    width: 12.5rem; /* Ancho del menú izquierdo */
-    height: 100vh; /* Altura completa de la ventana */
-    float: left;
-    border: thin solid #d94100;
-    margin-right: 2rem;
-  }
+header {
+  background-color: #dd0501;
+  padding: 1.5rem;
+}
 
-  .logodamm {
-    width: 12.44rem;
-    height: 6.87rem;
-    border: thin solid #d94100;
-  }
+.header-div {
+  display: flex;
+}
 
-  /* Estilos para el menú en la parte superior */
-.menu-top { /* Color rojo muy claro */
-    height: 6.9rem; 
-    border: thin solid #d94100;
-    /* Otros estilos para la barra de menú superior */
-  }
+.logodamm {
+  width: 8rem;
+  height: 4rem;
+  margin-right: 5rem;
+}
 
-  .cercador {
-    float: right;
-    margin-top: 3rem;
-    margin-right: 7.8rem;
-    width: 12rem;
-    height: 2rem;
-  }
+.beerdrive-title {
+  margin-top: 1rem;
+}
+
+.beerdrive-span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-left: auto;
+}
+
+.bars-top {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+}
+
+.llista-titol {
+  font: bold;
+  font-size: 200%;
+  margin: 0;
+}
+
+.back {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 2rem;
+}
+
+.menu-details {
+  display: flex;
+  align-items: center;
+  margin-left: 6rem;
+}
 
   .bold-text {
     font-weight: bold;
