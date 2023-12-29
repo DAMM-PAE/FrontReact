@@ -10,6 +10,7 @@ import JsonProva from './components/jsonProva/jsonProva';
 import PantallaLlista from './components/pantallaLlista/pantallaLlista';
 import IniciPrograma from './components/IniciPrograma/iniciPrograma';
 import RegistrarEntrega from './components/registrarEntrega/registrarEntrega';
+import AfegirBar from './components/afegirBar/afegirBar';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/json" element={<JsonProva />} exact></Route>
         <Route path="/pantallaBar2" element={<PantallaInicial />} exact></Route>
         <Route path="/delivery" element={<RegistrarEntrega />} exact></Route>
+        <Route path="/addBar" element={<AfegirBar />} exact></Route>
       </Routes>
     </Router>
   );

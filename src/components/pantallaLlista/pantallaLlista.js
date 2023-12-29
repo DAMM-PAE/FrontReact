@@ -469,8 +469,9 @@ function PantallaInicial() {
           </div>
           <div class="beerdrive-title">
             <span class="beerdrive-span">BEERDRIVE</span>
-          </div><div class="registration-container" onClick={() => handleNavigateRegister()} >
+          </div>
           
+          <div class="registration-container" onClick={() => handleNavigateRegister()} >
             <img src={logoreg} className="logoreg" alt="logo" />
             <label className="registrar" >Registrar entrega</label>
           </div>

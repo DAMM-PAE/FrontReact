@@ -1,0 +1,60 @@
+.filtres-select-prov {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 8.1rem;
+}
+
+.filtres-select-ciutat {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 9.8rem;
+}
+
+.input-field1-adreca {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 9.3rem;
+}
+
+.input-field1-numCarrer {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 5rem;
+}
+
+.input-field1-codiPostal {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 6.9rem;
+}
+
+.filtres-select-tipus {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 10rem;
+}
+
+.input-field1-lat {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 9rem;
+}
+
+.input-field1-long {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 8rem;
+}
+
+.input-field1-iot {
+    margin-left: 16.5rem;
+    scale: 1.25;
+}

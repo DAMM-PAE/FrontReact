@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import logo from '../pantallaLlista/logo3.png';
 import './registrarEntrega.css';
@@ -8,6 +8,21 @@ function RegistrarEntrega() {
   const bars = location.state.bars;
   const [barName, setBarName] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    const handleDocumentClick = () => {
+      // Oculta las sugerencias al hacer clic en cualquier parte del documento
+      setSuggestions([]);
+    };
+
+    // Agrega el manejador de eventos al documento
+    document.addEventListener('click', handleDocumentClick);
+
+    // Limpia el manejador de eventos al desmontar el componente
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, []);
 
   const handleBarNameChange = (e) => {
     const value = e.target.value;
@@ -26,9 +41,58 @@ function RegistrarEntrega() {
     setSuggestions([]);
   };
 
-  const consoleBars = () => {
-    console.log('Selected Bar: ', barName);
-  };
+  const registraEntrega = () => {
+
+    if (barName === '') {
+      alert('EL NOM DEL BAR NO POT ESTAR BUIT');
+      return;
+    }
+
+    if (document.getElementById('quantityInput').value === '') {
+      alert('LA QUANTITAT NO POT ESTAR BUIDA');
+      return;
+    }
+
+    if (document.getElementById('deliveryDateInput').value === '') {
+      alert('LA DATA NO POT ESTAR BUIDA');
+      return;
+    }
+
+    //comprobar que el nombre del bar existe en la base de datos de manera eficiente
+    let barExists = false;
+    bars.forEach((bar) => {
+      if (bar.nom === barName) {
+        barExists = true;
+      }
+    });
+    if (!barExists) {
+      alert('EL BAR NO EXISTEIX');
+      return;
+    }
+    else {
+      //comprobar que la cantidad es un numero y positivo
+      const quantity = document.getElementById('quantityInput').value;
+      if (isNaN(quantity) || quantity <= 0) {
+        alert('LA QUANTITAT HA DE SER UN NÚMERO POSITIU');
+        return;
+      }
+      else {
+        //registrar entrega
+        const deliveryDate = document.getElementById('deliveryDateInput').value;
+        const data = {
+          nom: barName,
+          quantitat: quantity,
+          data: deliveryDate
+        };
+        //enviar data al backend
+        //mensaje de confirmacion
+        alert('ENTREGA REGISTRADA CORRECTAMENT');
+      }
+    }
+  }
+    
+
+  
 
   return (
     <div>
@@ -84,7 +148,7 @@ function RegistrarEntrega() {
             <label className="filtres-select1">Data d'entrega</label>
             <input type="date" id="deliveryDateInput" className="input-field3" />
           </div>
-          <button className="button-env" onClick={consoleBars}>
+          <button className="button-env" onClick={registraEntrega}>
             Enviar
           </button>
         </div>
