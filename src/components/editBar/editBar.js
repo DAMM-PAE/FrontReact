@@ -1,11 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from '../pantallaLlista/logo3.png';
 import './editBar.css';
+import { useLocation } from "react-router-dom";
 
-const EditBar = (bar) => {
+const EditBar = () => {
+
+  const location = useLocation();
+  const bar = location.state.bar;
     
-    const [provincia, setProvincia] = React.useState('');
-    const [ciutat, setCiutat] = React.useState('');
+    const [provincia, setProvincia] = useState('');
+    const [ciutat, setCiutat] = useState('');
+
+    const [barName, setBarName] = useState('');
+    const [barAdreca, setBarAdreca] = useState('');
+    const [barNumCarrer, setBarNumCarrer] = useState('');
+    const [barCodiPostal, setBarCodiPostal] = useState('');
+    const [barLatitud, setBarLatitud] = useState('');
+    const [barLongitud, setBarLongitud] = useState('');
+    const [barIoT, setBarIoT] = useState(false);
+    const [barTipus, setBarTipus] = useState('');
+
+    useEffect(() => {
+
+      console.log(bar);
+      // Establecer los valores por defecto cuando se proporciona el bar
+      if (bar) {
+        setBarName(bar.nom || '');
+        setProvincia(bar.provincia || '');
+        setCiutat(bar.ciutat || '');
+        setBarAdreca(bar.direccio || '');
+        setBarNumCarrer(bar.numCarrer || '');
+        setBarCodiPostal(bar.codiPostal || '');
+        setBarLatitud(bar.latitud || '');
+        setBarLongitud(bar.longitud || '');
+        setBarIoT(bar.iot || false);
+        setBarTipus(bar.tipusBar || '');
+      }
+    }, [bar]);
 
     const ciutatsPerProvincia = {
         "A Coruña": ["A Coruña", "Ferrol", "Santiago de Compostela"],
@@ -66,7 +97,7 @@ const EditBar = (bar) => {
         setCiutat("");
       }
 
-    const addBar = () => {
+    const editBar = () => {
         const barName = document.getElementById("barNameInput").value;
         const barAdreca = document.getElementById("barAdrecaInput").value;
         const barNumCarrer = document.getElementById("barNumCarrerInput").value;
@@ -138,7 +169,7 @@ const EditBar = (bar) => {
               <section>
                 <div className="bars-top">
                   <h1 className="llista-titol">
-                    <span>Afegir Bar</span>
+                    <span>Editar Bar</span>
                   </h1>
                 </div>
               </section>
@@ -148,7 +179,13 @@ const EditBar = (bar) => {
 
                 <div className="input-container">
                     <label className="filtres-select1">Nom *</label>
-                    <input type="text" id="barNameInput" className="input-field1-nom" />
+                    <input
+                      type="text"
+                      id="barNameInput"
+                      className="input-field1-nom"
+                      value={barName}
+                      onChange={(e) => setBarName(e.target.value)}
+                    />
                 </div>
 
                 <div className="input-container">
@@ -221,22 +258,26 @@ const EditBar = (bar) => {
 
                 <div className="input-container">
                     <label className="filtres-select1">Adreça</label>
-                    <input type="text" id="barAdrecaInput" className="input-field1-adreca" />
+                    <input type="text" id="barAdrecaInput" className="input-field1-adreca" value={barAdreca}
+                      onChange={(e) => setBarAdreca(e.target.value)} />
                 </div>
 
                 <div className="input-container">
                     <label className="filtres-select1">Número Carrer</label>
-                    <input type="text" id="barNumCarrerInput" className="input-field1-numCarrer" />
+                    <input type="text" id="barNumCarrerInput" className="input-field1-numCarrer" value={barNumCarrer}
+                      onChange={(e) => setBarNumCarrer(e.target.value)}/>
                 </div>
 
                 <div className="input-container">
                     <label className="filtres-select1">Codi Postal</label>
-                    <input type="text" id="barCodiPostalInput" className="input-field1-codiPostal" />
+                    <input type="text" id="barCodiPostalInput" className="input-field1-codiPostal" value={barCodiPostal}
+                      onChange={(e) => setBarCodiPostal(e.target.value)}/>
                 </div>
 
                 <div className="input-container">
                     <label className="filtres-select1">Tipus</label>
-                    <select className="filtres-select-tipus" name="tipus" id="tipus">
+                    <select className="filtres-select-tipus" name="tipus" id="tipus"value={barTipus}
+                      onChange={(e) => setBarName(e.target.value)}>
                         <option value="Bar">Option 1</option>
                         <option value="Restaurant">Option 2</option>
                         <option value="Cafeteria">Option 3</option>
@@ -246,21 +287,24 @@ const EditBar = (bar) => {
 
                 <div className="input-container">
                     <label className="filtres-select1">Latitud</label>
-                    <input type="text" id="barLatitudInput" className="input-field1-lat" />
+                    <input type="text" id="barLatitudInput" className="input-field1-lat" value={barLatitud}
+                      onChange={(e) => setBarLatitud(e.target.value)}/>
                 </div>
 
                 <div className="input-container">
                     <label className="filtres-select1">Longitud</label>
-                    <input type="text" id="barLongitudInput" className="input-field1-long" />
+                    <input type="text" id="barLongitudInput" className="input-field1-long" value={barLongitud}
+                      onChange={(e) => setBarLongitud(e.target.value)}/>
                 </div>
 
                 <div className="input-container">
                     <label className="filtres-select1">IoT</label>
-                    <input type="checkbox" id="barIoTInput" className="input-field1-iot" />
+                    <input type="checkbox" id="barIoTInput" className="input-field1-iot" value={barIoT}
+                      onChange={(e) => setBarIoT(e.target.value)}/>
                 </div>
 
-                  <button className="button-env" onClick={addBar}>
-                    Afegir
+                  <button className="button-env" onClick={editBar}>
+                    Editar
                   </button>
                 </div>
               </div>

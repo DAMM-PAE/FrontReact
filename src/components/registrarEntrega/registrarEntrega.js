@@ -84,9 +84,7 @@ function RegistrarEntrega() {
           quantitat: quantity,
           data: deliveryDate
         };
-        //enviar data al backend
-        //mensaje de confirmacion
-        alert('ENTREGA REGISTRADA CORRECTAMENT');
+        
       }
     }
   }

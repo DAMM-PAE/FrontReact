@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./pantallaBar.css";
 import { useLocation } from "react-router-dom";
 import logo from "../pantallaLlista/logo3.png";
@@ -10,7 +10,7 @@ function PantallaBar() {
   const location = useLocation();
   const bar = location.state.bar;
   const navigate = useNavigate();
-
+  
   const defaultProps = {
     center: {
       lat: bar ? bar.latitud : 0,
@@ -25,16 +25,20 @@ function PantallaBar() {
   }
 
   const deleteBar = () => {
-    //obtener id del bar
-    const id = bar.id;
-    //BORRAR BAR API
-    navigate('/list');
-  }
+    // Mostrar una alerta de confirmación antes de borrar
+    const isConfirmed = window.confirm("¿Está seguro de que desea borrar este bar?");
+    
+    if (isConfirmed) {
+      // Borrar el bar aquí
+      const id = bar.id;
+      // BORRAR BAR API
+      navigate('/list');
+    }
+  };
 
   const editBar = () => {
     navigate('/bar/' + bar.id + '/edit', { state: { bar: bar } });
   }
-
 
   return (
     <div>
