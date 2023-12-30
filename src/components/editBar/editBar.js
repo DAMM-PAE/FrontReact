@@ -1,12 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import logo from '../pantallaLlista/logo3.png';
-import './afegirBar.css';
+import './editBar.css';
 
-const AfegirBar = () => {
+const EditBar = (bar) => {
     
     const [provincia, setProvincia] = React.useState('');
     const [ciutat, setCiutat] = React.useState('');
-    const [barTypes, setBarTypes] = React.useState([]);
 
     const ciutatsPerProvincia = {
         "A Coruña": ["A Coruña", "Ferrol", "Santiago de Compostela"],
@@ -61,30 +60,13 @@ const AfegirBar = () => {
         "Zaragoza": ["Zaragoza"]
       }
 
-      useEffect(() => {
-        getBarTypes();
-      }, []);
-    
-    const getBarTypes = async () => {
-      const url = 'http://nattech.fib.upc.edu:40540/api/bars/types';
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);
-        setBarTypes(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    
     const handleProvinciaChange = (e) => {
         const selectedProvincia = e.target.value;
         setProvincia(selectedProvincia);
         setCiutat("");
       }
 
-    const addBar =  async ()  => {
+    const addBar = () => {
         const barName = document.getElementById("barNameInput").value;
         const barAdreca = document.getElementById("barAdrecaInput").value;
         const barNumCarrer = document.getElementById("barNumCarrerInput").value;
@@ -121,6 +103,8 @@ const AfegirBar = () => {
             return;
         }
 
+        console.log(bar);
+
         //LLamar a la API para añadir el bar
         const data = {
             "nom": barName,
@@ -134,23 +118,7 @@ const AfegirBar = () => {
             "longitud" : barLongitud,
             "hasIot" : barIoT
         }
-        console.log(data);
-        const url = 'http://nattech.fib.upc.edu:40540/api/bars/';
-        try {
-          const response = await fetch(url, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data),
-          });
-          const responseData = await response.json();
-          console.log(responseData);
-        } catch (error) {
-          console.log(error);
-        }
-        alert("Bar afegit correctament");
-        window.location.href = "/list";
+        //LLAMADA A API
     }
 
 
@@ -269,9 +237,10 @@ const AfegirBar = () => {
                 <div className="input-container">
                     <label className="filtres-select1">Tipus</label>
                     <select className="filtres-select-tipus" name="tipus" id="tipus">
-                        {barTypes.map((tipus) => (
-                        <option key={tipus} value={tipus}>{tipus}</option>
-                        ))}
+                        <option value="Bar">Option 1</option>
+                        <option value="Restaurant">Option 2</option>
+                        <option value="Cafeteria">Option 3</option>
+                        <option value="Altres">Option 4</option>
                     </select>
                 </div>
 
@@ -299,4 +268,4 @@ const AfegirBar = () => {
                        );
 };
 
-export default AfegirBar;
+export default EditBar;

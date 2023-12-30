@@ -11,6 +11,7 @@ import PantallaLlista from './components/pantallaLlista/pantallaLlista';
 import IniciPrograma from './components/IniciPrograma/iniciPrograma';
 import RegistrarEntrega from './components/registrarEntrega/registrarEntrega';
 import AfegirBar from './components/afegirBar/afegirBar';
+import EditBar from './components/editBar/editBar';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/list" element={<PantallaLlista />} exact></Route>
         <Route path="/calendari" element={<Calendari />} exact></Route>
         <Route path="/bar/:id" element={<PantallaBars />} exact></Route>
+        <Route path="/bar/:id/edit" element={<EditBar />} exact></Route>
         <Route path="/vistaCalendari/" element={<VistaCalendari />} exact></Route>
         <Route path="/json" element={<JsonProva />} exact></Route>
         <Route path="/pantallaBar2" element={<PantallaInicial />} exact></Route>

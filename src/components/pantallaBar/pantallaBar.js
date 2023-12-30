@@ -24,6 +24,18 @@ function PantallaBar() {
     navigate(-1);
   }
 
+  const deleteBar = () => {
+    //obtener id del bar
+    const id = bar.id;
+    //BORRAR BAR API
+    navigate('/list');
+  }
+
+  const editBar = () => {
+    navigate('/bar/' + bar.id + '/edit', { state: { bar: bar } });
+  }
+
+
   return (
     <div>
       <header>
@@ -42,6 +54,10 @@ function PantallaBar() {
           <img src={back} className="back" alt="back" onClick={goBack} />
             <span>{bar ? bar.nom : 'Nombre del Bar'}</span>
           </h1>
+          <div className="buttons-container">
+          <button className="button-env" onClick={editBar}>Editar</button>
+          <button className="button-env" onClick={deleteBar}>Eliminar</button>
+          </div>
         </div>
       </section>
 

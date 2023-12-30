@@ -58,6 +58,12 @@ header {
     margin-left: 12rem;
     margin-top: 2rem;
   }
+
+  .buttons-container {
+    display: flex;
+    gap: 2rem;
+    margin-right: 7rem;
+  }
   
   
   
