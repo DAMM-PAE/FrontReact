@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import "./pantallaBar.css";
 import { useLocation } from "react-router-dom";
-import logo from "../pantallaInicial/dammlogo.jpg";
+import logo from "../pantallaLlista/logo3.png";
+import back from "./back.png";
 import GoogleMapReact from 'google-map-react';
+import { useNavigate } from 'react-router-dom';
 
 function PantallaBar() {
   const location = useLocation();
   const bar = location.state.bar;
-
+  const navigate = useNavigate();
+  
   const defaultProps = {
     center: {
       lat: bar ? bar.latitud : 0,
@@ -16,24 +19,76 @@ function PantallaBar() {
     zoom: 16
   };
 
+  const goBack = () => {
+    //volver a pantalla anterior, no url, sino a la pantalla anterior
+    navigate(-1);
+  }
+
+  const deleteBar = async () => {
+    // Mostrar una alerta de confirmación antes de borrar
+    const isConfirmed = window.confirm("Estàs segur que vols eliminar el bar?");
+    
+    if (isConfirmed) {
+      // Borrar el bar aquí
+      const id = bar.id;
+      const url = 'http://nattech.fib.upc.edu:40540/api/bars/' + id + '/';
+      try {
+        const response = await fetch(url, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+      // BORRAR BAR API
+      navigate('/list');
+    }
+  };
+
+  const editBar = () => {
+    navigate('/bar/' + bar.id + '/edit', { state: { bar: bar } });
+  }
+
   return (
     <div>
-      <div className="menu-left">
+      <header>
+        <div className= "header-div">
         <div className="logo">
           <img src={logo} className="logodamm" alt="logo" />
         </div>
-      </div>
-      <div className="menu-top"></div>
+        <div class="beerdrive-title">
+          <span class="beerdrive-span">BEERDRIVE</span>
+        </div></div>
+      </header>
+
+      <section>
+      <div class="bars-top">
+          <h1 class="llista-titol">
+          <img src={back} className="back" alt="back" onClick={goBack} />
+            <span>{bar ? bar.nom : 'Nombre del Bar'}</span>
+          </h1>
+          <div className="buttons-container">
+          <button className="button-env" onClick={editBar}>Editar</button>
+          <button className="button-env" onClick={deleteBar}>Eliminar</button>
+          </div>
+        </div>
+      </section>
+
+
+
       <div className="menu-total">
         <div className="menu-details">
-          <h1>{bar ? bar.nom : 'Nombre del Bar'}</h1>
           {bar ? (
             <div>
               <p><span className="bold-text">Adreça:</span> {bar.direccio}, {bar.numCarrer}</p>
               <p><span className="bold-text">Codi Postal:</span> {bar.codiPostal}</p>
               <p><span className="bold-text">Província/Ciutat:</span> {`${bar.provincia}/${bar.ciutat}`}</p>
               <p><span className="bold-text">Percentatge:</span> {bar.percentatge}%</p>
-              <p><span className="bold-text">Data de predicció de pròxima entrega:</span> {bar.data.toLocaleDateString()}</p>
+              <p><span className="bold-text">Data de predicció de pròxima entrega:</span> {bar.data}</p>
             </div>
           ) : (
             <p>No se ha proporcionado información del bar.</p>
