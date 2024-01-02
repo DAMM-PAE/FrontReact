@@ -101,9 +101,34 @@ const AfegirBar = () => {
             return;
         }
 
+        if (barProvincia.trim() === "") {
+            alert("La província no pot estar buida");
+            return;
+        }
+
+        if (barCiutat.trim() === "") {
+            alert("La ciutat no pot estar buida");
+            return;
+        }
+
+        if (barAdreca.trim() === "") {
+            alert("L'adreça no pot estar buida");
+            return;
+        }
+
+        if (barNumCarrer.trim() === "") {
+            alert("El número de carrer no pot estar buit");
+            return;
+        }
+
         if (barNumCarrer.trim() !== "" && (isNaN(barNumCarrer) || barNumCarrer < 0)) {
             alert("El número de carrer ha de ser un número");
             return;
+        }
+
+        if (barCodiPostal.trim() === "") {
+            alert("El codi postal no pot estar buit");
+            return; 
         }
 
         if (barCodiPostal.trim() !== "" && (isNaN(barCodiPostal) || barCodiPostal < 0)) {
@@ -130,10 +155,16 @@ const AfegirBar = () => {
             "direccio" : barAdreca,
             "numCarrer" : barNumCarrer,
             "tipusBar" : barTipus,
-            "latitud" : barLatitud,
-            "longitud" : barLongitud,
-            "hasIot" : barIoT
+            "iot" : barIoT
         }
+
+        if (barLatitud.trim() !== "") {
+            data["latitud"] = barLatitud;
+        }
+        if (barLongitud.trim() !== "") {
+            data["longitud"] = barLongitud;
+        }
+
         console.log(data);
         const url = 'http://nattech.fib.upc.edu:40540/api/bars/';
         try {
@@ -184,7 +215,7 @@ const AfegirBar = () => {
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Província</label>
+                    <label className="filtres-select1">Província *</label>
                     <select className="filtres-select-prov" name="provincia" id="provincia" value={provincia} onChange={handleProvinciaChange}>
                         <option value=""></option>
                         <option value="A Coruña">A Coruña</option>
@@ -241,7 +272,7 @@ const AfegirBar = () => {
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Ciutat</label>
+                    <label className="filtres-select1">Ciutat *</label>
                     <select className="filtres-select-ciutat" name="ciutat" id="ciutat" value={ciutat} onChange={(e) => setCiutat(e.target.value)}>
                     <option value=""></option>
                         {ciutatsPerProvincia[provincia]?.map((ciutat) => (
@@ -252,22 +283,22 @@ const AfegirBar = () => {
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Adreça</label>
+                    <label className="filtres-select1">Adreça *</label>
                     <input type="text" id="barAdrecaInput" className="input-field1-adreca" />
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Número Carrer</label>
+                    <label className="filtres-select1">Número Carrer *</label>
                     <input type="text" id="barNumCarrerInput" className="input-field1-numCarrer" />
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Codi Postal</label>
+                    <label className="filtres-select1">Codi Postal *</label>
                     <input type="text" id="barCodiPostalInput" className="input-field1-codiPostal" />
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Tipus</label>
+                    <label className="filtres-select1">Tipus *</label>
                     <select className="filtres-select-tipus" name="tipus" id="tipus">
                         {barTypes.map((tipus) => (
                         <option key={tipus} value={tipus}>{tipus}</option>
