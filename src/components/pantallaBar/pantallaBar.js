@@ -24,13 +24,26 @@ function PantallaBar() {
     navigate(-1);
   }
 
-  const deleteBar = () => {
+  const deleteBar = async () => {
     // Mostrar una alerta de confirmación antes de borrar
-    const isConfirmed = window.confirm("¿Está seguro de que desea borrar este bar?");
+    const isConfirmed = window.confirm("Estàs segur que vols eliminar el bar?");
     
     if (isConfirmed) {
       // Borrar el bar aquí
       const id = bar.id;
+      const url = 'http://nattech.fib.upc.edu:40540/api/bars/' + id + '/';
+      try {
+        const response = await fetch(url, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
       // BORRAR BAR API
       navigate('/list');
     }

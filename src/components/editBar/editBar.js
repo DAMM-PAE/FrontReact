@@ -8,7 +8,7 @@ const EditBar = () => {
   const location = useLocation();
   const bar = location.state.bar;
     
-    const [provincia, setProvincia] = useState('');
+    const [barProvincia, setBarProvincia] = useState('');
     const [ciutat, setCiutat] = useState('');
 
     const [barName, setBarName] = useState('');
@@ -19,14 +19,17 @@ const EditBar = () => {
     const [barLongitud, setBarLongitud] = useState('');
     const [barIoT, setBarIoT] = useState(false);
     const [barTipus, setBarTipus] = useState('');
+    const [barTypes, setBarTypes] = React.useState([]);
 
     useEffect(() => {
+
+      getBarTypes();
 
       console.log(bar);
       // Establecer los valores por defecto cuando se proporciona el bar
       if (bar) {
         setBarName(bar.nom || '');
-        setProvincia(bar.provincia || '');
+        setBarProvincia(bar.provincia || '');
         setCiutat(bar.ciutat || '');
         setBarAdreca(bar.direccio || '');
         setBarNumCarrer(bar.numCarrer || '');
@@ -37,6 +40,18 @@ const EditBar = () => {
         setBarTipus(bar.tipusBar || '');
       }
     }, [bar]);
+
+    const getBarTypes = async () => {
+      const url = 'http://nattech.fib.upc.edu:40540/api/bars/types';
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        setBarTypes(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     const ciutatsPerProvincia = {
         "A Coruña": ["A Coruña", "Ferrol", "Santiago de Compostela"],
@@ -190,7 +205,7 @@ const EditBar = () => {
 
                 <div className="input-container">
                     <label className="filtres-select1">Província</label>
-                    <select className="filtres-select-prov" name="provincia" id="provincia" value={provincia} onChange={handleProvinciaChange}>
+                    <select className="filtres-select-prov" name="provincia" id="provincia" value={barProvincia} onChange={handleProvinciaChange}>
                         <option value=""></option>
                         <option value="A Coruña">A Coruña</option>
                         <option value="Álava">Álava</option>
@@ -249,7 +264,7 @@ const EditBar = () => {
                     <label className="filtres-select1">Ciutat</label>
                     <select className="filtres-select-ciutat" name="ciutat" id="ciutat" value={ciutat} onChange={(e) => setCiutat(e.target.value)}>
                     <option value=""></option>
-                        {ciutatsPerProvincia[provincia]?.map((ciutat) => (
+                        {ciutatsPerProvincia[barProvincia]?.map((ciutat) => (
                         <option key={ciutat} value={ciutat}>{ciutat}</option>
                         ))}
                         <option value="Altres">Altres</option>
@@ -277,11 +292,11 @@ const EditBar = () => {
                 <div className="input-container">
                     <label className="filtres-select1">Tipus</label>
                     <select className="filtres-select-tipus" name="tipus" id="tipus"value={barTipus}
-                      onChange={(e) => setBarName(e.target.value)}>
-                        <option value="Bar">Option 1</option>
-                        <option value="Restaurant">Option 2</option>
-                        <option value="Cafeteria">Option 3</option>
-                        <option value="Altres">Option 4</option>
+                      onChange={(e) => setBarTipus(e.target.value)}>
+                        <option value=""></option>
+                        {barTypes.map((type) => (
+                        <option key={type} value={type}>{type}</option>
+                        ))}
                     </select>
                 </div>
 
