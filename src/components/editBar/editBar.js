@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import logo from '../pantallaLlista/logo3.png';
 import './editBar.css';
-import { useLocation } from "react-router-dom";
-import { parse, set } from 'date-fns';
+import { useLocation, useNavigate } from "react-router-dom";
+import back from "./back.png";
+
 
 const EditBar = () => {
 
   const location = useLocation();
   const bar = location.state.bar;
+  const navigate = useNavigate();
     
     const [barProvincia, setBarProvincia] = useState('');
     const [ciutat, setCiutat] = useState('');
@@ -56,7 +58,7 @@ const EditBar = () => {
       if (bar.provincia === "ASTURIAS") setBarProvincia("Asturias");
       if (bar.provincia === "AVILA") setBarProvincia("Ávila");
       if (bar.provincia === "BADAJOZ") setBarProvincia("Badajoz");
-      if (bar.provincia === "BALEARES") setBarProvincia("Baleares");
+      if (bar.provincia === "ILLES BALEARS") setBarProvincia("Illes Balears");
       if (bar.provincia === "BARCELONA") setBarProvincia("Barcelona");
       if (bar.provincia === "BURGOS") setBarProvincia("Burgos");
       if (bar.provincia === "CACERES") setBarProvincia("Cáceres");
@@ -95,7 +97,7 @@ const EditBar = () => {
       if (bar.provincia === "TOLEDO") setBarProvincia("Toledo");
       if (bar.provincia === "VALENCIA") setBarProvincia("Valencia");
       if (bar.provincia === "VALLADOLID") setBarProvincia("Valladolid");
-      if (bar.provincia === "VIZCAYA") setBarProvincia("Vizcaya");
+      if (bar.provincia === "BIZCAYA") setBarProvincia("Bizcaya");
       if (bar.provincia === "ZAMORA") setBarProvincia("Zamora");
       if (bar.provincia === "ZARAGOZA") setBarProvincia("Zaragoza");
     }
@@ -106,6 +108,7 @@ const EditBar = () => {
       if (bar.ciutat === "SANTIAGO DE COMPOSTELA") setCiutat("Santiago de Compostela");
       if (bar.ciutat === "VITORIA-GASTEIZ") setCiutat("Vitoria-Gasteiz");
       if (bar.ciutat === "ALBACETE") setCiutat("Albacete");
+      if (bar.ciutat === "BENIDORM") setCiutat("Benidorm");
       if (bar.ciutat === "ALICANTE") setCiutat("Alicante");
       if (bar.ciutat === "ELCHE") setCiutat("Elche");
       if (bar.ciutat === "ALMERIA") setCiutat("Almería");
@@ -116,10 +119,10 @@ const EditBar = () => {
       if (bar.ciutat === "BADAJOZ") setCiutat("Badajoz");
       if (bar.ciutat === "MERIDA") setCiutat("Mérida");
       if (bar.ciutat === "IBIZA") setCiutat("Ibiza");
-      if (bar.ciutat === "PALMA DE MALLORCA") setCiutat("Palma de Mallorca");
+      if (bar.ciutat === "PALMA") setCiutat("Palma");
       if (bar.ciutat === "BADALONA") setCiutat("Badalona");
       if (bar.ciutat === "BARCELONA") setCiutat("Barcelona");
-      if (bar.ciutat === "HOSPITALET DE LLOBREGAT") setCiutat("Hospitalet de Llobregat");
+      if (bar.ciutat === "L'HOSPITALET DE LLOBREGAT") setCiutat("L'Hospitalet de Llobregat");
       if (bar.ciutat === "BURGOS") setCiutat("Burgos");
       if (bar.ciutat === "MIRANDA DE EBRO") setCiutat("Miranda de Ebro");
       if (bar.ciutat === "CACERES") setCiutat("Cáceres");
@@ -135,7 +138,7 @@ const EditBar = () => {
       if (bar.ciutat === "GRANADA") setCiutat("Granada");
       if (bar.ciutat === "GUADALAJARA") setCiutat("Guadalajara");
       if (bar.ciutat === "IRUN") setCiutat("Irún");
-      if (bar.ciutat === "SAN SEBASTIAN") setCiutat("San Sebastián");
+      if (bar.ciutat === "DONOSTIA-SAN SEBASTIAN") setCiutat("Donostia-San Sebastián");
       if (bar.ciutat === "HUELVA") setCiutat("Huelva");
       if (bar.ciutat === "HUESCA") setCiutat("Huesca");
       if (bar.ciutat === "JAEN") setCiutat("Jaén");
@@ -154,12 +157,13 @@ const EditBar = () => {
       if (bar.ciutat === "OURENSE") setCiutat("Ourense");
       if (bar.ciutat === "PALENCIA") setCiutat("Palencia");
       if (bar.ciutat === "PONTEVEDRA") setCiutat("Pontevedra");
+      if (bar.ciutat === "VIGO") setCiutat("Vigo");
       if (bar.ciutat === "SALAMANCA") setCiutat("Salamanca");
+      if (bar.ciutat === "SALOU") setCiutat("Salou");
       if (bar.ciutat === "SANTA CRUZ DE TENERIFE") setCiutat("Santa Cruz de Tenerife");
       if (bar.ciutat === "SEGOVIA") setCiutat("Segovia");
       if (bar.ciutat === "SEVILLA") setCiutat("Sevilla");
       if (bar.ciutat === "SORIA") setCiutat("Soria");
-      if (bar.ciutat === "REUS") setCiutat("Reus");
       if (bar.ciutat === "TARRAGONA") setCiutat("Tarragona");
       if (bar.ciutat === "TERUEL") setCiutat("Teruel");
       if (bar.ciutat === "TOLEDO") setCiutat("Toledo");
@@ -186,14 +190,14 @@ const EditBar = () => {
     const ciutatsPerProvincia = {
       "A Coruña": ["     ", "A Coruña", "Ferrol", "Santiago de Compostela"],
       "Álava": ["     ", "Vitoria-Gasteiz"],
-      "Albacete": ["     ", "Albacete"],
+      "Albacete": ["     ", "Albacete", "Benidorm"],
       "Alicante": ["     ", "Alicante", "Elche"],
       "Almería": ["     ", "Almería", "Roquetas de Mar"],
       "Asturias": ["     ", "Gijón", "Oviedo"],
       "Ávila": ["     ", "Ávila"],
       "Badajoz": ["     ", "Badajoz", "Mérida"],
-      "Baleares": ["     ", "Ibiza", "Palma de Mallorca"],
-      "Barcelona": ["     ", "Badalona", "Barcelona", "Hospitalet de Llobregat"],
+      "Illes Balears": ["     ", "Ibiza", "Palma"],
+      "Barcelona": ["     ", "Badalona", "Barcelona", "L'Hospitalet de Llobregat"],
       "Burgos": ["     ", "Burgos", "Miranda de Ebro"],
       "Cáceres": ["     ", "Cáceres"],
       "Cádiz": ["     ", "Cádiz", "Jerez de la Frontera"],
@@ -205,7 +209,7 @@ const EditBar = () => {
       "Girona": ["     ", "Figueres", "Girona"],
       "Granada": ["     ", "Granada"],
       "Guadalajara": ["     ", "Guadalajara"],
-      "Guipúzcoa": ["     ", "Irún", "San Sebastián"],
+      "Guipúzcoa": ["     ", "Irún", "Donostia-San Sebastián"],
       "Huelva": ["     ", "Huelva"],
       "Huesca": ["     ", "Huesca"],
       "Jaén": ["     ", "Jaén"],
@@ -226,12 +230,12 @@ const EditBar = () => {
       "Segovia": ["     ", "Segovia"],
       "Sevilla": ["     ", "Sevilla"],
       "Soria": ["     ", "Soria"],
-      "Tarragona": ["     ", "Reus", "Tarragona"],
+      "Tarragona": ["     ", "Salou", "Tarragona"],
       "Teruel": ["     ", "Teruel"],
       "Toledo": ["     ", "Toledo"],
       "Valencia": ["     ", "Castellón", "Valencia"],
       "Valladolid": ["     ", "Valladolid"],
-      "Vizcaya": ["     ", "Bilbao"],
+      "Bizcaya": ["     ", "Bilbao"],
       "Zamora": ["     ", "Zamora"],
       "Zaragoza": ["     ", "Zaragoza"]
     }
@@ -247,7 +251,7 @@ const EditBar = () => {
         else if (selectedProvincia === "Asturias") setCiutat("Gijón");
         else if (selectedProvincia === "Ávila") setCiutat("Ávila");
         else if (selectedProvincia === "Badajoz") setCiutat("Badajoz");
-        else if (selectedProvincia === "Baleares") setCiutat("Ibiza");
+        else if (selectedProvincia === "Illes Balears") setCiutat("Palma");
         else if (selectedProvincia === "Barcelona") setCiutat("Barcelona");
         else if (selectedProvincia === "Burgos") setCiutat("Burgos");
         else if (selectedProvincia === "Cáceres") setCiutat("Cáceres");
@@ -257,10 +261,10 @@ const EditBar = () => {
         else if (selectedProvincia === "Ciudad Real") setCiutat("Ciudad Real");
         else if (selectedProvincia === "Córdoba") setCiutat("Córdoba");
         else if (selectedProvincia === "Cuenca") setCiutat("Cuenca");
-        else if (selectedProvincia === "Girona") setCiutat("Figueres");
-        else if (selectedProvincia === "Granada") setCiutat("Girona");
+        else if (selectedProvincia === "Girona") setCiutat("Girona");
+        else if (selectedProvincia === "Granada") setCiutat("Granada");
         else if (selectedProvincia === "Guadalajara") setCiutat("Guadalajara");
-        else if (selectedProvincia === "Guipúzcoa") setCiutat("Irún");
+        else if (selectedProvincia === "Guipúzcoa") setCiutat("Donostia-San Sebastián");
         else if (selectedProvincia === "Huelva") setCiutat("Huelva");
         else if (selectedProvincia === "Huesca") setCiutat("Huesca");
         else if (selectedProvincia === "Jaén") setCiutat("Jaén");
@@ -271,7 +275,7 @@ const EditBar = () => {
         else if (selectedProvincia === "Lugo") setCiutat("Lugo");
         else if (selectedProvincia === "Madrid") setCiutat("Madrid");
         else if (selectedProvincia === "Málaga") setCiutat("Málaga");
-        else if (selectedProvincia === "Murcia") setCiutat("Cartagena");
+        else if (selectedProvincia === "Murcia") setCiutat("Murcia");
         else if (selectedProvincia === "Navarra") setCiutat("Pamplona");
         else if (selectedProvincia === "Ourense") setCiutat("Ourense");
         else if (selectedProvincia === "Palencia") setCiutat("Palencia");
@@ -281,54 +285,85 @@ const EditBar = () => {
         else if (selectedProvincia === "Segovia") setCiutat("Segovia");
         else if (selectedProvincia === "Sevilla") setCiutat("Sevilla");
         else if (selectedProvincia === "Soria") setCiutat("Soria");
-        else if (selectedProvincia === "Tarragona") setCiutat("Reus");
-        else if (selectedProvincia === "Teruel") setCiutat("Tarragona");
+        else if (selectedProvincia === "Tarragona") setCiutat("Tarragona");
+        else if (selectedProvincia === "Teruel") setCiutat("Teruel");
         else if (selectedProvincia === "Toledo") setCiutat("Toledo");
-        else if (selectedProvincia === "Valencia") setCiutat("Castellón");
+        else if (selectedProvincia === "Valencia") setCiutat("Valencia");
         else if (selectedProvincia === "Valladolid") setCiutat("Valladolid");
-        else if (selectedProvincia === "Vizcaya") setCiutat("Bilbao");
+        else if (selectedProvincia === "Bizcaya") setCiutat("Bilbao");
         else if (selectedProvincia === "Zamora") setCiutat("Zamora");
         else if (selectedProvincia === "Zaragoza") setCiutat("Zaragoza");
       }
 
-    const editBar = () => {
+    const editBar = async () => {
         const barName = document.getElementById("barNameInput").value;
+        let barProvincia = document.getElementById("provincia").value;
+        let barCiutat = document.getElementById("ciutat").value;
         const barAdreca = document.getElementById("barAdrecaInput").value;
         const barNumCarrer = document.getElementById("barNumCarrerInput").value;
         const barCodiPostal = document.getElementById("barCodiPostalInput").value;
+        const barTipus = document.getElementById("tipus").value;
         const barLatitud = document.getElementById("barLatitudInput").value;
         const barLongitud = document.getElementById("barLongitudInput").value;
         const barIoT = document.getElementById("barIoTInput").checked;
-        const barTipus = document.getElementById("tipus").value;
-        const barCiutat = document.getElementById("ciutat").value;
-        const barProvincia = document.getElementById("provincia").value;
 
         if (barName.trim() === "") {
-            alert("El nom del bar no pot estar buit");
-            return;
-        }
+          alert("El nom del bar no pot estar buit");
+          return;
+      }
 
-        if (barNumCarrer.trim() !== "" && (isNaN(barNumCarrer) || barNumCarrer < 0)) {
-            alert("El número de carrer ha de ser un número");
-            return;
-        }
+      if (barProvincia.trim() === "") {
+          alert("La província no pot estar buida");
+          return;
+      }
 
-        if (barCodiPostal.trim() !== "" && (isNaN(barCodiPostal) || barCodiPostal < 0)) {
-            alert("El codi postal ha de ser un número");
-            return;
-        }
+      if (barCiutat.trim() === "") {
+          alert("La ciutat no pot estar buida");
+          return;
+      }
 
-        if (barLatitud.trim() !== "" && (isNaN(barLatitud) || barLatitud < 0)) {
-            alert("La latitud ha de ser un número");
-            return;
-        }
+      if (barAdreca.trim() === "") {
+          alert("L'adreça no pot estar buida");
+          return;
+      }
 
-        if (barLongitud.trim() !== "" && (isNaN(barLongitud) || barLongitud < 0)) {
-            alert("La longitud ha de ser un número");
-            return;
-        }
+      if (barNumCarrer.trim() === "") {
+          alert("El número de carrer no pot estar buit");
+          return;
+      }
 
-        console.log(bar);
+      if (barNumCarrer.trim() !== "" && (isNaN(barNumCarrer) || barNumCarrer < 0)) {
+          alert("El número de carrer ha de ser un número");
+          return;
+      }
+
+      if (barCodiPostal.trim() === "") {
+          alert("El codi postal no pot estar buit");
+          return; 
+      }
+
+      if (barCodiPostal.trim() !== "" && (isNaN(barCodiPostal) || barCodiPostal < 0)) {
+          alert("El codi postal ha de ser un número");
+          return;
+      }
+
+      if (barLatitud.trim() !== "" && isNaN(barLatitud)) {
+          alert("La latitud ha de ser un número");
+          return;
+      }
+
+      if (barLongitud.trim() !== "" && isNaN(barLongitud)) {
+          alert("La longitud ha de ser un número");
+          return;
+      }
+
+        console.log(barProvincia + " y " + barCiutat);
+
+        //pasar provincia y ciudad a mayusculas
+        barProvincia = barProvincia.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        barCiutat = barCiutat.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        console.log(barProvincia + " y " + barCiutat);
 
         //LLamar a la API para añadir el bar
         const data = {
@@ -339,12 +374,41 @@ const EditBar = () => {
             "direccio" : barAdreca,
             "numCarrer" : barNumCarrer,
             "tipusBar" : barTipus,
-            "latitud" : barLatitud,
-            "longitud" : barLongitud,
-            "hasIot" : barIoT
+            "iot" : barIoT
         }
-        //LLAMADA A API
+        if (barLatitud.trim() !== "") {
+          data["latitud"] = barLatitud;
+        }
+        if (barLongitud.trim() !== "") {
+          data["longitud"] = barLongitud;
+        }
+        const url = 'http://nattech.fib.upc.edu:40540/api/bars/';
+        try {
+          const response = await fetch(url, {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data),
+          });
+          const responseData = await response.json();
+          console.log(responseData);
+          if (responseData.error) {
+            alert(responseData.error);
+            return;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        alert("Bar editat correctament");
+        window.location.href = "/list";
     }
+
+    const goBack = () => {
+      //volver a la vista del bar "/bar/" + bar.id
+      navigate("/bar/" + bar.id, {state: {bar: bar}});
+    }
+
 
 
     return (
@@ -363,6 +427,7 @@ const EditBar = () => {
               <section>
                 <div className="bars-top">
                   <h1 className="llista-titol">
+                  <img src={back} className="back" alt="back" onClick={goBack} />
                     <span>Editar Bar</span>
                   </h1>
                 </div>
@@ -383,7 +448,7 @@ const EditBar = () => {
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Província</label>
+                    <label className="filtres-select1">Província *</label>
                     <select className="filtres-select-prov" name="provincia" id="provincia" value={barProvincia} onChange={handleProvinciaChange}>
                         <option value=""></option>
                         <option value="A Coruña">A Coruña</option>
@@ -394,8 +459,8 @@ const EditBar = () => {
                         <option value="Asturias">Asturias</option>
                         <option value="Ávila">Ávila</option>
                         <option value="Badajoz">Badajoz</option>
-                        <option value="Baleares">Baleares</option>
                         <option value="Barcelona">Barcelona</option>
+                        <option value="Bizcaya">Bizcaya</option>
                         <option value="Burgos">Burgos</option>
                         <option value="Cáceres">Cáceres</option>
                         <option value="Cádiz">Cádiz</option>
@@ -410,6 +475,7 @@ const EditBar = () => {
                         <option value="Guipúzcoa">Guipúzcoa</option>
                         <option value="Huelva">Huelva</option>
                         <option value="Huesca">Huesca</option>
+                        <option valie="Illes Balears">Illes Balears</option>
                         <option value="Jaén">Jaén</option>
                         <option value="La Rioja">La Rioja</option>
                         <option value="Las Palmas">Las Palmas</option>
@@ -433,14 +499,13 @@ const EditBar = () => {
                         <option value="Toledo">Toledo</option>
                         <option value="Valencia">Valencia</option>
                         <option value="Valladolid">Valladolid</option>
-                        <option value="Vizcaya">Vizcaya</option>
                         <option value="Zamora">Zamora</option>
                         <option value="Zaragoza">Zaragoza</option>
                     </select>
                 </div>
 
                 <div className="input-container">
-                  <label className="filtres-select1">Ciutat</label>
+                  <label className="filtres-select1">Ciutat *</label>
                   {ciutatsPerProvincia[barProvincia]?.includes(ciutat) ? (
                     <select
                       className="filtres-select-ciutat"
@@ -468,25 +533,25 @@ const EditBar = () => {
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Adreça</label>
+                    <label className="filtres-select1">Adreça *</label>
                     <input type="text" id="barAdrecaInput" className="input-field1-adreca" value={barAdreca}
                       onChange={(e) => setBarAdreca(e.target.value)} />
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Número Carrer</label>
+                    <label className="filtres-select1">Número Carrer *</label>
                     <input type="text" id="barNumCarrerInput" className="input-field1-numCarrer" value={barNumCarrer}
                       onChange={(e) => setBarNumCarrer(e.target.value)}/>
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Codi Postal</label>
+                    <label className="filtres-select1">Codi Postal *</label>
                     <input type="text" id="barCodiPostalInput" className="input-field1-codiPostal" value={barCodiPostal}
                       onChange={(e) => setBarCodiPostal(e.target.value)}/>
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Tipus</label>
+                    <label className="filtres-select1">Tipus *</label>
                     <select className="filtres-select-tipus" name="tipus" id="tipus"value={barTipus}
                       onChange={(e) => setBarTipus(e.target.value)}>
                         <option value=""></option>

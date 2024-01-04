@@ -82,14 +82,14 @@ function PantallaInicial() {
   const ciutatsPerProvincia = {
     "A Coruña": ["A Coruña", "Ferrol", "Santiago de Compostela"],
     "Álava": ["Vitoria-Gasteiz"],
-    "Albacete": ["Albacete"],
+    "Albacete": ["Albacete", "Benidorm"],
     "Alicante": ["Alicante", "Elche"],
     "Almería": ["Almería", "Roquetas de Mar"],
     "Asturias": ["Gijón", "Oviedo"],
     "Ávila": ["Ávila"],
     "Badajoz": ["Badajoz", "Mérida"],
-    "Baleares": ["Ibiza", "Palma de Mallorca"],
-    "Barcelona": ["Badalona", "Barcelona", "Hospitalet de Llobregat"],
+    "Barcelona": ["Badalona", "Barcelona", "L'Hospitalet de Llobregat"],
+    "Bizcaya": ["Bilbao"],
     "Burgos": ["Burgos", "Miranda de Ebro"],
     "Cáceres": ["Cáceres"],
     "Cádiz": ["Cádiz", "Jerez de la Frontera"],
@@ -101,9 +101,10 @@ function PantallaInicial() {
     "Girona": ["Figueres", "Girona"],
     "Granada": ["Granada"],
     "Guadalajara": ["Guadalajara"],
-    "Guipúzcoa": ["Irún", "San Sebastián"],
+    "Guipúzcoa": ["Irún", "Donostia-San Sebastián"],
     "Huelva": ["Huelva"],
     "Huesca": ["Huesca"],
+    "Illes Balears": ["Ibiza", "Palma"],
     "Jaén": ["Jaén"],
     "La Rioja": ["Logroño"],
     "Las Palmas": ["Las Palmas de Gran Canaria"],
@@ -122,12 +123,11 @@ function PantallaInicial() {
     "Segovia": ["Segovia"],
     "Sevilla": ["Sevilla"],
     "Soria": ["Soria"],
-    "Tarragona": ["Reus", "Tarragona"],
+    "Tarragona": ["Salou", "Tarragona"],
     "Teruel": ["Teruel"],
     "Toledo": ["Toledo"],
     "Valencia": ["Castellón", "Valencia"],
     "Valladolid": ["Valladolid"],
-    "Vizcaya": ["Bilbao"],
     "Zamora": ["Zamora"],
     "Zaragoza": ["Zaragoza"]
   }
@@ -300,14 +300,14 @@ function PantallaInicial() {
     console.log(allBars)
 
     if (provinciaFilter !== "") {
-      const lowerCaseProvinciaFilter = provinciaFilter.toLowerCase();
-
+      const provinciaFilterUp = provinciaFilter.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        
       filteredBarsByProvincia = allBars.filter((bar) => {
         // Verificar si bar.provincia es nulo o indefinido
-        const lowerCaseBarProvincia = (bar.provincia || '').toLowerCase();
+        const BarProvincia = (bar.provincia || '');
 
         // Realizar la comparación
-        return lowerCaseBarProvincia === lowerCaseProvinciaFilter;
+        return BarProvincia === provinciaFilterUp;
       });
     }
 
@@ -322,26 +322,27 @@ function PantallaInicial() {
 
         //pasar las ciudades a minusculas
         ciutatsProvincia.forEach((ciutat, index) => {
-          ciutatsProvincia[index] = ciutat.toLowerCase();
+          ciutatsProvincia[index] = ciutat.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         });
         
         //mirar para cada bar en filteredBarsByProvincia si su ciudad está en ciutatsProvincia
         //si está, eliminarlo de filteredBarsByProvincia
+        
         filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => {
-          const lowerCaseBarCiutat = (bar.ciutat || '').toLowerCase();
-          return !ciutatsProvincia.includes(lowerCaseBarCiutat);
+          const BarCiutat = (bar.ciutat || '');
+          return !ciutatsProvincia.includes(BarCiutat);
         }
         );
 
       } else {
-      const lowerCaseCiutatFilter = ciutatFilter.toLowerCase();
+      const CiutatFilterUp = ciutatFilter.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
       filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => {
         // Verificar si bar.ciutat es nulo o indefinido
-        const lowerCaseBarCiutat = (bar.ciutat || '').toLowerCase();
+        const BarCiutat = (bar.ciutat || '');
 
         // Realizar la comparación
-        return lowerCaseBarCiutat === lowerCaseCiutatFilter;
+        return BarCiutat === CiutatFilterUp;
       });
     }
     }
@@ -512,56 +513,56 @@ function PantallaInicial() {
             <label htmlFor="provincia">Província</label>
               <select className="filtres-select" name="provincia" id="provincia" value={provincia} onChange={handleProvinciaChange}>
               <option value=""></option>
-                <option value="A Coruña">A Coruña</option>
-                <option value="Álava">Álava</option>
-                <option value="Albacete">Albacete</option>
-                <option value="Alicante">Alicante</option>
-                <option value="Almería">Almería</option>
-                <option value="Asturias">Asturias</option>
-                <option value="Ávila">Ávila</option>
-                <option value="Badajoz">Badajoz</option>
-                <option value="Baleares">Baleares</option>
-                <option value="Barcelona">Barcelona</option>
-                <option value="Burgos">Burgos</option>
-                <option value="Cáceres">Cáceres</option>
-                <option value="Cádiz">Cádiz</option>
-                <option value="Cantabria">Cantabria</option>
-                <option value="Castellón">Castellón</option>
-                <option value="Ciudad Real">Ciudad Real</option>
-                <option value="Córdoba">Córdoba</option>
-                <option value="Cuenca">Cuenca</option>
-                <option value="Girona">Girona</option>
-                <option value="Granada">Granada</option>
-                <option value="Guadalajara">Guadalajara</option>
-                <option value="Guipúzcoa">Guipúzcoa</option>
-                <option value="Huelva">Huelva</option>
-                <option value="Huesca">Huesca</option>
-                <option value="Jaén">Jaén</option>
-                <option value="La Rioja">La Rioja</option>
-                <option value="Las Palmas">Las Palmas</option>
-                <option value="León">León</option>
-                <option value="Lleida">Lleida</option>
-                <option value="Lugo">Lugo</option>
-                <option value="Madrid">Madrid</option>
-                <option value="Málaga">Málaga</option> 
-                <option value="Murcia">Murcia</option>
-                <option value="Navarra">Navarra</option>
-                <option value="Ourense">Ourense</option>
-                <option value="Palencia">Palencia</option>
-                <option value="Pontevedra">Pontevedra</option>
-                <option value="Salamanca">Salamanca</option>
-                <option value="Santa Cruz de Tenerife">Santa Cruz de Tenerife</option>
-                <option value="Segovia">Segovia</option>
-                <option value="Sevilla">Sevilla</option>
-                <option value="Soria">Soria</option>
-                <option value="Tarragona">Tarragona</option>
-                <option value="Teruel">Teruel</option>
-                <option value="Toledo">Toledo</option>
-                <option value="Valencia">Valencia</option>
-                <option value="Valladolid">Valladolid</option>
-                <option value="Vizcaya">Vizcaya</option>
-                <option value="Zamora">Zamora</option>
-                <option value="Zaragoza">Zaragoza</option>
+                        <option value="A Coruña">A Coruña</option>
+                        <option value="Álava">Álava</option>
+                        <option value="Albacete">Albacete</option>
+                        <option value="Alicante">Alicante</option>
+                        <option value="Almería">Almería</option>
+                        <option value="Asturias">Asturias</option>
+                        <option value="Ávila">Ávila</option>
+                        <option value="Badajoz">Badajoz</option>
+                        <option value="Barcelona">Barcelona</option>
+                        <option value="Bizcaya">Bizcaya</option>
+                        <option value="Burgos">Burgos</option>
+                        <option value="Cáceres">Cáceres</option>
+                        <option value="Cádiz">Cádiz</option>
+                        <option value="Cantabria">Cantabria</option>
+                        <option value="Castellón">Castellón</option>
+                        <option value="Ciudad Real">Ciudad Real</option>
+                        <option value="Córdoba">Córdoba</option>
+                        <option value="Cuenca">Cuenca</option>
+                        <option value="Girona">Girona</option>
+                        <option value="Granada">Granada</option>
+                        <option value="Guadalajara">Guadalajara</option>
+                        <option value="Guipúzcoa">Guipúzcoa</option>
+                        <option value="Huelva">Huelva</option>
+                        <option value="Huesca">Huesca</option>
+                        <option value="Illes Balears">Illes Balears</option>
+                        <option value="Jaén">Jaén</option>
+                        <option value="La Rioja">La Rioja</option>
+                        <option value="Las Palmas">Las Palmas</option>
+                        <option value="León">León</option>
+                        <option value="Lleida">Lleida</option>
+                        <option value="Lugo">Lugo</option>
+                        <option value="Madrid">Madrid</option>
+                        <option value="Málaga">Málaga</option> 
+                        <option value="Murcia">Murcia</option>
+                        <option value="Navarra">Navarra</option>
+                        <option value="Ourense">Ourense</option>
+                        <option value="Palencia">Palencia</option>
+                        <option value="Pontevedra">Pontevedra</option>
+                        <option value="Salamanca">Salamanca</option>
+                        <option value="Santa Cruz de Tenerife">Santa Cruz de Tenerife</option>
+                        <option value="Segovia">Segovia</option>
+                        <option value="Sevilla">Sevilla</option>
+                        <option value="Soria">Soria</option>
+                        <option value="Tarragona">Tarragona</option>
+                        <option value="Teruel">Teruel</option>
+                        <option value="Toledo">Toledo</option>
+                        <option value="Valencia">Valencia</option>
+                        <option value="Valladolid">Valladolid</option>
+                        <option value="Zamora">Zamora</option>
+                        <option value="Zaragoza">Zaragoza</option>
               </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <label htmlFor="ciutat">Ciutat</label>
               <select className="filtres-select" name="ciutat" id="ciutat" value={ciutat} onChange={(e) => setCiutat(e.target.value)}>

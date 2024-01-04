@@ -12,6 +12,7 @@ import IniciPrograma from './components/IniciPrograma/iniciPrograma';
 import RegistrarEntrega from './components/registrarEntrega/registrarEntrega';
 import AfegirBar from './components/afegirBar/afegirBar';
 import EditBar from './components/editBar/editBar';
+import EntreguesBar from './components/entreguesBar/entreguesBar';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/pantallaBar2" element={<PantallaInicial />} exact></Route>
         <Route path="/delivery" element={<RegistrarEntrega />} exact></Route>
         <Route path="/addBar" element={<AfegirBar />} exact></Route>
+        <Route path="/delivery-list/:id" element={<EntreguesBar />} exact></Route>
       </Routes>
     </Router>
   );

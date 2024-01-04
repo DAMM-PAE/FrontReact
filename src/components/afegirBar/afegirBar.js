@@ -1,9 +1,12 @@
 import React, {useEffect} from 'react';
 import logo from '../pantallaLlista/logo3.png';
 import './afegirBar.css';
+import back from './back.png';
+import { useNavigate } from 'react-router-dom';
 
 const AfegirBar = () => {
     
+    const navigate = useNavigate();
     const [provincia, setProvincia] = React.useState('');
     const [ciutat, setCiutat] = React.useState('');
     const [barTypes, setBarTypes] = React.useState([]);
@@ -11,14 +14,14 @@ const AfegirBar = () => {
     const ciutatsPerProvincia = {
         "A Coruña": ["A Coruña", "Ferrol", "Santiago de Compostela"],
         "Álava": ["Vitoria-Gasteiz"],
-        "Albacete": ["Albacete"],
+        "Albacete": ["Albacete", "Benidorm"],
         "Alicante": ["Alicante", "Elche"],
         "Almería": ["Almería", "Roquetas de Mar"],
         "Asturias": ["Gijón", "Oviedo"],
         "Ávila": ["Ávila"],
         "Badajoz": ["Badajoz", "Mérida"],
-        "Baleares": ["Ibiza", "Palma de Mallorca"],
-        "Barcelona": ["Badalona", "Barcelona", "Hospitalet de Llobregat"],
+        "Barcelona": ["Badalona", "Barcelona", "L'Hospitalet de Llobregat"],
+        "Bizcaya": ["Bilbao"],
         "Burgos": ["Burgos", "Miranda de Ebro"],
         "Cáceres": ["Cáceres"],
         "Cádiz": ["Cádiz", "Jerez de la Frontera"],
@@ -30,9 +33,10 @@ const AfegirBar = () => {
         "Girona": ["Figueres", "Girona"],
         "Granada": ["Granada"],
         "Guadalajara": ["Guadalajara"],
-        "Guipúzcoa": ["Irún", "San Sebastián"],
+        "Guipúzcoa": ["Irún", "Donostia-San Sebastián"],
         "Huelva": ["Huelva"],
         "Huesca": ["Huesca"],
+        "Illes Balears": ["Ibiza", "Palma"],
         "Jaén": ["Jaén"],
         "La Rioja": ["Logroño"],
         "Las Palmas": ["Las Palmas de Gran Canaria"],
@@ -51,12 +55,11 @@ const AfegirBar = () => {
         "Segovia": ["Segovia"],
         "Sevilla": ["Sevilla"],
         "Soria": ["Soria"],
-        "Tarragona": ["Reus", "Tarragona"],
+        "Tarragona": ["Salou", "Tarragona"],
         "Teruel": ["Teruel"],
         "Toledo": ["Toledo"],
         "Valencia": ["Castellón", "Valencia"],
         "Valladolid": ["Valladolid"],
-        "Vizcaya": ["Bilbao"],
         "Zamora": ["Zamora"],
         "Zaragoza": ["Zaragoza"]
       }
@@ -93,8 +96,8 @@ const AfegirBar = () => {
         const barLongitud = document.getElementById("barLongitudInput").value;
         const barIoT = document.getElementById("barIoTInput").checked;
         const barTipus = document.getElementById("tipus").value;
-        const barCiutat = document.getElementById("ciutat").value;
-        const barProvincia = document.getElementById("provincia").value;
+        let barCiutat = document.getElementById("ciutat").value;
+        let barProvincia = document.getElementById("provincia").value;
 
         if (barName.trim() === "") {
             alert("El nom del bar no pot estar buit");
@@ -136,15 +139,24 @@ const AfegirBar = () => {
             return;
         }
 
-        if (barLatitud.trim() !== "" && (isNaN(barLatitud) || barLatitud < 0)) {
+        if (barLatitud.trim() !== "" && isNaN(barLatitud)) {
             alert("La latitud ha de ser un número");
             return;
         }
 
-        if (barLongitud.trim() !== "" && (isNaN(barLongitud) || barLongitud < 0)) {
+        if (barLongitud.trim() !== "" && isNaN(barLongitud)) {
             alert("La longitud ha de ser un número");
             return;
         }
+
+        //pasar barProvincia y barCiutat a mayusculas
+        barProvincia = barProvincia.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        barCiutat = barCiutat.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+
+        console.log(barProvincia);
+        console.log(barCiutat);
+
 
         //LLamar a la API para añadir el bar
         const data = {
@@ -177,11 +189,19 @@ const AfegirBar = () => {
           });
           const responseData = await response.json();
           console.log(responseData);
+          if (responseData.error) {
+            alert(responseData.error);
+            return;
+          }
         } catch (error) {
           console.log(error);
         }
         alert("Bar afegit correctament");
         window.location.href = "/list";
+    }
+
+    const goBack = () => {
+      navigate(-1);
     }
 
 
@@ -201,6 +221,7 @@ const AfegirBar = () => {
               <section>
                 <div className="bars-top">
                   <h1 className="llista-titol">
+                  <img src={back} className="back" alt="back" onClick={goBack} />
                     <span>Afegir Bar</span>
                   </h1>
                 </div>
@@ -226,8 +247,8 @@ const AfegirBar = () => {
                         <option value="Asturias">Asturias</option>
                         <option value="Ávila">Ávila</option>
                         <option value="Badajoz">Badajoz</option>
-                        <option value="Baleares">Baleares</option>
                         <option value="Barcelona">Barcelona</option>
+                        <option value="Bizcaya">Bizcaya</option>
                         <option value="Burgos">Burgos</option>
                         <option value="Cáceres">Cáceres</option>
                         <option value="Cádiz">Cádiz</option>
@@ -242,6 +263,7 @@ const AfegirBar = () => {
                         <option value="Guipúzcoa">Guipúzcoa</option>
                         <option value="Huelva">Huelva</option>
                         <option value="Huesca">Huesca</option>
+                        <option value="Illes Balears">Illes Balears</option>
                         <option value="Jaén">Jaén</option>
                         <option value="La Rioja">La Rioja</option>
                         <option value="Las Palmas">Las Palmas</option>
@@ -265,7 +287,6 @@ const AfegirBar = () => {
                         <option value="Toledo">Toledo</option>
                         <option value="Valencia">Valencia</option>
                         <option value="Valladolid">Valladolid</option>
-                        <option value="Vizcaya">Vizcaya</option>
                         <option value="Zamora">Zamora</option>
                         <option value="Zaragoza">Zaragoza</option>
                     </select>

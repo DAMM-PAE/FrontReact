@@ -20,8 +20,7 @@ function PantallaBar() {
   };
 
   const goBack = () => {
-    //volver a pantalla anterior, no url, sino a la pantalla anterior
-    navigate(-1);
+    navigate('/list');
   }
 
   const deleteBar = async () => {
@@ -51,6 +50,14 @@ function PantallaBar() {
 
   const editBar = () => {
     navigate('/bar/' + bar.id + '/edit', { state: { bar: bar } });
+  }
+
+  const registarEntrega = () => {
+    navigate('/delivery', { state: { bar: bar } });
+  }
+
+  const veureRegistreEntregues = () => {
+    navigate('/delivery-list/' + bar.id, { state: { bar: bar } });
   }
 
   return (
@@ -89,6 +96,8 @@ function PantallaBar() {
               <p><span className="bold-text">Província/Ciutat:</span> {`${bar.provincia}/${bar.ciutat}`}</p>
               <p><span className="bold-text">Percentatge:</span> {bar.percentatge}%</p>
               <p><span className="bold-text">Data de predicció de pròxima entrega:</span> {bar.data}</p>
+              <button className="button-env" style={{ marginRight: '5rem' }} onClick={registarEntrega}>Registrar Entrega</button>
+              <button className="button-env" onClick={veureRegistreEntregues}>Veure Registre d'Entregues</button>
             </div>
           ) : (
             <p>No se ha proporcionado información del bar.</p>
