@@ -382,7 +382,7 @@ const EditBar = () => {
         if (barLongitud.trim() !== "") {
           data["longitud"] = barLongitud;
         }
-        const url = 'http://nattech.fib.upc.edu:40540/api/bars/';
+        const url = 'http://nattech.fib.upc.edu:40540/api/bars/' + bar.id + '/';
         try {
           const response = await fetch(url, {
               method: 'PUT',

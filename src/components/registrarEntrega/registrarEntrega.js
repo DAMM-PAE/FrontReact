@@ -8,13 +8,13 @@ function RegistrarEntrega() {
   const navigate = useNavigate();
   const location = useLocation();
   const bars = location.state.bars;
-  const barNom = location.state?.bar?.nom;
+  const barEntrega = location.state.bar;
   const [barName, setBarName] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    if (barNom) {
-      setBarName(barNom);
+    if (barEntrega) {
+      setBarName(barEntrega.nom);
     }
     const handleDocumentClick = () => {
       // Oculta las sugerencias al hacer clic en cualquier parte del documento
@@ -47,7 +47,7 @@ function RegistrarEntrega() {
     setSuggestions([]);
   };
 
-  const registraEntrega = () => {
+  const registraEntrega =  async () => {
 
     if (barName === '') {
       alert('EL NOM DEL BAR NO POT ESTAR BUIT');
@@ -64,17 +64,6 @@ function RegistrarEntrega() {
       return;
     }
 
-    //comprobar que el nombre del bar existe en la base de datos de manera eficiente
-    let barExists = false;
-    bars.forEach((bar) => {
-      if (bar.nom === barName) {
-        barExists = true;
-      }
-    });
-    if (!barExists) {
-      alert('EL BAR NO EXISTEIX');
-      return;
-    }
     else {
       //comprobar que la cantidad es un numero y positivo
       const quantity = document.getElementById('quantityInput').value;
@@ -85,11 +74,48 @@ function RegistrarEntrega() {
       else {
         //registrar entrega
         const deliveryDate = document.getElementById('deliveryDateInput').value;
+        var fechaParts = barEntrega.data.split('-');
+
+        // Crear una nueva fecha en el formato "YYYY-MM-DD"
+        var nuevaFecha = new Date(fechaParts[2], fechaParts[1] - 1, fechaParts[0]);
+
+        var nuevoAnio = nuevaFecha.getFullYear();
+        var nuevoMes = ('0' + (nuevaFecha.getMonth() + 1)).slice(-2);
+        var nuevoDia = ('0' + nuevaFecha.getDate()).slice(-2);
+        
+        // Formar la fecha en el formato deseado
+        var fechaConvertida = nuevoAnio + '-' + nuevoMes + '-' + nuevoDia;
+        
+        console.log(fechaConvertida);
+              //registrar entrega
         const data = {
-          nom: barName,
-          quantitat: quantity,
-          data: deliveryDate
+          idCliente: barEntrega.id,
+          fechaPedido: fechaConvertida,
+          fechaEntrega: deliveryDate,
+          litrosEntregados: quantity,
         };
+        console.log(data);
+        const url = 'http://nattech.fib.upc.edu:40540/api/entregas/';
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+          const responseData = await response.json();
+          if (responseData.error) {
+            alert(responseData.error);
+            return;
+          }
+        } catch (error) {
+          console.log(error);
+          alert('ERROR AL REGISTRAR ENTREGA');
+          return;
+        }
+        alert('ENTREGA REGISTRADA CORRECTAMENT');
+        navigate(-1);
         
       }
     }
