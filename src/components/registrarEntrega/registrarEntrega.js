@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../pantallaLlista/logo3.png';
 import './registrarEntrega.css';
 import back from './back.png';
+import { baseUrl } from '../../global';
 
 function RegistrarEntrega() {
   const navigate = useNavigate();
@@ -95,7 +96,7 @@ function RegistrarEntrega() {
           litrosEntregados: quantity,
         };
         console.log(data);
-        const url = 'http://nattech.fib.upc.edu:40540/api/entregas/';
+        const url = baseUrl + '/api/entregas/';
         try {
           const response = await fetch(url, {
             method: 'POST',

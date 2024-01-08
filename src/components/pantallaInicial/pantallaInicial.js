@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import ListBars from '../listBars/ListBars';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { baseUrl } from '../../global';
 
 function PantallaInicial() {
 
@@ -39,7 +40,7 @@ function PantallaInicial() {
 
   const fetchBars = async () => {
  
-    const url = 'http://nattech.fib.upc.edu:40540/api/bars';
+    const url = baseUrl + '/api/bars';
     try {
       const response = await fetch(url);
       const data = await response.json();

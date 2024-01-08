@@ -3,12 +3,13 @@ import logo from '../pantallaLlista/logo3.png';
 import './editBar.css';
 import { useLocation, useNavigate } from "react-router-dom";
 import back from "./back.png";
+import { baseUrl } from '../../global';
 
 
 const EditBar = () => {
 
   const location = useLocation();
-  const bar = location.state.bar;
+  let bar = location.state.bar;
   const navigate = useNavigate();
     
     const [barProvincia, setBarProvincia] = useState('');
@@ -176,7 +177,7 @@ const EditBar = () => {
     }
 
     const getBarTypes = async () => {
-      const url = 'http://nattech.fib.upc.edu:40540/api/bars/types';
+      const url = baseUrl + '/api/bars/types';
       try {
         const response = await fetch(url);
         const data = await response.json();
@@ -382,7 +383,7 @@ const EditBar = () => {
         if (barLongitud.trim() !== "") {
           data["longitud"] = barLongitud;
         }
-        const url = 'http://nattech.fib.upc.edu:40540/api/bars/' + bar.id + '/';
+        const url = baseUrl + '/api/bars/' + bar.id + '/';
         try {
           const response = await fetch(url, {
               method: 'PUT',

@@ -1,0 +1,1 @@
+export const baseUrl = 'http://nattech.fib.upc.edu:40540'

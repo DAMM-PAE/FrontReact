@@ -6,7 +6,6 @@ import PantallaInicial from './components/pantallaInicial/pantallaInicial';
 import Calendari from './components/calendari/calendari';
 import PantallaBars from './components/pantallaBar/pantallaBar';
 import VistaCalendari from './components/vistaCalendari/vistaCalendari';
-import JsonProva from './components/jsonProva/jsonProva';
 import PantallaLlista from './components/pantallaLlista/pantallaLlista';
 import IniciPrograma from './components/IniciPrograma/iniciPrograma';
 import RegistrarEntrega from './components/registrarEntrega/registrarEntrega';
@@ -25,7 +24,6 @@ function App() {
         <Route path="/bar/:id" element={<PantallaBars />} exact></Route>
         <Route path="/bar/:id/edit" element={<EditBar />} exact></Route>
         <Route path="/vistaCalendari/" element={<VistaCalendari />} exact></Route>
-        <Route path="/json" element={<JsonProva />} exact></Route>
         <Route path="/pantallaBar2" element={<PantallaInicial />} exact></Route>
         <Route path="/delivery" element={<RegistrarEntrega />} exact></Route>
         <Route path="/addBar" element={<AfegirBar />} exact></Route>

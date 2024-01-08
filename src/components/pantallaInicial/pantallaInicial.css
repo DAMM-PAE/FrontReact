@@ -1,185 +1,185 @@
 .menu-left {
-  width: 12.5rem; /* Ancho del menú izquierdo */
-  height: 100vh; /* Altura completa de la ventana */
-  float: left;
-  border: thin solid #d94100;
-}
-
-/* Estilos para el menú en la parte superior */
-.menu-top { /* Color rojo muy claro */
-  height: 6.9rem; 
-  border: thin solid #d94100;
-  /* Otros estilos para la barra de menú superior */
-}
-
-.logodamm {
-  width: 12.44rem;
-  height: 6.87rem;
-  border: thin solid #d94100;
-}
-
-.cercador {
-  float: right;
-  margin-top: 3rem;
-  margin-right: 7.8rem;
-  width: 12rem;
-  height: 2rem;
-}
-
-.first-row {
-  display: flex;
-  align-items:center;
-}
-
-.provincia-ciutat {
-  display: flex;
-  margin-bottom: 0.5rem;
-}
-
-.provincia {
-  margin-right: 1rem;
-}
-
-.provincia-select {
-  margin-left: 2.3rem;
-}
-
-.ciutat {
-  margin-left: 1rem;
-}
-
-.ciutat-select {
-  margin-left: 6.5rem;
-}
-
-.tipus-percentatge {
-  display: flex;
-  margin-bottom: 0.5rem;
-}
-
-.tipus {
-  margin-right: 8.1rem;
-}
-
-.tipus-select {
-  margin-left: 3.9rem;
-}
-
-.percentatge-select {
-  margin-left: 0.5rem;
-}
-
-.data-calendari {
-  display: flex;
-  margin-bottom: 0.5rem;
-}
-
-.data-select {
-  margin-left: 0.5rem;
-}
-
-.menu-total {
-  display: flex;
-  margin-bottom: 0.5rem;
-}
-
-.filtres-llista {
-  flex: 0 0 65%; /* El elemento ocupa el 75% del ancho disponible */
-  padding: 10px;
-  box-sizing: border-box;
-  margin: 1rem;
-}
-
-.menu-top-llista {
-  margin-top: 5rem;
-}
-
-.menu-right {
-  flex: 1;
-  box-sizing: border-box; 
-  margin: 1rem;
-}
-
-.menu-top-llista {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  margin-bottom: 0.75rem;
-  align-items: center;
-  border-bottom: 3px solid #d94100;
-  padding: .3rem 0;
-  text-align: left;
-}
-
-.col-llista1 {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  flex-basis: 6rem;
-  margin-right: 6.8rem;
-}
-
-.col-llista2 {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  flex-basis: 6rem;
-  margin-right: 2.5rem;
-}
-
-.col-llista3 {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  flex-basis: 6rem;
-  margin-right: 2.2rem;
-}
-
-.button_order {
-  text-decoration: none;
-  color: #d94100;
-  background: none;
-  margin: 0;
-  border: none;
-  padding: 1px 3px;
-}
-
-.reset {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-left: 1rem;
-}
-
-.titol-entregues {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #d94100;
-}
-
-.titol-avui {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #d94100;
-}
-
-.menu-options {
-  margin-top: 0rem;
-}
-.menu-options button {
-  display: block; /* o flex */
-  border: none;
-  background-color: white;
-  color: #d94100;
-  font-weight: bold;
-  width: 200px; /* Ancho del botón */
-  height: 60px; /* Alto del botón */
-}
-
-.menu-options-llista {
-  font-size: 1.35rem;
-}
-
-.menu-options-calendari {
-  font-size: 1rem;
-}
-
+    width: 12.5rem; /* Ancho del menú izquierdo */
+    height: 100vh; /* Altura completa de la ventana */
+    float: left;
+    border: thin solid #d94100;
+  }
+  
+  /* Estilos para el menú en la parte superior */
+  .menu-top { /* Color rojo muy claro */
+    height: 6.9rem; 
+    border: thin solid #d94100;
+    /* Otros estilos para la barra de menú superior */
+  }
+  
+  .logodamm {
+    width: 12.44rem;
+    height: 6.87rem;
+    border: thin solid #d94100;
+  }
+  
+  .cercador {
+    float: right;
+    margin-top: 3rem;
+    margin-right: 7.8rem;
+    width: 12rem;
+    height: 2rem;
+  }
+  
+  .first-row {
+    display: flex;
+    align-items:center;
+  }
+  
+  .provincia-ciutat {
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+  
+  .provincia {
+    margin-right: 1rem;
+  }
+  
+  .provincia-select {
+    margin-left: 2.3rem;
+  }
+  
+  .ciutat {
+    margin-left: 1rem;
+  }
+  
+  .ciutat-select {
+    margin-left: 6.5rem;
+  }
+  
+  .tipus-percentatge {
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tipus {
+    margin-right: 8.1rem;
+  }
+  
+  .tipus-select {
+    margin-left: 3.9rem;
+  }
+  
+  .percentatge-select {
+    margin-left: 0.5rem;
+  }
+  
+  .data-calendari {
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+  
+  .data-select {
+    margin-left: 0.5rem;
+  }
+  
+  .menu-total {
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+  
+  .filtres-llista {
+    flex: 0 0 65%; /* El elemento ocupa el 75% del ancho disponible */
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 1rem;
+  }
+  
+  .menu-top-llista {
+    margin-top: 5rem;
+  }
+  
+  .menu-right {
+    flex: 1;
+    box-sizing: border-box; 
+    margin: 1rem;
+  }
+  
+  .menu-top-llista {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-bottom: 0.75rem;
+    align-items: center;
+    border-bottom: 3px solid #d94100;
+    padding: .3rem 0;
+    text-align: left;
+  }
+  
+  .col-llista1 {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-basis: 6rem;
+    margin-right: 6.8rem;
+  }
+  
+  .col-llista2 {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-basis: 6rem;
+    margin-right: 2.5rem;
+  }
+  
+  .col-llista3 {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-basis: 6rem;
+    margin-right: 2.2rem;
+  }
+  
+  .button_order {
+    text-decoration: none;
+    color: #d94100;
+    background: none;
+    margin: 0;
+    border: none;
+    padding: 1px 3px;
+  }
+  
+  .reset {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: 1rem;
+  }
+  
+  .titol-entregues {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #d94100;
+  }
+  
+  .titol-avui {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #d94100;
+  }
+  
+  .menu-options {
+    margin-top: 0rem;
+  }
+  .menu-options button {
+    display: block; /* o flex */
+    border: none;
+    background-color: white;
+    color: #d94100;
+    font-weight: bold;
+    width: 200px; /* Ancho del botón */
+    height: 60px; /* Alto del botón */
+  }
+  
+  .menu-options-llista {
+    font-size: 1.35rem;
+  }
+  
+  .menu-options-calendari {
+    font-size: 1rem;
+  }
+  

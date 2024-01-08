@@ -5,6 +5,7 @@ import logo from "../pantallaLlista/logo3.png";
 import back from "./back.png";
 import GoogleMapReact from 'google-map-react';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../global';
 
 function PantallaBar() {
   const location = useLocation();
@@ -30,7 +31,7 @@ function PantallaBar() {
     if (isConfirmed) {
       // Borrar el bar aquí
       const id = bar.id;
-      const url = 'http://nattech.fib.upc.edu:40540/api/bars/' + id + '/';
+      const url = baseUrl + '/api/bars/' + id + '/';
       try {
         const response = await fetch(url, {
           method: 'DELETE',

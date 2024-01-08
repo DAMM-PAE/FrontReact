@@ -3,6 +3,7 @@ import logo from '../pantallaLlista/logo3.png';
 import './afegirBar.css';
 import back from './back.png';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../global';
 
 const AfegirBar = () => {
     
@@ -69,7 +70,7 @@ const AfegirBar = () => {
       }, []);
     
     const getBarTypes = async () => {
-      const url = 'http://nattech.fib.upc.edu:40540/api/bars/types';
+      const url = baseUrl + '/api/bars/types';
       try {
         const response = await fetch(url);
         const data = await response.json();
@@ -178,7 +179,7 @@ const AfegirBar = () => {
         }
 
         console.log(data);
-        const url = 'http://nattech.fib.upc.edu:40540/api/bars/';
+        const url = baseUrl + '/api/bars/';
         try {
           const response = await fetch(url, {
               method: 'POST',
