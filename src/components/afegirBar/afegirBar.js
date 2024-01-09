@@ -1,9 +1,13 @@
 import React, {useEffect} from 'react';
 import logo from '../pantallaLlista/logo3.png';
 import './afegirBar.css';
+import back from './back.png';
+import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../global';
 
 const AfegirBar = () => {
     
+    const navigate = useNavigate();
     const [provincia, setProvincia] = React.useState('');
     const [ciutat, setCiutat] = React.useState('');
     const [barTypes, setBarTypes] = React.useState([]);
@@ -11,14 +15,14 @@ const AfegirBar = () => {
     const ciutatsPerProvincia = {
         "A Coruña": ["A Coruña", "Ferrol", "Santiago de Compostela"],
         "Álava": ["Vitoria-Gasteiz"],
-        "Albacete": ["Albacete"],
+        "Albacete": ["Albacete", "Benidorm"],
         "Alicante": ["Alicante", "Elche"],
         "Almería": ["Almería", "Roquetas de Mar"],
         "Asturias": ["Gijón", "Oviedo"],
         "Ávila": ["Ávila"],
         "Badajoz": ["Badajoz", "Mérida"],
-        "Baleares": ["Ibiza", "Palma de Mallorca"],
-        "Barcelona": ["Badalona", "Barcelona", "Hospitalet de Llobregat"],
+        "Barcelona": ["Badalona", "Barcelona", "L'Hospitalet de Llobregat"],
+        "Bizcaya": ["Bilbao"],
         "Burgos": ["Burgos", "Miranda de Ebro"],
         "Cáceres": ["Cáceres"],
         "Cádiz": ["Cádiz", "Jerez de la Frontera"],
@@ -30,9 +34,10 @@ const AfegirBar = () => {
         "Girona": ["Figueres", "Girona"],
         "Granada": ["Granada"],
         "Guadalajara": ["Guadalajara"],
-        "Guipúzcoa": ["Irún", "San Sebastián"],
+        "Guipúzcoa": ["Irún", "Donostia-San Sebastián"],
         "Huelva": ["Huelva"],
         "Huesca": ["Huesca"],
+        "Illes Balears": ["Ibiza", "Palma"],
         "Jaén": ["Jaén"],
         "La Rioja": ["Logroño"],
         "Las Palmas": ["Las Palmas de Gran Canaria"],
@@ -51,12 +56,11 @@ const AfegirBar = () => {
         "Segovia": ["Segovia"],
         "Sevilla": ["Sevilla"],
         "Soria": ["Soria"],
-        "Tarragona": ["Reus", "Tarragona"],
+        "Tarragona": ["Salou", "Tarragona"],
         "Teruel": ["Teruel"],
         "Toledo": ["Toledo"],
         "Valencia": ["Castellón", "Valencia"],
         "Valladolid": ["Valladolid"],
-        "Vizcaya": ["Bilbao"],
         "Zamora": ["Zamora"],
         "Zaragoza": ["Zaragoza"]
       }
@@ -66,7 +70,7 @@ const AfegirBar = () => {
       }, []);
     
     const getBarTypes = async () => {
-      const url = 'http://nattech.fib.upc.edu:40540/api/bars/types';
+      const url = baseUrl + '/api/bars/types';
       try {
         const response = await fetch(url);
         const data = await response.json();
@@ -93,11 +97,31 @@ const AfegirBar = () => {
         const barLongitud = document.getElementById("barLongitudInput").value;
         const barIoT = document.getElementById("barIoTInput").checked;
         const barTipus = document.getElementById("tipus").value;
-        const barCiutat = document.getElementById("ciutat").value;
-        const barProvincia = document.getElementById("provincia").value;
+        let barCiutat = document.getElementById("ciutat").value;
+        let barProvincia = document.getElementById("provincia").value;
 
         if (barName.trim() === "") {
             alert("El nom del bar no pot estar buit");
+            return;
+        }
+
+        if (barProvincia.trim() === "") {
+            alert("La província no pot estar buida");
+            return;
+        }
+
+        if (barCiutat.trim() === "") {
+            alert("La ciutat no pot estar buida");
+            return;
+        }
+
+        if (barAdreca.trim() === "") {
+            alert("L'adreça no pot estar buida");
+            return;
+        }
+
+        if (barNumCarrer.trim() === "") {
+            alert("El número de carrer no pot estar buit");
             return;
         }
 
@@ -106,20 +130,34 @@ const AfegirBar = () => {
             return;
         }
 
+        if (barCodiPostal.trim() === "") {
+            alert("El codi postal no pot estar buit");
+            return; 
+        }
+
         if (barCodiPostal.trim() !== "" && (isNaN(barCodiPostal) || barCodiPostal < 0)) {
             alert("El codi postal ha de ser un número");
             return;
         }
 
-        if (barLatitud.trim() !== "" && (isNaN(barLatitud) || barLatitud < 0)) {
+        if (barLatitud.trim() !== "" && isNaN(barLatitud)) {
             alert("La latitud ha de ser un número");
             return;
         }
 
-        if (barLongitud.trim() !== "" && (isNaN(barLongitud) || barLongitud < 0)) {
+        if (barLongitud.trim() !== "" && isNaN(barLongitud)) {
             alert("La longitud ha de ser un número");
             return;
         }
+
+        //pasar barProvincia y barCiutat a mayusculas
+        barProvincia = barProvincia.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        barCiutat = barCiutat.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+
+        console.log(barProvincia);
+        console.log(barCiutat);
+
 
         //LLamar a la API para añadir el bar
         const data = {
@@ -130,12 +168,18 @@ const AfegirBar = () => {
             "direccio" : barAdreca,
             "numCarrer" : barNumCarrer,
             "tipusBar" : barTipus,
-            "latitud" : barLatitud,
-            "longitud" : barLongitud,
-            "hasIot" : barIoT
+            "iot" : barIoT
         }
+
+        if (barLatitud.trim() !== "") {
+            data["latitud"] = barLatitud;
+        }
+        if (barLongitud.trim() !== "") {
+            data["longitud"] = barLongitud;
+        }
+
         console.log(data);
-        const url = 'http://nattech.fib.upc.edu:40540/api/bars/';
+        const url = baseUrl + '/api/bars/';
         try {
           const response = await fetch(url, {
               method: 'POST',
@@ -146,11 +190,19 @@ const AfegirBar = () => {
           });
           const responseData = await response.json();
           console.log(responseData);
+          if (responseData.error) {
+            alert(responseData.error);
+            return;
+          }
         } catch (error) {
           console.log(error);
         }
         alert("Bar afegit correctament");
         window.location.href = "/list";
+    }
+
+    const goBack = () => {
+      navigate(-1);
     }
 
 
@@ -170,6 +222,7 @@ const AfegirBar = () => {
               <section>
                 <div className="bars-top">
                   <h1 className="llista-titol">
+                  <img src={back} className="back" alt="back" onClick={goBack} />
                     <span>Afegir Bar</span>
                   </h1>
                 </div>
@@ -184,7 +237,7 @@ const AfegirBar = () => {
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Província</label>
+                    <label className="filtres-select1">Província *</label>
                     <select className="filtres-select-prov" name="provincia" id="provincia" value={provincia} onChange={handleProvinciaChange}>
                         <option value=""></option>
                         <option value="A Coruña">A Coruña</option>
@@ -195,8 +248,8 @@ const AfegirBar = () => {
                         <option value="Asturias">Asturias</option>
                         <option value="Ávila">Ávila</option>
                         <option value="Badajoz">Badajoz</option>
-                        <option value="Baleares">Baleares</option>
                         <option value="Barcelona">Barcelona</option>
+                        <option value="Bizcaya">Bizcaya</option>
                         <option value="Burgos">Burgos</option>
                         <option value="Cáceres">Cáceres</option>
                         <option value="Cádiz">Cádiz</option>
@@ -211,6 +264,7 @@ const AfegirBar = () => {
                         <option value="Guipúzcoa">Guipúzcoa</option>
                         <option value="Huelva">Huelva</option>
                         <option value="Huesca">Huesca</option>
+                        <option value="Illes Balears">Illes Balears</option>
                         <option value="Jaén">Jaén</option>
                         <option value="La Rioja">La Rioja</option>
                         <option value="Las Palmas">Las Palmas</option>
@@ -234,14 +288,13 @@ const AfegirBar = () => {
                         <option value="Toledo">Toledo</option>
                         <option value="Valencia">Valencia</option>
                         <option value="Valladolid">Valladolid</option>
-                        <option value="Vizcaya">Vizcaya</option>
                         <option value="Zamora">Zamora</option>
                         <option value="Zaragoza">Zaragoza</option>
                     </select>
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Ciutat</label>
+                    <label className="filtres-select1">Ciutat *</label>
                     <select className="filtres-select-ciutat" name="ciutat" id="ciutat" value={ciutat} onChange={(e) => setCiutat(e.target.value)}>
                     <option value=""></option>
                         {ciutatsPerProvincia[provincia]?.map((ciutat) => (
@@ -252,22 +305,22 @@ const AfegirBar = () => {
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Adreça</label>
+                    <label className="filtres-select1">Adreça *</label>
                     <input type="text" id="barAdrecaInput" className="input-field1-adreca" />
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Número Carrer</label>
+                    <label className="filtres-select1">Número Carrer *</label>
                     <input type="text" id="barNumCarrerInput" className="input-field1-numCarrer" />
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Codi Postal</label>
+                    <label className="filtres-select1">Codi Postal *</label>
                     <input type="text" id="barCodiPostalInput" className="input-field1-codiPostal" />
                 </div>
 
                 <div className="input-container">
-                    <label className="filtres-select1">Tipus</label>
+                    <label className="filtres-select1">Tipus *</label>
                     <select className="filtres-select-tipus" name="tipus" id="tipus">
                         {barTypes.map((tipus) => (
                         <option key={tipus} value={tipus}>{tipus}</option>

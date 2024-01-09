@@ -1,0 +1,85 @@
+/* entreguesBar.css */
+
+.entregues-bar-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cuadro-con-tabla {
+    margin-top: 20px;
+}
+
+.table-css {
+    width: 100%; /* Asegúrate de que la propiedad width esté bien escrita */
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+
+.th-css {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    background-color: #f8c7c7;
+    font-weight: normal;
+}
+
+.td-css {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-weight: normal;
+}
+
+
+.h1-css {
+    text-align: center;
+    color: #333;
+}
+
+.button-delete-entrega {
+    background-color: #d94100;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; /* Cambia a inline-block */
+    width: 5rem; /* O ajusta el ancho según tus necesidades */
+    margin: auto;
+    margin-top: 1rem;
+}
+
+.green-text {
+    color: green;
+}
+
+.orange-text {
+    color: orange;
+}
+
+.red-text {
+    color: red;
+}
+
+/* Tu estilo existente para back-button sigue igual */
+
+.back-button {
+    background-color: #d94100;
+    color: #fff;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: auto; /* Mueve el botón hacia la derecha */
+    margin-right: 20px; /* Añade margen derecho para separarlo del título */
+}
+
+/* Estilo para titol-ent (contenedor flex) */
+.titol-ent {
+    display: flex;
+    align-items: center; /* Alinea los elementos verticalmente */
+}
