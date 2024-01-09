@@ -1,58 +1,60 @@
-.calendar-container {
-    height: 300px; /* Ajusta la altura según sea necesario */
-    width: 60%; /* Ajusta el ancho según sea necesario */
-    margin: auto; /* Centra el calendario en el contenedor */
-    margin-top: 100px;
-  }
-
-  .menu-left {
-    width: 12.5rem; /* Ancho del menú izquierdo */
-    height: 100vh; /* Altura completa de la ventana */
-    float: left;
-    border: thin solid #d94100;
-  }
-
-  .logodamm {
-    width: 12.44rem;
-    height: 6.87rem;
-    border: thin solid #d94100;
-  }
-
-  .menu-options {
-    margin-top: 0rem;
-  }
-  .menu-options button {
-    display: block; /* o flex */
-    border: none;
-    background-color: white;
-    color: #d94100;
-    font-weight: bold;
-    width: 200px; /* Ancho del botón */
-    height: 60px; /* Alto del botón */
-  }
-
-  .menu-options-llista {
-    font-size: 1rem;
-  }
-  
-  .menu-options-calendari {
-    font-size: 1.35rem;
-  }
-
-  /* Estilos para el menú en la parte superior */
-.menu-top { /* Color rojo muy claro */
-    height: 6.9rem; 
-    border: thin solid #d94100;
-    /* Otros estilos para la barra de menú superior */
-  }
-
-  .calendar-container {
-    height: 300px;
-    width: 60%;
-    margin: auto;
-    margin-top: 100px;
-    border: 1px solid #ccc; /* Borde gris */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+header {
+  background-color: #dd0501;
+  padding: 1.5rem;
 }
 
+.beerdrive-title {
+  margin-top: 1rem;
+}
+
+.beerdrive-span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-left: auto;
+}
+
+.header-div {
+  display: flex;
+  align-items: center; /* Centra verticalmente los elementos dentro de header-div */
+}
+
+.logodamm {
+  width: 8rem;
+  height: 4rem;
+  margin-right: 1rem;
+}
+
+.menu-top {
+  height: 2rem; /* Ajusta la altura según tus necesidades */
+}
+
+.content-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendar-container {
+  padding: 1rem;
+  margin-left: calc(9rem); /* Dos tercios + margen de 1rem */
+  width: calc(60%); /* Dos tercios - 2 * margen de 1rem */
+  height: 30rem;
+
+}
+
+.calendar-custom .rbc-slot-selecting {
+  background-color: rgba(100, 100, 100, 0.5) !important;
+}
+
+
+.task-list-container {
+  padding: 1rem;
+  margin-right: calc(3rem);
+  width: 20%; /* Tercio del espacio disponible */
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+}
+
+.selected-date-info {
+  margin-top: 1rem;
+}

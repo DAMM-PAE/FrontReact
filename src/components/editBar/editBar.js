@@ -108,7 +108,7 @@ const EditBar = () => {
 
     const handleProvinciaChange = (e) => {
         const selectedProvincia = e.target.value;
-        setProvincia(selectedProvincia);
+        setBarProvincia(selectedProvincia);
         setCiutat("");
       }
 
