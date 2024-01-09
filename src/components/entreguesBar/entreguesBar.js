@@ -3,11 +3,20 @@ import { useLocation } from "react-router-dom";
 import { baseUrl } from '../../global';
 import './entreguesBar.css';
 import moment from 'moment'; 
+import Pagination from '../listBars/Pagination';
 
 const EntreguesBar = () => {
     const location = useLocation();
     const bar = location.state.bar;
     const [entregues, setEntregues] = useState([]);
+    const entreguesPerPage = 10;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const indexOfLastEntrega = currentPage * entreguesPerPage;
+    const indexOfFirstEntrega = indexOfLastEntrega - entreguesPerPage;
+    const currentEntregues = entregues.slice(indexOfFirstEntrega, indexOfLastEntrega);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     useEffect(() => {
         fetchEntregues();
@@ -38,17 +47,17 @@ const EntreguesBar = () => {
 
     const formatDifferenceText = (difference) => {
         if (difference === 1) {
-            return '1 dia després';
+            return { text: '1 dia després', styleClass: 'orange-text' };
         } else if (difference > 1) {
-            return `${difference} dies després`;
+            return { text: `${difference} dies després`, styleClass: 'red-text' };
         } else if (difference === -1) {
-            return '1 dia abans';
+            return { text: '1 dia abans', styleClass: 'orange-text' };
         } else if (difference < -1) {
-            return `${Math.abs(difference)} dies abans`;
+            return { text: `${Math.abs(difference)} dies abans`, styleClass: 'red-text' };
         } else {
-            return 'Mateixa data';
+            return { text: 'Mateixa data', styleClass: 'green-text' };
         }
-    }
+    };
 
     const handleEliminarEntrega = async (id) => {
     const isConfirmed = window.confirm("Estàs segur que vols eliminar l'entrega?");
@@ -73,9 +82,18 @@ const EntreguesBar = () => {
     }
     }
 
+    const goBack = () => {
+        window.history.back();
+    }
+
     return (
         <div className="entregues-bar-container">
-            <h1 className="h1-css">EntreguesBar</h1>
+            <div className="titol-ent">
+            <h1 className="h1-css">{bar.nom}</h1>
+            <button className="back-button" onClick={goBack}>
+                &#10006; 
+            </button>
+            </div>
             <div className="cuadro-con-tabla">
                 <table className="table-css">
                     <thead>
@@ -87,12 +105,14 @@ const EntreguesBar = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {entregues.map((entrega, index) => (
+                        {currentEntregues.map((entrega, index) => (
                             <tr key={index}>
                                 <td className="td-css">{entrega.litrosEntregados}</td>
                                 <td className="td-css">{moment(entrega.fechaPedido).format('DD-MM-YYYY')}</td>
-                                <td className="td-css">{moment(entrega.fechaEntrega).format('DD-MM-YYYY')}</td>
-                                <td className="td-css">{formatDifferenceText(calculateDaysDifference(entrega.fechaPedido, entrega.fechaEntrega))}</td>
+                                <td className="td-css"><b>{moment(entrega.fechaEntrega).format('DD-MM-YYYY')}</b></td>
+                                <td className={`td-css ${formatDifferenceText(calculateDaysDifference(entrega.fechaPedido, entrega.fechaEntrega)).styleClass}`}>
+                                    {formatDifferenceText(calculateDaysDifference(entrega.fechaPedido, entrega.fechaEntrega)).text}
+                                </td>
                                 <td className="td-css">
                                     <button className="button-delete-entrega" onClick={() => handleEliminarEntrega(entrega.id)}>Eliminar</button>
                                 </td>
@@ -100,6 +120,12 @@ const EntreguesBar = () => {
                         ))}
                     </tbody>
                 </table>
+                <Pagination
+                    barsPerPage={entreguesPerPage}
+                    totalBars={entregues.length}
+                    currentPage={currentPage}
+                    paginate={paginate}
+                />
             </div>
         </div>
     );

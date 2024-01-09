@@ -4,12 +4,14 @@ import './editBar.css';
 import { useLocation, useNavigate } from "react-router-dom";
 import back from "./back.png";
 import { baseUrl } from '../../global';
+import { parse, set } from 'date-fns';
 
 
 const EditBar = () => {
 
   const location = useLocation();
   let bar = location.state.bar;
+  let iot = location.state.iot;
   const navigate = useNavigate();
     
     const [barProvincia, setBarProvincia] = useState('');
@@ -21,9 +23,9 @@ const EditBar = () => {
     const [barCodiPostal, setBarCodiPostal] = useState('');
     const [barLatitud, setBarLatitud] = useState('');
     const [barLongitud, setBarLongitud] = useState('');
-    const [barIoT, setBarIoT] = useState(false);
     const [barTipus, setBarTipus] = useState('');
     const [barTypes, setBarTypes] = React.useState([]);
+    const [barIoT, setBarIoT] = useState(iot);
 
     useEffect(() => {
       getBarTypes();
@@ -40,12 +42,12 @@ const EditBar = () => {
         setBarCodiPostal(bar.codiPostal || '');
         setBarLatitud(bar.latitud || '');
         setBarLongitud(bar.longitud || '');
-        setBarIoT(bar.iot || false);
         setBarTipus(bar.tipusBar || '');
       }
     
       console.log("barProvincia:", barProvincia);
       console.log("ciutat:", ciutat);
+      console.log("iot:", barIoT);
       parseBarProvincia();
       parseBarCiutat();
     }, [bar]);
@@ -175,6 +177,7 @@ const EditBar = () => {
       if (bar.ciutat === "ZAMORA") setCiutat("Zamora");
       if (bar.ciutat === "ZARAGOZA") setCiutat("Zaragoza");
     }
+
 
     const getBarTypes = async () => {
       const url = baseUrl + '/api/bars/types';
@@ -443,7 +446,7 @@ const EditBar = () => {
                       type="text"
                       id="barNameInput"
                       className="input-field1-nom"
-                      value={bar.nom}
+                      value={barName}
                       onChange={(e) => setBarName(e.target.value)}
                     />
                 </div>
@@ -576,8 +579,14 @@ const EditBar = () => {
 
                 <div className="input-container">
                     <label className="filtres-select1">IoT</label>
-                    <input type="checkbox" id="barIoTInput" className="input-field1-iot" value={barIoT}
-                      onChange={(e) => setBarIoT(e.target.value)}/>
+                    <input
+                      type="checkbox"
+                      id="barIoTInput"
+                      className="input-field1-iot"
+                      value={barIoT}
+                      checked={barIoT} // Establecer el atributo checked
+                      onChange={(e) => setBarIoT(e.target.checked)} // Actualizar el estado al cambiar
+                    />
                 </div>
 
                   <button className="button-env" onClick={editBar}>

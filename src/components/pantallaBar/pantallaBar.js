@@ -50,7 +50,7 @@ function PantallaBar() {
   };
 
   const editBar = () => {
-    navigate('/bar/' + bar.id + '/edit', { state: { bar: bar } });
+    navigate('/bar/' + bar.id + '/edit', { state: { bar: bar , iot: bar.iot} });
   }
 
   const registarEntrega = () => {
