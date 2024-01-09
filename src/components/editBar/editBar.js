@@ -247,6 +247,7 @@ const EditBar = () => {
     const handleProvinciaChange = (e) => {
         const selectedProvincia = e.target.value;
         setBarProvincia(selectedProvincia);
+
         if (selectedProvincia === "A Coruña") setCiutat("A Coruña");
         else if (selectedProvincia === "Álava") setCiutat("Vitoria-Gasteiz");
         else if (selectedProvincia === "Albacete") setCiutat("Albacete");
