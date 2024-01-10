@@ -6,6 +6,7 @@ import 'moment/locale/ca'; // Importa el idioma catalán
 import { useLocation, useNavigate } from 'react-router-dom';
 import './vistaCalendari.css';
 import logo from './logo3.png';
+import { baseUrl } from '../../global';
 
 function VistaCalendari() {
   const { state } = useLocation();
@@ -22,7 +23,7 @@ function VistaCalendari() {
   }, []);
 
   const fetchBars = async () => {
-    const url = 'http://nattech.fib.upc.edu:40540/api/bars';
+    const url = baseUrl + '/api/bars';
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -80,6 +81,22 @@ function VistaCalendari() {
     navigate(`/bar/${bar.id}`);
   };
 
+  const handleOptionChange = (e) => {
+    const selectedOption = e;
+    if (selectedOption === "/addBar") {
+      navigate('/addBar', {state: { bars: allBars }});
+    } else if (selectedOption === "/delivery") {
+      navigate('/delivery', {state: { bars: allBars }});
+    } else if (selectedOption === "/list") {
+      navigate('/list', {state: { bars: allBars }});
+    } else if (selectedOption === "/vistaCalendari") {
+      navigate('/vistaCalendari', {state: { bars: allBars }});
+    } else if (selectedOption === "/") {
+      navigate('/');
+    }
+  };
+
+
   return (
     <div>
       <header>
@@ -87,10 +104,31 @@ function VistaCalendari() {
           <div className="logo">
             <img src={logo} className="logodamm" alt="logo" />
           </div>
-          <div className="beerdrive-title">
-            <span className="beerdrive-span">BEERDRIVE</span>
+          <div class="beerdrive-title">
+            <span class="beerdrive-span">BEERDRIVE</span>
           </div>
-        </div>
+          
+      <div>
+      <ul className="menu">
+      <li onClick={() => handleOptionChange('/addBar')}>
+        Afegir Bar
+      </li>
+        <li onClick={() => handleOptionChange('/delivery')}>
+          Registrar Entrega
+        </li>
+        <li onClick={() => handleOptionChange('/list')}>
+          Vista Llista
+        </li>
+        <li className="menu-li-active" onClick={() => handleOptionChange('/vistaCalendari')}>
+          Vista Calendari
+        </li>
+        <li onClick={() => handleOptionChange('/')}>
+          Sortir
+        </li>
+      </ul>
+
+    </div>
+    </div>
       </header>
 
       <div className="menu-top"></div>

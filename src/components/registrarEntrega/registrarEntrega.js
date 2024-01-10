@@ -127,6 +127,21 @@ function RegistrarEntrega() {
     navigate(-1)
   }
 
+
+  const handleOptionChange = (e) => {
+    const selectedOption = e;
+    if (selectedOption === "/addBar") {
+      navigate('/addBar', {state: { bars: bars }});
+    } else if (selectedOption === "/delivery") {
+      navigate('/delivery', {state: { bars: bars }});
+    } else if (selectedOption === "/list") {
+      navigate('/list', {state: { bars: bars }});
+    } else if (selectedOption === "/vistaCalendari") {
+      navigate('/vistaCalendari', {state: { bars: bars }});
+    } else if (selectedOption === "/") {
+      navigate('/');
+    }
+  };
   
 
   return (
@@ -136,10 +151,31 @@ function RegistrarEntrega() {
           <div className="logo">
             <img src={logo} className="logodamm" alt="logo" />
           </div>
-          <div className="beerdrive-title">
-            <span className="beerdrive-span">BEERDRIVE</span>
+          <div class="beerdrive-title">
+            <span class="beerdrive-span">BEERDRIVE</span>
           </div>
-        </div>
+          
+      <div>
+      <ul className="menu">
+      <li onClick={() => handleOptionChange('/addBar')}>
+        Afegir Bar
+      </li>
+        <li className="menu-li-active" onClick={() => handleOptionChange('/delivery')}>
+          Registrar Entrega
+        </li>
+        <li onClick={() => handleOptionChange('/list')}>
+          Vista Llista
+        </li>
+        <li onClick={() => handleOptionChange('/vistaCalendari')}>
+          Vista Calendari
+        </li>
+        <li onClick={() => handleOptionChange('/')}>
+          Sortir
+        </li>
+      </ul>
+
+    </div>
+    </div>
       </header>
 
       <section>

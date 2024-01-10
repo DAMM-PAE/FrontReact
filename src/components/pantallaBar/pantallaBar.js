@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./pantallaBar.css";
 import { useLocation } from "react-router-dom";
 import logo from "../pantallaLlista/logo3.png";
@@ -11,7 +11,24 @@ function PantallaBar() {
   const location = useLocation();
   const bar = location.state.bar;
   const navigate = useNavigate();
+  const [allBars, setAllBars] = useState([]);
+
   
+  useEffect(() => {
+    fetchBars();
+  }, []);
+  
+  const fetchBars = async () => {
+    const url = baseUrl + '/api/bars';
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setAllBars(data);
+    } catch (error) {
+      console.error('Error fetching bars data:', error);
+    }
+  };
+
   const defaultProps = {
     center: {
       lat: bar ? bar.latitud : 0,
@@ -50,7 +67,7 @@ function PantallaBar() {
   };
 
   const editBar = () => {
-    navigate('/bar/' + bar.id + '/edit', { state: { bar: bar , iot: bar.iot} });
+    navigate('/bar/' + bar.id + '/edit', { state: { bar: bar , iot: bar.iot, bars: allBars} });
   }
 
   const registarEntrega = () => {
@@ -61,16 +78,53 @@ function PantallaBar() {
     navigate('/delivery-list/' + bar.id, { state: { bar: bar } });
   }
 
+  const handleOptionChange = (e) => {
+    const selectedOption = e;
+    if (selectedOption === "/addBar") {
+      navigate('/addBar', {state: { bars: allBars }});
+    } else if (selectedOption === "/delivery") {
+      navigate('/delivery', {state: { bars: allBars }});
+    } else if (selectedOption === "/list") {
+      navigate('/list', {state: { bars: allBars }});
+    } else if (selectedOption === "/vistaCalendari") {
+      navigate('/vistaCalendari', {state: { bars: allBars }});
+    } else if (selectedOption === "/") {
+      navigate('/');
+    }
+  };
+
   return (
     <div>
-      <header>
-        <div className= "header-div">
-        <div className="logo">
-          <img src={logo} className="logodamm" alt="logo" />
-        </div>
-        <div class="beerdrive-title">
-          <span class="beerdrive-span">BEERDRIVE</span>
-        </div></div>
+<header>
+        <div className="header-div">
+          <div className="logo">
+            <img src={logo} className="logodamm" alt="logo" />
+          </div>
+          <div class="beerdrive-title">
+            <span class="beerdrive-span">BEERDRIVE</span>
+          </div>
+          
+      <div>
+      <ul className="menu">
+      <li onClick={() => handleOptionChange('/addBar')}>
+        Afegir Bar
+      </li>
+        <li onClick={() => handleOptionChange('/delivery')}>
+          Registrar Entrega
+        </li>
+        <li onClick={() => handleOptionChange('/list')}>
+          Vista Llista
+        </li>
+        <li onClick={() => handleOptionChange('/vistaCalendari')}>
+          Vista Calendari
+        </li>
+        <li onClick={() => handleOptionChange('/')}>
+          Sortir
+        </li>
+      </ul>
+
+    </div>
+    </div>
       </header>
 
       <section>

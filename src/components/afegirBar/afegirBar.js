@@ -2,11 +2,14 @@ import React, {useEffect} from 'react';
 import logo from '../pantallaLlista/logo3.png';
 import './afegirBar.css';
 import back from './back.png';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { baseUrl } from '../../global';
+
 
 const AfegirBar = () => {
     
+    const location = useLocation();
+    const allBars = location.state.bars;
     const navigate = useNavigate();
     const [provincia, setProvincia] = React.useState('');
     const [ciutat, setCiutat] = React.useState('');
@@ -205,19 +208,55 @@ const AfegirBar = () => {
       navigate(-1);
     }
 
+    const handleOptionChange = (e) => {
+      const selectedOption = e;
+      if (selectedOption === "/addBar") {
+        navigate('/addBar', {state: { bars: allBars }});
+      } else if (selectedOption === "/delivery") {
+        navigate('/delivery', {state: { bars: allBars }});
+      } else if (selectedOption === "/list") {
+        navigate('/list', {state: { bars: allBars }});
+      } else if (selectedOption === "/vistaCalendari") {
+        navigate('/vistaCalendari', {state: { bars: allBars }});
+      } else if (selectedOption === "/") {
+        navigate('/');
+      }
+    };
+
 
     return (
             <div>
-              <header>
-                <div className="header-div">
-                  <div className="logo">
-                    <img src={logo} className="logodamm" alt="logo" />
-                  </div>
-                  <div className="beerdrive-title">
-                    <span className="beerdrive-span">BEERDRIVE</span>
-                  </div>
-                </div>
-              </header>
+      <header>
+        <div className="header-div">
+          <div className="logo">
+            <img src={logo} className="logodamm" alt="logo" />
+          </div>
+          <div class="beerdrive-title">
+            <span class="beerdrive-span">BEERDRIVE</span>
+          </div>
+          
+      <div>
+      <ul className="menu">
+      <li className="menu-li-active" onClick={() => handleOptionChange('/addBar')}>
+        Afegir Bar
+      </li>
+        <li onClick={() => handleOptionChange('/delivery')}>
+          Registrar Entrega
+        </li>
+        <li onClick={() => handleOptionChange('/list')}>
+          Vista Llista
+        </li>
+        <li onClick={() => handleOptionChange('/vistaCalendari')}>
+          Vista Calendari
+        </li>
+        <li onClick={() => handleOptionChange('/')}>
+          Sortir
+        </li>
+      </ul>
+
+    </div>
+    </div>
+      </header>
         
               <section>
                 <div className="bars-top">

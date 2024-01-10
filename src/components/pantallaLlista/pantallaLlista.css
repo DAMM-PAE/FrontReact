@@ -190,7 +190,7 @@ header {
   display: flex;
   justify-content: center;
   flex-basis: 6rem;
-  margin-right: 15rem;
+  margin-right: 15.5rem;
 }
 
 .col-llista2 {
@@ -211,6 +211,8 @@ header {
 
 .header-div {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logodamm {
@@ -219,24 +221,63 @@ header {
   margin-right: 5rem;
 }
 
+/* Estilos para registration-container */
 .registration-container {
   display: flex;
-  flex-direction: column; /* Alinea los elementos en una columna */
-  align-items: center; /* Alinea los elementos verticalmente en el contenedor secundario */
-  margin-left: auto; /* Mueve el contenedor a la derecha */
-  margin-right: 10rem;
+  align-items: center;
+  margin-right: 2rem; /* Ajusta el margen derecho según sea necesario */
 }
 
-.logoreg {
-  width: 3rem;
-  height: 2.5rem;
-}
-
-.registrar {
-  margin-top: 0.25rem; /* Espaciado superior para separar del logo */
+/* Estilos para registration-select */
+.registration-select {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
   cursor: pointer;
-  color: #ffffff;
-  font: bold;
-  font-size: 0.85rem;
+  margin-right: 1rem; /* Ajusta el margen derecho según sea necesario */
+}
+
+.registration-select:focus {
+  outline: none;
+  border-color: #d94100;
+  box-shadow: 0 0 5px #d94100;
+}
+
+/* Estilos para registration-option */
+.registration-option {
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+}
+
+.registration-option:hover {
+  background-color: #d94100;
+  color: #fff;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 15rem; /* Alinea los elementos a la derecha */
+}
+
+.menu li {
+  margin-right: 2rem;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.menu li:hover {
+  text-decoration: underline;
+}
+
+.menu-li-active {
+  text-decoration: underline;
 }
 

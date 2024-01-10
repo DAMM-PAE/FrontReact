@@ -27,7 +27,9 @@ function ListBars({ filteredBars }) {
         <tbody>
           {currentBars.map((bar) => {
             const rowStyle = bar.iot ? { background: 'rgba(255, 255, 153, 0.45)' } : {};
-
+            if (bar.urgent) {
+              rowStyle.background = 'rgba(255, 102, 0, 0.45)';
+            }
             return (
               <tr key={bar.id} style={rowStyle} onClick={() => handleClick(bar)}>
                 <td style={{

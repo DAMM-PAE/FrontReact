@@ -5,7 +5,7 @@ import "./pantallaLlista.css";
 import logo from "./logo3.png";
 import reset from "./reset.png";
 import logoreg from "./registrar.png"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import ListBars from '../listBars/ListBars';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -45,7 +45,15 @@ function PantallaInicial() {
       const response = await fetch(url);
       const data = await response.json();
       //ordenamos los bares por fecha de entrega
-      data.sort((a, b) => new Date(a.data) - new Date(b.data));
+      data.sort((a, b) => {
+        // Ordena por urgent en orden descendente
+        if (b.urgent - a.urgent !== 0) {
+          return b.urgent - a.urgent;
+        }
+        
+        // Si tienen el mismo valor en urgent, ordena por fecha en orden ascendente
+        return new Date(a.data) - new Date(b.data);
+      });
 
       //transform percentage to int and if iot is false, set percentage to "-"
       data.forEach((bar, index) => {
@@ -195,6 +203,8 @@ function PantallaInicial() {
     }
     console.log("Fecha de inicio en pantalla inicial:", startDate);
     console.log("Fecha de fin en pantalla inicial:", endDate);
+
+    
   };  
 
   const handleSortNom = (attribute, sortdir) => {
@@ -280,6 +290,13 @@ function PantallaInicial() {
     setFilteredBars(newData);
   }
 
+  const formatDate = (date) => {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   const filterBars = (e) => {
     //obtener valores de los filtros
     const provinciaFilter = provincia;
@@ -287,8 +304,8 @@ function PantallaInicial() {
     const tipusFilter = tipus;
     const percentatgeFilter = percentatge;
     const dataFilter = selectedDate;
-    const dataFilterStart = startDate;
-    const dataFilterEnd = endDate;
+    const dataFilterStart = formatDate(startDate);
+    const dataFilterEnd = formatDate(endDate);
     console.log("Provincia: ", provinciaFilter);
     console.log("Ciutat: ", ciutatFilter);
     console.log("Tipus: ", tipusFilter);
@@ -371,14 +388,16 @@ function PantallaInicial() {
     }
 
     //filtra por fecha, si la data esta entre la fecha de inicio y la fecha de fin, añadelo al array
-   if (dataFilter !== "") {
+    if (dataFilter !== "") {
+
       filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => {
         const data = new Date(bar.data);
-        return data >= dataFilterStart && data <= dataFilterEnd;
+        return data >= startDate && data <= endDate;
       });
-  }
-    console.log("data inici: ", dataFilterStart);
-    console.log("data fi: ", dataFilterEnd);
+    }
+    
+    console.log("data inici: ", startDate);
+    console.log("data fi: ", endDate);
     console.log(filteredBarsByProvincia);
     setFilteredBars(filteredBarsByProvincia);
   }
@@ -409,58 +428,20 @@ function PantallaInicial() {
     setFilteredBars(allBars);
   }
 
-  const handleTickClick = (barId) => {
-    // Encuentra el índice del bar basado en el ID proporcionado
-    // Cambiar el color de fondo a verde
-    const tickElement = document.getElementById(`tick-${barId}`);
-    if (tickElement) {
-      tickElement.parentElement.style.backgroundColor = 'rgba(0, 255, 0, 0.45)';
+  const handleOptionChange = (e) => {
+    const selectedOption = e;
+    if (selectedOption === "/addBar") {
+      navigate('/addBar', {state: { bars: allBars }});
+    } else if (selectedOption === "/delivery") {
+      navigate('/delivery', {state: { bars: allBars }});
+    } else if (selectedOption === "/list") {
+      navigate('/list', {state: { bars: allBars }});
+    } else if (selectedOption === "/vistaCalendari") {
+      navigate('/vistaCalendari', {state: { bars: allBars }});
+    } else if (selectedOption === "/") {
+      navigate('/');
     }
-    // Esperar 1 segundo antes de ejecutar la actualización de la fecha
-    setTimeout(() => {
-      updateDate(barId);
-    }, 1000);
-  }
-
-  const updateDate = (barId) => {
-    //poner al bar una fecha random entre de aqui 1 mes y 4 meses
-    //solo existe 1 bar con ese id
-    const today = new Date();
-    const randomDate = new Date(today.getTime() + Math.random() * 10368000000);
-    const newData = [...allBars];
-    const barIndex = newData.findIndex((bar) => bar.id === barId);
-    newData[barIndex].data = randomDate;
-    setAllBars(newData);
-    setFilteredBars(newData);
-  }
-
-  const handleVistaCalendari = () => {
-    navigate('/vistaCalendari', {state: { bars: allBars }});
-  }
-
-  const maxItemsToShow = 5;
-  const barsThisWeek = allBars.filter((bar) => {
-    const today = new Date();
-    const todayPlusTwo = new Date(today);
-    todayPlusTwo.setDate(today.getDate() + 2);
-    todayPlusTwo.setHours(0, 0, 0, 0);
-    const endDateWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay()));
-    endDateWeek.setHours(23, 59, 59, 999);
-    const data = new Date(bar.data);
-    return data > todayPlusTwo && data <= endDateWeek;
-  });
-  
-  const barsToShow = barsThisWeek.slice(0, maxItemsToShow);
-  const remainingBarsCount = Math.max(0, barsThisWeek.length - maxItemsToShow);
-
-  const handleNavigateBar = (bar) => {
-    navigate(`/bar/${bar.id}`, { state: { bar } });
-  }
-
-  const handleNavigateRegister = () => {
-    console.log("allBars: ", allBars)
-    navigate('/delivery', {state: { bars: allBars }});
-  }
+  };
 
   return (
     <div>
@@ -473,11 +454,27 @@ function PantallaInicial() {
             <span class="beerdrive-span">BEERDRIVE</span>
           </div>
           
-          <div class="registration-container" onClick={() => handleNavigateRegister()} >
-            <img src={logoreg} className="logoreg" alt="logo" />
-            <label className="registrar" >Registrar entrega</label>
-          </div>
-        </div>
+      <div>
+      <ul className="menu">
+      <li onClick={() => handleOptionChange('/addBar')}>
+        Afegir Bar
+      </li>
+        <li onClick={() => handleOptionChange('/delivery')}>
+          Registrar Entrega
+        </li>
+        <li className="menu-li-active" onClick={() => handleOptionChange('/list')}>
+          Vista Llista
+        </li>
+        <li onClick={() => handleOptionChange('/vistaCalendari')}>
+          Vista Calendari
+        </li>
+        <li onClick={() => handleOptionChange('/')}>
+          Sortir
+        </li>
+      </ul>
+
+    </div>
+    </div>
       </header>
 
       <section className="section-top">
