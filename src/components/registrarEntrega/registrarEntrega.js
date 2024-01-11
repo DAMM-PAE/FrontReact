@@ -160,9 +160,6 @@ function RegistrarEntrega() {
       <li onClick={() => handleOptionChange('/addBar')}>
         Afegir Bar
       </li>
-        <li className="menu-li-active" onClick={() => handleOptionChange('/delivery')}>
-          Registrar Entrega
-        </li>
         <li onClick={() => handleOptionChange('/list')}>
           Vista Llista
         </li>

@@ -276,25 +276,26 @@ function PantallaInicial() {
   const handleSortData = (attribute, sortdir) => {
     const newData = [...filteredBars];
     newData.sort((a, b) => {
-      //pasar strings a date
-      const auxA = new Date(a[attribute]);
-      const auxB = new Date(b[attribute]);
-      if (sortdir === 'asc') {
-        return auxA - auxB;
-      } else if (sortdir === 'desc') {
-        return auxB - auxA;
+      const dateA = new Date(a[attribute]);
+      const dateB = new Date(b[attribute]);
+  
+      // Asegúrate de que las fechas sean objetos Date válidos antes de realizar la comparación
+      if (!isNaN(dateA) && !isNaN(dateB)) {
+        if (sortdir === 'asc') {
+          return dateA - dateB;
+        } else if (sortdir === 'desc') {
+          return dateB - dateA;
+        } else {
+          return 0;
+        }
       } else {
+        // Maneja el caso en que las fechas no sean válidas
+        console.error('Fecha no válida');
         return 0;
       }
     });
+  
     setFilteredBars(newData);
-  }
-
-  const formatDate = (date) => {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
   };
 
   const filterBars = (e) => {
@@ -304,8 +305,8 @@ function PantallaInicial() {
     const tipusFilter = tipus;
     const percentatgeFilter = percentatge;
     const dataFilter = selectedDate;
-    const dataFilterStart = formatDate(startDate);
-    const dataFilterEnd = formatDate(endDate);
+    let dataFilterStart = ''
+    let dataFilterEnd = ''
     console.log("Provincia: ", provinciaFilter);
     console.log("Ciutat: ", ciutatFilter);
     console.log("Tipus: ", tipusFilter);
@@ -391,8 +392,7 @@ function PantallaInicial() {
     if (dataFilter !== "") {
 
       filteredBarsByProvincia = filteredBarsByProvincia.filter((bar) => {
-        const data = new Date(bar.data);
-        return data >= startDate && data <= endDate;
+        return bar.data >= startDate && bar.data <= endDate;
       });
     }
     
@@ -459,9 +459,6 @@ function PantallaInicial() {
       <li onClick={() => handleOptionChange('/addBar')}>
         Afegir Bar
       </li>
-        <li onClick={() => handleOptionChange('/delivery')}>
-          Registrar Entrega
-        </li>
         <li className="menu-li-active" onClick={() => handleOptionChange('/list')}>
           Vista Llista
         </li>

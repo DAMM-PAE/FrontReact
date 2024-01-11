@@ -262,7 +262,7 @@ header {
   margin: 0;
   display: flex;
   justify-content: flex-end;
-  margin-left: 15rem; /* Alinea los elementos a la derecha */
+  margin-left: 25rem; /* Alinea los elementos a la derecha */
 }
 
 .menu li {

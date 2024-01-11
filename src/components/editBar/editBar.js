@@ -448,9 +448,6 @@ const EditBar = () => {
       <li onClick={() => handleOptionChange('/addBar')}>
         Afegir Bar
       </li>
-        <li onClick={() => handleOptionChange('/delivery')}>
-          Registrar Entrega
-        </li>
         <li onClick={() => handleOptionChange('/list')}>
           Vista Llista
         </li>

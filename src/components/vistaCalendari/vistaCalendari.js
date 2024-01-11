@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './vistaCalendari.css';
 import logo from './logo3.png';
 import { baseUrl } from '../../global';
+import back from './back.png';
 
 function VistaCalendari() {
   const { state } = useLocation();
@@ -27,27 +28,40 @@ function VistaCalendari() {
     try {
       const response = await fetch(url);
       const data = await response.json();
-
-      // Transforma date a dd-mm-yyyy
+  
+      // Transforma date a DD-MM-YYYY
       data.forEach((bar, index) => {
         const date = moment(bar.data);
         data[index].data = date.format('DD-MM-YYYY');
       });
-
+  
       setAllBars(data);
-
+  
       // Actualiza los eventos del calendario
       setEvents(
         data.map(bar => ({
           title: bar.nom,
-          start: moment(bar.data),
-          end: moment(bar.data),
+          start: moment(bar.data, 'DD-MM-YYYY').toDate(), // Usa toDate() para obtener un objeto Date
+          end: moment(bar.data, 'DD-MM-YYYY').add(1, 'hour').toDate(), // Puedes ajustar esto según tus necesidades
           id: bar.id,
         }))
       );
     } catch (error) {
       console.error('Error fetching bars data:', error);
     }
+  };
+  
+  const handleDateSelect = ({ start }) => {
+    setSelectedDate(start);
+    
+    // Mantén la pista de la ranura seleccionada
+    setSelectedSlot({ start });
+  
+    // Filtra las entregas programadas para el día seleccionado
+    const deliveriesForSelectedDate = allBars.filter(
+      bar => moment(bar.data, 'DD-MM-YYYY').isSame(moment(start), 'day')
+    );
+    setScheduledDeliveries(deliveriesForSelectedDate);
   };
 
   const handleEventClick = event => {
@@ -65,20 +79,8 @@ function VistaCalendari() {
     }
   };
 
-  const handleDateSelect = ({ start }) => {
-    setSelectedDate(start);
-
-    // Mantén la pista de la ranura seleccionada
-    setSelectedSlot({ start });
-
-    const deliveriesForSelectedDate = allBars.filter(
-      bar => moment(bar.data).isSame(moment(start), 'day')
-    );
-    setScheduledDeliveries(deliveriesForSelectedDate);
-  };
-
   const handleBarClick = bar => {
-    navigate(`/bar/${bar.id}`);
+    navigate(`/bar/${bar.id}`, { state: { bar } });
   };
 
   const handleOptionChange = (e) => {
@@ -97,6 +99,11 @@ function VistaCalendari() {
   };
 
 
+  const goBack = () => {
+    navigate(-1);
+  }
+
+
   return (
     <div>
       <header>
@@ -113,9 +120,6 @@ function VistaCalendari() {
       <li onClick={() => handleOptionChange('/addBar')}>
         Afegir Bar
       </li>
-        <li onClick={() => handleOptionChange('/delivery')}>
-          Registrar Entrega
-        </li>
         <li onClick={() => handleOptionChange('/list')}>
           Vista Llista
         </li>
@@ -130,10 +134,12 @@ function VistaCalendari() {
     </div>
     </div>
       </header>
+      
 
       <div className="menu-top"></div>
       <div className="content-container">
         <div className="calendar-container">
+        <img src={back} className="back" alt="back" onClick={goBack} />
           <Calendar
             events={events}
             startAccessor="start"
@@ -147,7 +153,7 @@ function VistaCalendari() {
           />
         </div>
         <div className="task-list-container">
-          <h2>Entregas programadas para el día {moment(selectedDate).format('DD/MM/YY')}</h2>
+          <h2>Entregues predites pel dia {moment(selectedDate).format('DD/MM/YY')}</h2>
           <ul>
           {scheduledDeliveries.length > 0 ? (
               scheduledDeliveries.map(bar => (
@@ -156,7 +162,7 @@ function VistaCalendari() {
                 </li>
               ))
             ) : (
-              <li>No hay entregas programadas para este día.</li>
+              <li>No hi ha cap entrega predita per a aquest dia</li>
             )}
           </ul>
         </div>

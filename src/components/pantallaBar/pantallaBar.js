@@ -38,7 +38,7 @@ function PantallaBar() {
   };
 
   const goBack = () => {
-    navigate('/list');
+    navigate(-1);
   }
 
   const deleteBar = async () => {
@@ -109,9 +109,6 @@ function PantallaBar() {
       <li onClick={() => handleOptionChange('/addBar')}>
         Afegir Bar
       </li>
-        <li onClick={() => handleOptionChange('/delivery')}>
-          Registrar Entrega
-        </li>
         <li onClick={() => handleOptionChange('/list')}>
           Vista Llista
         </li>
