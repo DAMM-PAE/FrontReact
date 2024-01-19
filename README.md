@@ -18,3 +18,10 @@ Para ejecutar damm_front, se puede usar el siguiente comando:
 ```
 npm start
 ```
+
+## Connectar con el API
+
+En el archivo global.js está los dos enpoints para conectarse dependiendo si es local o en produccion
+
+
+
